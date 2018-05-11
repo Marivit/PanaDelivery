@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "245930645058",
+    "firebase_url": "https://panadelivery-1dfb9.firebaseio.com",
+    "project_id": "panadelivery-1dfb9",
+    "storage_bucket": "panadelivery-1dfb9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:245930645058:android:b72c5e9b1ed5c77c",
+        "android_client_info": {
+          "package_name": "com.example.virginia.panadelivery"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "245930645058-u3auj99gir5qq1rng22b855ltm8tgujv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3MJDwuO6KImJHxzokPMIERPtNNUWiUlc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
