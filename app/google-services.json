@@ -1,27 +1,71 @@
 {
   "project_info": {
-    "project_number": "245930645058",
-    "firebase_url": "https://panadelivery-1dfb9.firebaseio.com",
-    "project_id": "panadelivery-1dfb9",
-    "storage_bucket": "panadelivery-1dfb9.appspot.com"
+    "project_number": "701184006138",
+    "firebase_url": "https://pana-delivery.firebaseio.com",
+    "project_id": "pana-delivery",
+    "storage_bucket": "pana-delivery.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:245930645058:android:b72c5e9b1ed5c77c",
+        "mobilesdk_app_id": "1:701184006138:android:b72c5e9b1ed5c77c",
         "android_client_info": {
           "package_name": "com.example.virginia.panadelivery"
         }
       },
       "oauth_client": [
         {
-          "client_id": "245930645058-u3auj99gir5qq1rng22b855ltm8tgujv.apps.googleusercontent.com",
+          "client_id": "701184006138-9iu7vnmuvah0k7spa8696imnmojte1vm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.virginia.panadelivery",
+            "certificate_hash": "3125d989fa1a33b1e4301ecda5d3222398dae652"
+          }
+        },
+        {
+          "client_id": "701184006138-rd8oi2tqhg60omd36t3rl2nbkk1qpmdv.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyB3MJDwuO6KImJHxzokPMIERPtNNUWiUlc"
+          "current_key": "AIzaSyD8wzY9X9s7dcGAcRivf-kCKHyRiAt1Lac"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "701184006138-rd8oi2tqhg60omd36t3rl2nbkk1qpmdv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:701184006138:android:5525e5d2166835ba",
+        "android_client_info": {
+          "package_name": "com.panaDelivery.android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "701184006138-rd8oi2tqhg60omd36t3rl2nbkk1qpmdv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD8wzY9X9s7dcGAcRivf-kCKHyRiAt1Lac"
         }
       ],
       "services": {
