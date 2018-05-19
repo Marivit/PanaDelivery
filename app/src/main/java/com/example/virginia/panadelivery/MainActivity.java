@@ -33,6 +33,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         firebaseauth = FirebaseAuth.getInstance();
+
+        if (firebaseauth.getCurrentUser() != null ) {
+            finish();
+            startActivity(new Intent(this, ProfileClienteActivity.class));
+        }
+
         progressDialog = new ProgressDialog(this);
         buttonLogin = (Button) findViewById(R.id.buttonLogin);
         editTextEmail = (EditText) findViewById(R.id.editTextEmail);
@@ -63,12 +69,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+                        progressDialog.dismiss();
                         if (task.isSuccessful()) {
+                            Toast.makeText(getApplicationContext(), "Se logro hacer el login", Toast.LENGTH_SHORT).show();
+                            finish();
+                            startActivity(new Intent(getApplicationContext(), ProfileClienteActivity.class));
+
                             /* //Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             updateUI(user);*/
                         } else {
+                            Toast.makeText(getApplicationContext(), "El login fallo", Toast.LENGTH_SHORT).show();
                             /*// If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
                             Toast.makeText(EmailPasswordActivity.this, "Authentication failed.",
@@ -83,8 +95,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
         if (view == buttonLogin) {
-            finish();
-            startActivity(new Intent(this, ProfileClienteActivity.class));
+          LoginUser();
             //LoginUser();
         }
         if (view == textViewSignUp) {
