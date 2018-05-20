@@ -3,9 +3,7 @@ package com.example.virginia.panadelivery;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -120,13 +118,13 @@ public class ProfileClienteActivity extends AppCompatActivity
         } else if (id == R.id.nav_historial) {
             //
         } else if (id == R.id.nav_pedido) {
-            startActivity(new Intent(this, PedidoClientFragment.class));
-        }
-        else if (id == R.id.nav_logout) {
+            startActivity(new Intent(this, PedidoClienteActivity.class));
+        } else if (id == R.id.nav_logout) {
             firebaseAuth.signOut();
             finish();
             startActivity(new Intent(ProfileClienteActivity.this, MainActivity.class));
-
+        } else if (id == R.id.nav_maps) {
+            startActivity(new Intent(this, MapsActivity.class));
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
