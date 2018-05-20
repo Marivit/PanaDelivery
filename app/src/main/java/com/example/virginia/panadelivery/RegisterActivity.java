@@ -2,7 +2,10 @@ package com.example.virginia.panadelivery;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -13,6 +16,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -25,14 +32,25 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
-
+    //Variables
+    private EditText editTextName;
+    private EditText editTextLastname;
+    private EditText editTextFecha;
+    private EditText editTextTelefono;
     private Button buttonRegister;
     private EditText editTextEmail;
     private EditText editTextPassword;
     private TextView textViewSignIn;
+    private TextView textViewDireccion;
     private ProgressDialog progressDialog;
+    private String direccionLatLng;
+    //Base de datos
     private FirebaseAuth firebaseauth;
     private FirebaseFirestore firestore;
+    //Ubicacion
+    private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION =1;
+    private int PLACE_PICKER_REQUEST=1;
+    private boolean mLocationPermissionGranted=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,13 +61,21 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         firestore = FirebaseFirestore.getInstance();
         progressDialog = new ProgressDialog(this);
 
-        buttonRegister = (Button) findViewById(R.id.buttonRegister);
+        editTextName = (EditText) findViewById(R.id.editTextName);
+        editTextLastname = (EditText) findViewById(R.id.editTextLastName);
+        editTextFecha = (EditText) findViewById(R.id.editTextFecha);
+        editTextTelefono = (EditText) findViewById(R.id.editTextTelefono);
+        textViewDireccion = (TextView) findViewById(R.id.textDireccion);
         editTextEmail = (EditText) findViewById(R.id.editTextEmail);
         editTextPassword = (EditText) findViewById(R.id.editTextPassword);
+
+        buttonRegister = (Button) findViewById(R.id.buttonRegister);
         textViewSignIn = (TextView) findViewById(R.id.textViewSignIn);
 
         buttonRegister.setOnClickListener(this);
         textViewSignIn.setOnClickListener(this);
+        textViewDireccion.setOnClickListener(this);
+
     }
 
     @Override
@@ -62,18 +88,91 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             finish();
             startActivity(new Intent(this, MainActivity.class));
         }
+        if(view == textViewDireccion) {
+            if (ContextCompat.checkSelfPermission(this,
+                    android.Manifest.permission.ACCESS_FINE_LOCATION)
+                    == PackageManager.PERMISSION_GRANTED) {
+                mLocationPermissionGranted = true;
+            } else {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
+                        PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
+            }
+
+            try {
+
+                PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+                Intent i = builder.build(this);
+                startActivityForResult(i, PLACE_PICKER_REQUEST);
+            } catch (GooglePlayServicesRepairableException e) {
+                e.printStackTrace();
+                //Log.e(TAG, String.format("GooglePlayServices Not Available [%s]", e.getMessage()));
+            } catch (GooglePlayServicesNotAvailableException e) {
+                e.printStackTrace();
+                //Log.e(TAG, String.format("GooglePlayServices Not Available [%s]", e.getMessage()));
+            } catch (Exception e) {
+                //Log.e(TAG, String.format("PlacePicker Exception: %s", e.getMessage()));
+                e.printStackTrace();
+            }
+        }
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode==PLACE_PICKER_REQUEST){
+            if(resultCode== RESULT_OK){
+                Place place= PlacePicker.getPlace(this, data);
+                if (place == null) {
+                    Toast.makeText(this, "No place selected", Toast.LENGTH_LONG).show();
+                    //Log.i(TAG, "No place selected");
+                    return;
+                }
+                String address = String.format("Direccion: %s", place.getAddress());
+                textViewDireccion.setText(address);
+                direccionLatLng = String.format("%s", place.getLatLng());
+                //Mensajito
+                // Toast.makeText(this, direccionLatLng, Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String permissions[],
+                                           @NonNull int[] grantResults) {
+        mLocationPermissionGranted = false;
+        switch (requestCode) {
+            case PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    mLocationPermissionGranted = true;
+                }
+            }
+        }
+        //updateLocationUI();
     }
 
     private void registerUser() {
         String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
+        String name = editTextName.getText().toString().trim();
+        String lastname = editTextLastname.getText().toString().trim();
+        String fechaN = editTextFecha.getText().toString().trim();
+        String telefono = editTextTelefono.getText().toString().trim();
+        String direccion = textViewDireccion.getText().toString().trim();
+        //String dir2 = direccionLatLng.trim();
 
+        //Validaciones
         if(TextUtils.isEmpty(email)) {
             Toast.makeText(this, "Porfavor ingrese un email", Toast.LENGTH_SHORT).show();
             return;
         }
         if(TextUtils.isEmpty(password)) {
             Toast.makeText(this, "Porfavor ingrese la contraseña", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(TextUtils.isEmpty(name) || TextUtils.isEmpty(lastname) || TextUtils.isEmpty(fechaN) || TextUtils.isEmpty(telefono) || TextUtils.isEmpty(direccion) || TextUtils.isEmpty(direccionLatLng)){
+            Toast.makeText(this, "Porfavor rellene todos los campos", Toast.LENGTH_SHORT).show();
             return;
         }
         //Si cumple las validaciones, primero se muestra un ProgressDialog
@@ -92,7 +191,12 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
                             Map<String, Object> usuario = new HashMap<>();
                             //Colocar resto de la info
+                            usuario.put("nombre", editTextName.getText().toString().trim());
+                            usuario.put("apellido", editTextLastname.getText().toString().trim());
+                            usuario.put("fechaNacimiento", editTextFecha.getText().toString().trim());
                             usuario.put("email", editTextEmail.getText().toString().trim());
+                            usuario.put("telefono", editTextTelefono.getText().toString().trim());
+                            usuario.put("direccion", direccionLatLng);
                             usuario.put("rol", 1);
 
 
@@ -120,10 +224,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                             Toast.makeText(RegisterActivity.this, "Fallo en el registro, intente de nuevo.", Toast.LENGTH_SHORT).show();
                             //updateUI(null);
                         }
-
-                        // ...
                     }
                 });
+        finish();
+        startActivity(new Intent(this, ProfileClienteActivity.class));
 
     }
 }

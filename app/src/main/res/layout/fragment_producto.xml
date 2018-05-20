@@ -8,15 +8,8 @@
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <Button
-            android:id="@+id/button3"
-            android:layout_width="53dp"
-            android:layout_height="53dp"
-            android:text="+"
-            tools:layout_editor_absoluteX="232dp"
-            tools:layout_editor_absoluteY="71dp" />
+        android:layout_height="match_parent"
+        tools:layout_margin="10dp">
 
         <ImageView
             android:id="@+id/imageView4"
@@ -26,43 +19,60 @@
             tools:layout_editor_absoluteX="0dp"
             tools:layout_editor_absoluteY="16dp" />
 
-        <Button
-            android:id="@+id/button2"
-            android:layout_width="53dp"
-            android:layout_height="53dp"
-            android:text="-"
-            tools:layout_editor_absoluteX="123dp"
-            tools:layout_editor_absoluteY="71dp" />
-
         <TextView
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Cantidad"
-            tools:layout_editor_absoluteX="176dp"
+            android:textAllCaps="true"
+            tools:layout_editor_absoluteX="164dp"
             tools:layout_editor_absoluteY="89dp" />
-
-        <Button
-            android:id="@+id/button4"
-            android:layout_width="46dp"
-            android:layout_height="48dp"
-            android:background="@android:drawable/checkbox_on_background"
-            tools:layout_editor_absoluteX="297dp"
-            tools:layout_editor_absoluteY="76dp" />
 
         <TextView
             android:id="@+id/textView7"
-            android:layout_width="255dp"
-            android:layout_height="16dp"
-            android:layout_marginBottom="35dp"
+            android:layout_width="229dp"
+            android:layout_height="17dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="13dp"
             android:layout_marginTop="20dp"
             android:text="Nombre Producto"
-            app:layout_constraintBottom_toTopOf="@+id/button3"
+            android:textAppearance="@android:style/TextAppearance.Material.Menu"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/imageView4"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/floatingActionButton"
+            android:layout_width="31dp"
+            android:layout_height="31dp"
+            android:clickable="true"
+            app:backgroundTint="@color/color1"
+            app:srcCompat="@mipmap/add"
+            tools:layout_editor_absoluteX="244dp"
+            tools:layout_editor_absoluteY="77dp" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/floatingActionButton3"
+            android:layout_width="31dp"
+            android:layout_height="31dp"
+            android:clickable="true"
+            app:backgroundTint="@color/color1"
+            app:srcCompat="@mipmap/menos"
+            tools:layout_editor_absoluteX="121dp"
+            tools:layout_editor_absoluteY="77dp" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/floatingActionButton4"
+            android:layout_width="49dp"
+            android:layout_height="47dp"
+            android:clickable="true"
+            app:backgroundTint="@color/colorPrimary"
+            app:srcCompat="@mipmap/shop"
+            tools:layout_editor_absoluteX="305dp"
+            tools:layout_editor_absoluteY="65dp" />
+
     </android.support.constraint.ConstraintLayout>
 
 </LinearLayout>
