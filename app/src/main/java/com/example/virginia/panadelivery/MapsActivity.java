@@ -1,7 +1,7 @@
 package com.example.virginia.panadelivery;
 
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -12,6 +12,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
+    private static final int MY_LOCATION_REQUEST_CODE=1;
+    private static final int PLACE_PICKER_REQUEST=1;
     private GoogleMap mMap;
 
     @Override
@@ -22,6 +24,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
     }
 
 
@@ -39,8 +42,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
 
         // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+       LatLng sydney = new LatLng(10.501522500000002, -66.82144921874998);
+        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in MI CASA"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
     }
+
 }
