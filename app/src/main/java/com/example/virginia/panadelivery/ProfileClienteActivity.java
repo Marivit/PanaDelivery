@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -12,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -24,6 +26,8 @@ public class ProfileClienteActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
         private FirebaseAuth firebaseAuth;
         private FirebaseFirestore db = FirebaseFirestore.getInstance();
+        private TextView name;
+        private TextView email;
 
 
     @Override
@@ -32,6 +36,11 @@ public class ProfileClienteActivity extends AppCompatActivity
         setContentView(R.layout.activity_profile_cliente);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        //Fragment inicial
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.contenedorCliente, new panaderia_listFragment()).commit();
+
         firebaseAuth = FirebaseAuth.getInstance();
 
         if (firebaseAuth.getCurrentUser() == null) {
@@ -48,6 +57,7 @@ public class ProfileClienteActivity extends AppCompatActivity
             }
         });
         */
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -73,6 +83,8 @@ public class ProfileClienteActivity extends AppCompatActivity
                 }
             }
         });
+
+
     }
 
     @Override
@@ -112,13 +124,14 @@ public class ProfileClienteActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-
+        FragmentManager fragmentManager = getSupportFragmentManager();
         if (id == R.id.nav_home) {
-            startActivity(new Intent(this, ProfileClienteActivity.class));
+            //startActivity(new Intent(this, ProfileClienteActivity.class));
+            fragmentManager.beginTransaction().replace(R.id.contenedorCliente, new panaderia_listFragment()).commit();
         } else if (id == R.id.nav_historial) {
-            //
+            //fragmentManager.beginTransaction().replace(R.id.contenedorCliente, new historialClienteFragment()).commit();
         } else if (id == R.id.nav_pedido) {
-            startActivity(new Intent(this, PedidoClienteActivity.class));
+            //fragmentManager.beginTransaction().replace(R.id.contenedorCliente, new pedidoClienteFragment()).commit();
         } else if (id == R.id.nav_logout) {
             firebaseAuth.signOut();
             finish();
