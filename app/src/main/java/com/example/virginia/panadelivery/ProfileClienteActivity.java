@@ -9,18 +9,30 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.example.virginia.panadelivery.Modelos.Producto;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.Nullable;
 
 public class ProfileClienteActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -28,18 +40,25 @@ public class ProfileClienteActivity extends AppCompatActivity
         private FirebaseFirestore db = FirebaseFirestore.getInstance();
         private TextView name;
         private TextView email;
-
-
+        private RecyclerView listaProductos;
+        private String TAG = "Firelog";
+        private List<Producto> productos;
+        private ProductosListAdapter productosListAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_cliente);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        listaProductos = (RecyclerView) findViewById(R.id.productos);
+        productos = new ArrayList<>();
+        productosListAdapter = new ProductosListAdapter(productos);
+        listaProductos.setHasFixedSize(true);
+        listaProductos.setLayoutManager(new LinearLayoutManager(this));
+        listaProductos.setAdapter(productosListAdapter);
         //Fragment inicial
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.contenedorCliente, new panaderia_listFragment()).commit();
+
+
 
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -70,19 +89,30 @@ public class ProfileClienteActivity extends AppCompatActivity
 
         // Prueba FireStore
 
-        db.collection("Productos").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        Log.d("Productos:", document.getId() + "=> " + document.getData() );
+      db.collection("Productos").addSnapshotListener(new EventListener<QuerySnapshot>() {
+          @Override
+          public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
 
-                    }
-                } else {
-                    Log.w("Productos:", "Error al obtener productos", task.getException());
-                }
-            }
-        });
+              if (e != null) {
+                  Log.d(TAG, e.getMessage());
+
+              }
+              for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
+                    //TODO: Agregar modified
+
+                  if(doc.getType() == DocumentChange.Type.ADDED) {
+                        String name = doc.getDocument().getString("nombre");
+                        Log.d(TAG, name);
+
+                        Producto producto = doc.getDocument().toObject(Producto.class);
+
+                        productos.add(producto);
+                      Log.d(TAG, Integer.toString(productosListAdapter.getItemCount()));
+                        productosListAdapter.notifyDataSetChanged();
+                  }
+              }
+          }
+      });
 
 
     }
@@ -138,6 +168,9 @@ public class ProfileClienteActivity extends AppCompatActivity
             startActivity(new Intent(ProfileClienteActivity.this, MainActivity.class));
         } else if (id == R.id.nav_maps) {
             startActivity(new Intent(this, MapsActivity.class));
+        }
+        else if (id == R.id.nav_send) {
+            startActivity(new Intent(this, testActivity.class));
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
