@@ -38,8 +38,7 @@ public class panaderia_listFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //Fragment inicial
-        FragmentManager fragmentManager =getFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.listaPanaderias, new PanaderiaFragment()).commit();
+
         /*
         listaProductos = (RecyclerView) findViewById(R.id.productos);
         productos = new ArrayList<>();
@@ -50,6 +49,8 @@ public class panaderia_listFragment extends Fragment {
         */
 
         listaPanaderias =  (RecyclerView) getActivity().findViewById(R.id.listaPanaderias);
+        Log.d(TAG, getActivity().getPackageName());
+
         panaderias = new ArrayList<>();
         panaderiasListAdapter = new PanaderiasListAdapter(panaderias);
         listaPanaderias.setHasFixedSize(true);

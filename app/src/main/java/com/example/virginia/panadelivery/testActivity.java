@@ -38,7 +38,7 @@ public class testActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.panaderias, new panaderia_listFragment()).commit();
+        fragmentManager.beginTransaction().replace(R.id.listaPanaderias, new panaderia_listFragment()).commit();
 
 
     }
