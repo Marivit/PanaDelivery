@@ -37,7 +37,7 @@ public class PanaderiasListAdapter extends RecyclerView.Adapter<PanaderiasListAd
 
     @Override
     public int getItemCount() {
-        return 0;
+        return panaderias.size();
     }
 
 

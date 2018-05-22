@@ -8,15 +8,29 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.example.virginia.panadelivery.Adapters.PanaderiasListAdapter;
+import com.example.virginia.panadelivery.Modelos.Panaderia;
+import com.example.virginia.panadelivery.Modelos.Producto;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.Nullable;
 
 
 public class ProfileClienteActivity extends AppCompatActivity
@@ -25,8 +39,16 @@ public class ProfileClienteActivity extends AppCompatActivity
         private FirebaseFirestore db = FirebaseFirestore.getInstance();
         private TextView name;
         private TextView email;
-        private RecyclerView listaProductos;
+
         private String TAG = "Firelog";
+
+
+        //ELIMINAR
+        private RecyclerView listaPanaderias;
+
+    private List<Panaderia> panaderias;
+    private PanaderiasListAdapter panaderiasListAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +86,44 @@ public class ProfileClienteActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        listaPanaderias = (RecyclerView) findViewById(R.id.listaPanaderias);
+
+        panaderias = new ArrayList<>();
+        panaderiasListAdapter = new PanaderiasListAdapter(panaderias);
+        listaPanaderias.setHasFixedSize(true);
+        listaPanaderias.setLayoutManager(new LinearLayoutManager(this));
+        listaPanaderias.setAdapter(panaderiasListAdapter);
+
+
+
+
+
+
+        db.collection("Panaderias").addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+
+                if (e != null) {
+                    Log.d(TAG, e.getMessage());
+
+                }
+
+                for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
+                    //TODO: Agregar modified
+
+                    if(doc.getType() == DocumentChange.Type.ADDED) {
+                        String name = doc.getDocument().getString("nombre");
+                        Log.d(TAG, name);
+
+                        Panaderia panaderia = doc.getDocument().toObject(Panaderia.class);
+
+                        panaderias.add(panaderia);
+                        Log.d(TAG, Integer.toString(panaderiasListAdapter.getItemCount()));
+                        panaderiasListAdapter.notifyDataSetChanged();
+                    }
+                }
+            }
+        });
 
 
     }
@@ -119,7 +179,7 @@ public class ProfileClienteActivity extends AppCompatActivity
         } else if (id == R.id.nav_maps) { //Esto es una prueba para implementar en el transportista
             startActivity(new Intent(this, MapsActivity.class));
         } else if (id == R.id.nav_send){
-            fragmentManager.beginTransaction().replace(R.id.contenedorCliente, new ProductosListFragment()).commit();
+            startActivity(new Intent(this, testActivity.class));
         }
 
 
