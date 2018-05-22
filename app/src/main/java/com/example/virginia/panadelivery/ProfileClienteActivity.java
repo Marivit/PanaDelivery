@@ -126,17 +126,16 @@ public class ProfileClienteActivity extends AppCompatActivity
         int id = item.getItemId();
         FragmentManager fragmentManager = getSupportFragmentManager();
         if (id == R.id.nav_home) {
-            //startActivity(new Intent(this, ProfileClienteActivity.class));
             fragmentManager.beginTransaction().replace(R.id.contenedorCliente, new panaderia_listFragment()).commit();
         } else if (id == R.id.nav_historial) {
-            //fragmentManager.beginTransaction().replace(R.id.contenedorCliente, new historialClienteFragment()).commit();
+            fragmentManager.beginTransaction().replace(R.id.contenedorCliente, new HistorialClienteFragment()).commit();
         } else if (id == R.id.nav_pedido) {
-            //fragmentManager.beginTransaction().replace(R.id.contenedorCliente, new pedidoClienteFragment()).commit();
+            fragmentManager.beginTransaction().replace(R.id.contenedorCliente, new PedidoClienteFragment()).commit();
         } else if (id == R.id.nav_logout) {
             firebaseAuth.signOut();
             finish();
             startActivity(new Intent(ProfileClienteActivity.this, MainActivity.class));
-        } else if (id == R.id.nav_maps) {
+        } else if (id == R.id.nav_maps) { //Esto es una prueba para implementar en el transportista
             startActivity(new Intent(this, MapsActivity.class));
         }
 

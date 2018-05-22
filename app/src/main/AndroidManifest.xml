@@ -46,7 +46,6 @@
             android:name=".ProfileClienteActivity"
             android:label="@string/title_activity_profile_cliente"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".PedidoClienteActivity"></activity>
     </application>
 
 </manifest>
