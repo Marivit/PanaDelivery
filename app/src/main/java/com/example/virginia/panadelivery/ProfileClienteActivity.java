@@ -17,6 +17,8 @@ import android.widget.TextView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+
+
 public class ProfileClienteActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
         private FirebaseAuth firebaseAuth;
