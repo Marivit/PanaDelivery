@@ -2,25 +2,20 @@ package com.example.virginia.panadelivery;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 public class ProfileClienteActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -28,7 +23,8 @@ public class ProfileClienteActivity extends AppCompatActivity
         private FirebaseFirestore db = FirebaseFirestore.getInstance();
         private TextView name;
         private TextView email;
-
+        private RecyclerView listaProductos;
+        private String TAG = "Firelog";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,10 +32,9 @@ public class ProfileClienteActivity extends AppCompatActivity
         setContentView(R.layout.activity_profile_cliente);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         //Fragment inicial
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.contenedorCliente, new panaderia_listFragment()).commit();
+
+
 
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -67,22 +62,6 @@ public class ProfileClienteActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-        // Prueba FireStore
-
-        db.collection("Productos").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        Log.d("Productos:", document.getId() + "=> " + document.getData() );
-
-                    }
-                } else {
-                    Log.w("Productos:", "Error al obtener productos", task.getException());
-                }
-            }
-        });
 
 
     }
@@ -137,7 +116,10 @@ public class ProfileClienteActivity extends AppCompatActivity
             startActivity(new Intent(ProfileClienteActivity.this, MainActivity.class));
         } else if (id == R.id.nav_maps) { //Esto es una prueba para implementar en el transportista
             startActivity(new Intent(this, MapsActivity.class));
+        } else if (id == R.id.nav_send){
+            fragmentManager.beginTransaction().replace(R.id.contenedorCliente, new ProductosListFragment()).commit();
         }
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
