@@ -1,11 +1,14 @@
 package com.example.virginia.panadelivery.Adapters;
 
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.TextView;
 
 import com.example.virginia.panadelivery.Modelos.Producto;
@@ -27,11 +30,14 @@ public class ProductosListAdapter extends RecyclerView.Adapter<ProductosListAdap
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_producto, parent, false);
         Log.d("MMG", "Se creo un nuevo viewholder!");
+
         return new ViewHolder(view);
+
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+
 
         holder.nombreProducto.setText(productos.get(position).getNombre());
         holder.descripcion.setText(productos.get(position).getProveedor());
@@ -50,14 +56,31 @@ public class ProductosListAdapter extends RecyclerView.Adapter<ProductosListAdap
         public TextView nombreProducto;
         public TextView descripcion;
         public TextView cantidadProducto;
+        public FloatingActionButton mas, menos;
 
         public ViewHolder(View itemView) {
             super(itemView);
             mView = itemView;
 
+
+            nombreProducto = (TextView) mView.findViewById(R.id.nombre);
+            mas = (FloatingActionButton) mView.findViewById(R.id.mas);
+            cantidadProducto = (TextView) mView.findViewById(R.id.cantidadProducto);
+
             nombreProducto = (TextView) mView.findViewById(R.id.nombre2);
             descripcion = (TextView) mView.findViewById(R.id.descripcion);
 
+
         }
+        public void bind() {
+            mas.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View view ) {
+                    int numero = Integer.parseInt(cantidadProducto.toString());
+                    numero--;
+                    Log.d("Numero", Integer.toString(numero));
+                }
+            });
+        }
+
     }
 }
