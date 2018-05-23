@@ -88,6 +88,7 @@ public class ProfileClienteActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        /*
         listaPanaderias = (RecyclerView) findViewById(R.id.listaPanaderias);
 
         panaderias = new ArrayList<>();
@@ -126,7 +127,7 @@ public class ProfileClienteActivity extends AppCompatActivity
                 }
             }
         });
-
+*/
 
     }
 
