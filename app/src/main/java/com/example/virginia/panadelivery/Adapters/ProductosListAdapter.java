@@ -40,6 +40,8 @@ public class ProductosListAdapter extends RecyclerView.Adapter<ProductosListAdap
 
 
         holder.nombreProducto.setText(productos.get(position).getNombre());
+        holder.descripcion.setText(productos.get(position).getProveedor());
+
 
     }
 
@@ -52,7 +54,7 @@ public class ProductosListAdapter extends RecyclerView.Adapter<ProductosListAdap
         View mView;
 
         public TextView nombreProducto;
-        public TextView proveedorProducto;
+        public TextView descripcion;
         public TextView cantidadProducto;
         public FloatingActionButton mas, menos;
 
@@ -60,9 +62,14 @@ public class ProductosListAdapter extends RecyclerView.Adapter<ProductosListAdap
             super(itemView);
             mView = itemView;
 
+
             nombreProducto = (TextView) mView.findViewById(R.id.nombre);
             mas = (FloatingActionButton) mView.findViewById(R.id.mas);
             cantidadProducto = (TextView) mView.findViewById(R.id.cantidadProducto);
+
+            nombreProducto = (TextView) mView.findViewById(R.id.nombre2);
+            descripcion = (TextView) mView.findViewById(R.id.descripcion);
+
 
         }
         public void bind() {

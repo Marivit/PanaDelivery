@@ -27,7 +27,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.List;
 
 
-public class ProfileClienteActivity extends AppCompatActivity
+public class    ProfileClienteActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
         private FirebaseAuth firebaseAuth;
         private FirebaseFirestore db = FirebaseFirestore.getInstance();

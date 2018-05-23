@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.virginia.panadelivery.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
@@ -17,8 +18,6 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import javax.annotation.Nullable;
-
-import com.example.virginia.panadelivery.R;
 
 public class PedidoClienteFragment extends Fragment {
     private FirebaseAuth firebaseAuth;
@@ -36,11 +35,6 @@ public class PedidoClienteFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        /*textViewEstado = (TextView) getView().findViewById(R.id.textViewEstado);
-        textViewMonto = (TextView) getView().findViewById(R.id.textViewMonto);
-        textViewConductor = (TextView) getView().findViewById(R.id.textViewConductor);
-        textViewPanaderia = (TextView) getView().findViewById(R.id.textViewPanaderia);*/
 
         firebaseAuth = FirebaseAuth.getInstance();
 
