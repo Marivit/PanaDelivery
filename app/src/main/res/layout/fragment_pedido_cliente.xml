@@ -41,12 +41,12 @@
             android:text="Monto total:"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/textView11"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.146"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.98" />
+            app:layout_constraintVertical_bias="0.229" />
 
         <TextView
             android:id="@+id/textView10"
@@ -59,12 +59,12 @@
             android:text="Estado:"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/textView5"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.127"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.988" />
+            app:layout_constraintVertical_bias="0.159" />
 
         <TextView
             android:id="@+id/textView6"
@@ -82,17 +82,25 @@
             app:layout_constraintHorizontal_bias="0.194"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.457" />
+            app:layout_constraintVertical_bias="0.459" />
 
         <TextView
             android:id="@+id/textView12"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
             android:text="Panadería:"
             android:textSize="18sp"
             android:textStyle="bold"
-            tools:layout_editor_absoluteX="44dp"
-            tools:layout_editor_absoluteY="186dp" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.14"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.378" />
 
         <TextView
             android:id="@+id/textView11"
@@ -105,68 +113,68 @@
             android:text="Conductor:"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/textView12"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.145"
+            app:layout_constraintHorizontal_bias="0.141"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.98" />
+            app:layout_constraintVertical_bias="0.302" />
 
-        <fragment
-            android:id="@+id/fragment"
-            android:name="com.example.virginia.panadelivery.panaderia_listFragment"
-            android:layout_width="279dp"
-            android:layout_height="211dp"
+        <TextView
+            android:id="@+id/textViewPanaderia"
+            android:layout_width="209dp"
+            android:layout_height="31dp"
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
+            android:text="Panaderia La orquídea"
+            android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.507"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.897" />
-
-        <TextView
-            android:id="@+id/textViewPanaderia"
-            android:layout_width="159dp"
-            android:layout_height="22dp"
-            android:layout_marginEnd="40dp"
-            android:layout_marginStart="8dp"
-            android:text="La orquídea"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@+id/textView12"
-            tools:layout_editor_absoluteY="186dp" />
+            app:layout_constraintVertical_bias="0.383" />
 
         <TextView
             android:id="@+id/textViewMonto"
             android:layout_width="wrap_content"
-            android:layout_height="22dp"
-            android:layout_marginEnd="112dp"
+            android:layout_height="23dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
             android:text="1741000"
             android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/textView5"
-            tools:layout_editor_absoluteY="116dp" />
+            app:layout_constraintHorizontal_bias="0.532"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.233" />
 
         <TextView
             android:id="@+id/textViewConductor"
             android:layout_width="146dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="28dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
             android:text="Soy lo max"
             android:textSize="18sp"
-            app:layout_constraintStart_toEndOf="@+id/textView11"
-            tools:layout_editor_absoluteY="150dp" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.681"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.302" />
 
         <TextView
             android:id="@+id/textViewEstado"
-            android:layout_width="wrap_content"
-            android:layout_height="21dp"
+            android:layout_width="79dp"
+            android:layout_height="24dp"
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
@@ -175,9 +183,9 @@
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.3"
-            app:layout_constraintStart_toEndOf="@+id/textView10"
+            app:layout_constraintHorizontal_bias="0.55"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.156" />
+            app:layout_constraintVertical_bias="0.159" />
     </android.support.constraint.ConstraintLayout>
 </FrameLayout>
