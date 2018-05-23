@@ -68,7 +68,7 @@
         <TextView
             android:id="@+id/nombre2"
             android:layout_width="224dp"
-            android:layout_height="23dp"
+            android:layout_height="27dp"
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"

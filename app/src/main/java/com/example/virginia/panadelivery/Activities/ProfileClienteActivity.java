@@ -179,9 +179,8 @@ public class    ProfileClienteActivity extends AppCompatActivity
         } else if (id == R.id.nav_maps) { //Esto es una prueba para implementar en el transportista
             startActivity(new Intent(this, MapsActivity.class));
         } else if (id == R.id.nav_send){
-            startActivity(new Intent(this, testActivity.class));
+            startActivity(new Intent(this, ProfileConductorActivity.class));
         }
-
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
