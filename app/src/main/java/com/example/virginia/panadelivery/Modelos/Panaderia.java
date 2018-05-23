@@ -1,8 +1,33 @@
 package com.example.virginia.panadelivery.Modelos;
 
+import android.util.Log;
+
+import java.util.List;
+
 public class Panaderia {
 
-    String nombre, direccion;
+    String nombre, direccion, id;
+    List<Producto> productosPanaderia;
+
+    public void setProductosPanaderia(List<Producto> productosPanaderia) {
+        this.productosPanaderia = productosPanaderia;
+        Log.d("HOLA", "SE AGREGARON LOS PRODUCTOS");
+        if (productosPanaderia.size() != 0) {
+            Log.d("p0", productosPanaderia.get(0).getNombre());
+        }
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public List<Producto> getProductosPanaderia() {
+        return productosPanaderia;
+    }
 
     Panaderia() {
 

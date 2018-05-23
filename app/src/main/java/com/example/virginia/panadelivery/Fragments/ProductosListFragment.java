@@ -27,25 +27,49 @@ import javax.annotation.Nullable;
 public class ProductosListFragment extends Fragment {
     private RecyclerView listaProductos;
     private String TAG = "Firelog";
-    private List<Producto> productos;
+    private List<Producto> lProductos;
     private ProductosListAdapter productosListAdapter;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+
+       //TODO Cambiar
+
+
+
+
 
     public ProductosListFragment() {
         // Required empty public constructor
     }
 
+    public void setListaProductos(RecyclerView listaProductos) {
+        this.listaProductos = listaProductos;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        listaProductos = (RecyclerView) getActivity().findViewById(R.id.productos);
-        productos = new ArrayList<>();
-        productosListAdapter = new ProductosListAdapter(productos);
+
+
+
+
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View mView = inflater.inflate(R.layout.fragment_productos_list, container, false);
+        lProductos = new ArrayList<>();
+        listaProductos = (RecyclerView) mView.findViewById(R.id.productos);
+        productosListAdapter = new ProductosListAdapter(lProductos);
         listaProductos.setHasFixedSize(true);
         listaProductos.setLayoutManager(new LinearLayoutManager(getContext()));
         listaProductos.setAdapter(productosListAdapter);
+        String id = this.getArguments().getString("id");
 
-        db.collection("Productos").addSnapshotListener(new EventListener<QuerySnapshot>() {
+
+        db.collection("Panaderias").document(id).collection("Productos").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
 
@@ -53,30 +77,32 @@ public class ProductosListFragment extends Fragment {
                     Log.d(TAG, e.getMessage());
 
                 }
+
                 for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
                     //TODO: Agregar modified
 
-                    if(doc.getType() == DocumentChange.Type.ADDED) {
+                    if (doc.getType() == DocumentChange.Type.ADDED) {
                         String name = doc.getDocument().getString("nombre");
                         Log.d(TAG, name);
-
                         Producto producto = doc.getDocument().toObject(Producto.class);
 
-                        productos.add(producto);
-                        Log.d(TAG, Integer.toString(productosListAdapter.getItemCount()));
+                        lProductos.add(producto);
+                        Log.d(TAG, "Se agrego algo a la lista!");
                         productosListAdapter.notifyDataSetChanged();
                     }
                 }
+
             }
         });
-    }
+return mView;
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_productos_list, container, false);
     }
 
 
 }
+
+
+
+
+
+

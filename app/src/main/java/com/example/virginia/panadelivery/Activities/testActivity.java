@@ -47,7 +47,7 @@ public class testActivity extends AppCompatActivity {
         listaProductos.setLayoutManager(new LinearLayoutManager(this));
         listaProductos.setAdapter(productosListAdapter);
         */
-
+/*
         listaPanaderias = (RecyclerView) findViewById(R.id.listaPanaderias);
 
         panaderias = new ArrayList<>();
@@ -55,7 +55,7 @@ public class testActivity extends AppCompatActivity {
         listaPanaderias.setHasFixedSize(true);
         listaPanaderias.setLayoutManager(new LinearLayoutManager(this));
         listaPanaderias.setAdapter(panaderiasListAdapter);
-
+*/
 
         db.collection("Panaderias").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override

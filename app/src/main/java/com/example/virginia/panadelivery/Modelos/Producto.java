@@ -32,6 +32,8 @@ public class Producto {
         this.nombre = nombre;
     }
 
+
+
     public String getProveedor() {
         return proveedor;
     }
