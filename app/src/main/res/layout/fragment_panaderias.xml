@@ -29,7 +29,7 @@
         android:layout_width="225dp"
         android:layout_height="31dp"
         android:layout_marginBottom="8dp"
-        android:layout_marginEnd="32dp"
+        android:layout_marginEnd="36dp"
         android:layout_marginLeft="116dp"
         android:layout_marginTop="16dp"
         android:text="Panadería La Orquídea"
@@ -47,7 +47,7 @@
         android:layout_width="225dp"
         android:layout_height="15dp"
         android:layout_marginBottom="8dp"
-        android:layout_marginEnd="32dp"
+        android:layout_marginEnd="36dp"
         android:layout_marginLeft="100dp"
         android:layout_marginTop="44dp"
         android:text="Av. El Rosario, Los Chorros"
@@ -55,7 +55,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.073" />
+        app:layout_constraintVertical_bias="0.108" />
 
     <TextView
         android:id="@+id/textView9"
@@ -73,7 +73,7 @@
         app:layout_constraintEnd_toStartOf="@+id/floatingActionButton5"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.333" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/floatingActionButton5"
