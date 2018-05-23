@@ -9,11 +9,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import javax.annotation.Nullable;
@@ -47,44 +47,164 @@ public class PedidoClienteFragment extends Fragment {
         Log.d(TAG, String.valueOf(firebaseAuth.getCurrentUser().getEmail()));
         final String  email= firebaseAuth.getCurrentUser().getEmail();
 
-        CollectionReference resultado = db
+        Query resultado = db
                 .collection("Usuarios").document(email)
-                .collection("pedidos");
+                .collection("pedidos").whereEqualTo("estado","En espera");
+        Query resultado1 = db
+                .collection("Usuarios").document(email)
+                .collection("pedidos").whereEqualTo("estado","En proceso");
+        Query resultado2 = db
+                .collection("Usuarios").document(email)
+                .collection("pedidos").whereEqualTo("estado","En tránsito");
+        Query resultado3 = db
+                .collection("Usuarios").document(email)
+                .collection("pedidos").whereEqualTo("estado","Completo");
 
-        resultado.addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+        if(resultado!=null){
+            resultado.addSnapshotListener(new EventListener<QuerySnapshot>() {
+                @Override
+                public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
 
-                if (e != null) {
-                    Log.d(TAG, e.getMessage());
-
-                }
-                for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
-                    //TODO: Agregar modified
-
-                    if(doc.getType() == DocumentChange.Type.ADDED) {
-                        String estado = "";
-                        estado=doc.getDocument().getString("estado");
-                        Log.d(TAG2, estado);
-                        String conductor = "";
-                        conductor=doc.getDocument().getString("conductor");
-                        Log.d(TAG3, conductor);
-                        String monto = "";
-                        monto=doc.getDocument().getString("montoTotal");
-                        Log.d(TAG4, monto);
-                        String panaderia = "";
-                        panaderia=doc.getDocument().getString("panaderia");
-                        Log.d(TAG5, panaderia);
-
-                        textViewEstado.setText(estado);
-                        textViewMonto.setText(monto);
-                        textViewConductor.setText(conductor);
-                        textViewPanaderia.setText(panaderia);
+                    if (e != null) {
+                        Log.d(TAG, e.getMessage());
 
                     }
+                    for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
+                        //TODO: Agregar modified
+
+                        if(doc.getType() == DocumentChange.Type.ADDED) {
+                            String estado = "";
+                            estado=doc.getDocument().getString("estado");
+                            Log.d(TAG2, estado);
+                            String conductor = "";
+                            conductor=doc.getDocument().getString("conductor");
+                            Log.d(TAG3, conductor);
+                            String monto = "";
+                            monto=doc.getDocument().getString("montoTotal");
+                            Log.d(TAG4, monto);
+                            String panaderia = "";
+                            panaderia=doc.getDocument().getString("panaderia");
+                            Log.d(TAG5, panaderia);
+
+                            textViewEstado.setText(estado);
+                            textViewMonto.setText(monto);
+                            textViewConductor.setText(conductor);
+                            textViewPanaderia.setText(panaderia);
+
+                        }
+                    }
                 }
-            }
-        });
+            });
+         }
+         if(resultado1!=null){
+            resultado1.addSnapshotListener(new EventListener<QuerySnapshot>() {
+                @Override
+                public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+
+                    if (e != null) {
+                        Log.d(TAG, e.getMessage());
+
+                    }
+                    for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
+                        //TODO: Agregar modified
+
+                        if(doc.getType() == DocumentChange.Type.ADDED) {
+                            String estado = "";
+                            estado=doc.getDocument().getString("estado");
+                            Log.d(TAG2, estado);
+                            String conductor = "";
+                            conductor=doc.getDocument().getString("conductor");
+                            Log.d(TAG3, conductor);
+                            String monto = "";
+                            monto=doc.getDocument().getString("montoTotal");
+                            Log.d(TAG4, monto);
+                            String panaderia = "";
+                            panaderia=doc.getDocument().getString("panaderia");
+                            Log.d(TAG5, panaderia);
+
+                            textViewEstado.setText(estado);
+                            textViewMonto.setText(monto);
+                            textViewConductor.setText(conductor);
+                            textViewPanaderia.setText(panaderia);
+
+                        }
+                    }
+                }
+            });
+        }
+        if(resultado2!=null){
+            resultado2.addSnapshotListener(new EventListener<QuerySnapshot>() {
+                @Override
+                public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+
+                    if (e != null) {
+                        Log.d(TAG, e.getMessage());
+
+                    }
+                    for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
+                        //TODO: Agregar modified
+
+                        if(doc.getType() == DocumentChange.Type.ADDED) {
+                            String estado = "";
+                            estado=doc.getDocument().getString("estado");
+                            Log.d(TAG2, estado);
+                            String conductor = "";
+                            conductor=doc.getDocument().getString("conductor");
+                            Log.d(TAG3, conductor);
+                            String monto = "";
+                            monto=doc.getDocument().getString("montoTotal");
+                            Log.d(TAG4, monto);
+                            String panaderia = "";
+                            panaderia=doc.getDocument().getString("panaderia");
+                            Log.d(TAG5, panaderia);
+
+                            textViewEstado.setText(estado);
+                            textViewMonto.setText(monto);
+                            textViewConductor.setText(conductor);
+                            textViewPanaderia.setText(panaderia);
+
+                        }
+                    }
+                }
+            });
+        }
+        if(resultado3!=null){
+            resultado3.addSnapshotListener(new EventListener<QuerySnapshot>() {
+                @Override
+                public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+
+                    if (e != null) {
+                        Log.d(TAG, e.getMessage());
+
+                    }
+                    for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
+                        //TODO: Agregar modified
+
+                        if(doc.getType() == DocumentChange.Type.ADDED) {
+                            String estado = "";
+                            estado=doc.getDocument().getString("estado");
+                            Log.d(TAG2, estado);
+                            String conductor = "";
+                            conductor=doc.getDocument().getString("conductor");
+                            Log.d(TAG3, conductor);
+                            String monto = "";
+                            monto=doc.getDocument().getString("montoTotal");
+                            Log.d(TAG4, monto);
+                            String panaderia = "";
+                            panaderia=doc.getDocument().getString("panaderia");
+                            Log.d(TAG5, panaderia);
+
+                            textViewEstado.setText(estado);
+                            textViewMonto.setText(monto);
+                            textViewConductor.setText(conductor);
+                            textViewPanaderia.setText(panaderia);
+
+                        }
+                    }
+                }
+            });
+        }
+
 
 
     }
