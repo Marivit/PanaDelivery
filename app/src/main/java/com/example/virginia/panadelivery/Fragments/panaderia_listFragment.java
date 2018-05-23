@@ -3,7 +3,6 @@ package com.example.virginia.panadelivery.Fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -12,10 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.virginia.panadelivery.Adapters.PanaderiasListAdapter;
-import com.example.virginia.panadelivery.Adapters.ProductosListAdapter;
 import com.example.virginia.panadelivery.Modelos.Panaderia;
+
 import com.example.virginia.panadelivery.Modelos.Producto;
 import com.example.virginia.panadelivery.R;
+
+
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -49,7 +50,7 @@ public class panaderia_listFragment extends Fragment {
         listaProductos.setAdapter(productosListAdapter);
         */
 
-        listaPanaderias =  (RecyclerView) getActivity().findViewById(R.id.listaPanaderias);
+        listaPanaderias =  (RecyclerView) getActivity().findViewById(R.id.listaPanaderia);
         Log.d(TAG, getActivity().getPackageName());
 
         panaderias = new ArrayList<>();

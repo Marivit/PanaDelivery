@@ -5,6 +5,6 @@
     android:id="@+id/productos2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".testActivity">
+    tools:context=".Activities.testActivity">
 
 </android.support.constraint.ConstraintLayout>
