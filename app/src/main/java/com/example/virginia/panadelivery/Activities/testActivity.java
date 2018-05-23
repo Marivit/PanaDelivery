@@ -1,39 +1,39 @@
-package com.example.virginia.panadelivery;
+package com.example.virginia.panadelivery.Activities;
 
 
+import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.virginia.panadelivery.Adapters.PanaderiasListAdapter;
 import com.example.virginia.panadelivery.Adapters.ProductosListAdapter;
 import com.example.virginia.panadelivery.Modelos.Panaderia;
 import com.example.virginia.panadelivery.Modelos.Producto;
+import com.example.virginia.panadelivery.R;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
+import android.support.v4.app.FragmentManager;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Nullable;
 
-
-public class panaderia_listFragment extends Fragment {
-
+public class testActivity extends AppCompatActivity {
     private RecyclerView listaPanaderias;
     private String TAG = "Firelog";
     private List<Panaderia> panaderias;
     private PanaderiasListAdapter panaderiasListAdapter;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,13 +48,12 @@ public class panaderia_listFragment extends Fragment {
         listaProductos.setAdapter(productosListAdapter);
         */
 
-        listaPanaderias =  (RecyclerView) getActivity().findViewById(R.id.listaPanaderias);
-        Log.d(TAG, getActivity().getPackageName());
+        listaPanaderias = (RecyclerView) findViewById(R.id.listaPanaderias);
 
         panaderias = new ArrayList<>();
         panaderiasListAdapter = new PanaderiasListAdapter(panaderias);
         listaPanaderias.setHasFixedSize(true);
-        listaPanaderias.setLayoutManager(new LinearLayoutManager(getContext()));
+        listaPanaderias.setLayoutManager(new LinearLayoutManager(this));
         listaPanaderias.setAdapter(panaderiasListAdapter);
 
 
@@ -69,7 +68,7 @@ public class panaderia_listFragment extends Fragment {
                 for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
                     //TODO: Agregar modified
 
-                    if(doc.getType() == DocumentChange.Type.ADDED) {
+                    if (doc.getType() == DocumentChange.Type.ADDED) {
                         String name = doc.getDocument().getString("nombre");
                         Log.d(TAG, name);
 
@@ -83,13 +82,4 @@ public class panaderia_listFragment extends Fragment {
             }
         });
     }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_panaderia_list, container, false);
-    }
-
-
 }

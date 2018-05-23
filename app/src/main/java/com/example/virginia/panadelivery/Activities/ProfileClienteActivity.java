@@ -1,4 +1,4 @@
-package com.example.virginia.panadelivery;
+package com.example.virginia.panadelivery.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,11 +17,13 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.example.virginia.panadelivery.Adapters.PanaderiasListAdapter;
+import com.example.virginia.panadelivery.Fragments.HistorialClienteFragment;
+import com.example.virginia.panadelivery.Fragments.PedidoClienteFragment;
+import com.example.virginia.panadelivery.Fragments.panaderia_listFragment;
 import com.example.virginia.panadelivery.Modelos.Panaderia;
-import com.example.virginia.panadelivery.Modelos.Producto;
+import com.example.virginia.panadelivery.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;

@@ -1,4 +1,4 @@
-package com.example.virginia.panadelivery;
+package com.example.virginia.panadelivery.Activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -12,14 +12,17 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.virginia.panadelivery.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
+//import static com.example.virginia.panadelivery.R.*;
 
-    private Button buttonSignIn;
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+
+    private Button buttonLogin;
     private EditText editTextEmail;
     private EditText editTextPassword;
     private TextView textViewSignUp;
@@ -29,16 +32,22 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_main);
 
         firebaseauth = FirebaseAuth.getInstance();
+
+        if (firebaseauth.getCurrentUser() != null ) {
+            finish();
+            startActivity(new Intent(this, ProfileClienteActivity.class));
+        }
+
         progressDialog = new ProgressDialog(this);
-        buttonSignIn = (Button) findViewById(R.id.buttonRegister);
+        buttonLogin = (Button) findViewById(R.id.buttonLogin);
         editTextEmail = (EditText) findViewById(R.id.editTextEmail);
         editTextPassword = (EditText) findViewById(R.id.editTextPassword);
         textViewSignUp = (TextView) findViewById(R.id.textViewSignUp);
 
-        buttonSignIn.setOnClickListener(this);
+        buttonLogin.setOnClickListener(this);
         textViewSignUp.setOnClickListener(this);
     }
 
@@ -62,12 +71,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+                        progressDialog.dismiss();
                         if (task.isSuccessful()) {
+                            Toast.makeText(getApplicationContext(), "Se logro hacer el login", Toast.LENGTH_SHORT).show();
+                            finish();
+                            startActivity(new Intent(getApplicationContext(), ProfileClienteActivity.class));
+
                             /* //Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             updateUI(user);*/
                         } else {
+                            Toast.makeText(getApplicationContext(), "El login fallo", Toast.LENGTH_SHORT).show();
                             /*// If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
                             Toast.makeText(EmailPasswordActivity.this, "Authentication failed.",
@@ -81,13 +96,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View view) {
-        if (view == buttonSignIn) {
-            LoginUser();
+        if (view == buttonLogin) {
+          LoginUser();
+            //LoginUser();
         }
         if (view == textViewSignUp) {
             //will open register activity here
             finish();
-            startActivity(new Intent(this, MainActivity.class));
+            startActivity(new Intent(this, RegisterActivity.class));
         }
     }
 }
