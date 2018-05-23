@@ -9,7 +9,9 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.TextView;
 
+import com.example.virginia.panadelivery.Adapters.PanaderiasListAdapter;
 import com.example.virginia.panadelivery.Adapters.ProductosListAdapter;
+import com.example.virginia.panadelivery.Modelos.Panaderia;
 import com.example.virginia.panadelivery.Modelos.Producto;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
@@ -25,21 +27,58 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 public class testActivity extends AppCompatActivity {
-    private FirebaseAuth firebaseAuth;
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private TextView name;
-    private TextView email;
-    private RecyclerView listaProductos;
+    private RecyclerView listaPanaderias;
     private String TAG = "Firelog";
-    private List<Producto> productos;
-    private ProductosListAdapter productosListAdapter;
+    private List<Panaderia> panaderias;
+    private PanaderiasListAdapter panaderiasListAdapter;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_test);
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.listaPanaderias, new panaderia_listFragment()).commit();
+        //Fragment inicial
+
+        /*
+        listaProductos = (RecyclerView) findViewById(R.id.productos);
+        productos = new ArrayList<>();
+        productosListAdapter = new ProductosListAdapter(productos);
+        listaProductos.setHasFixedSize(true);
+        listaProductos.setLayoutManager(new LinearLayoutManager(this));
+        listaProductos.setAdapter(productosListAdapter);
+        */
+
+        listaPanaderias = (RecyclerView) findViewById(R.id.listaPanaderias);
+
+        panaderias = new ArrayList<>();
+        panaderiasListAdapter = new PanaderiasListAdapter(panaderias);
+        listaPanaderias.setHasFixedSize(true);
+        listaPanaderias.setLayoutManager(new LinearLayoutManager(this));
+        listaPanaderias.setAdapter(panaderiasListAdapter);
 
 
+        db.collection("Panaderias").addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+
+                if (e != null) {
+                    Log.d(TAG, e.getMessage());
+
+                }
+                for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
+                    //TODO: Agregar modified
+
+                    if (doc.getType() == DocumentChange.Type.ADDED) {
+                        String name = doc.getDocument().getString("nombre");
+                        Log.d(TAG, name);
+
+                        Panaderia panaderia = doc.getDocument().toObject(Panaderia.class);
+
+                        panaderias.add(panaderia);
+                        Log.d(TAG, Integer.toString(panaderiasListAdapter.getItemCount()));
+                        panaderiasListAdapter.notifyDataSetChanged();
+                    }
+                }
+            }
+        });
     }
 }
