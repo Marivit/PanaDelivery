@@ -5,6 +5,9 @@ public class Producto {
      String nombre, proveedor, id ;
      int cantidad;
 
+
+
+
     @Override
     public String toString() {
         return "Producto{" +

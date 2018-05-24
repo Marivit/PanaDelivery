@@ -115,6 +115,7 @@ public class PedidosListFragment extends Fragment {
                                     Log.d(TAG, "Se agrego algo a la lista!");
                                     pedidosListAdapter.notifyDataSetChanged();
                                 }
+
                             }
 
                         }
