@@ -11,6 +11,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -55,6 +56,7 @@ public class    ProfileClienteActivity extends AppCompatActivity
 
 
         firebaseAuth = FirebaseAuth.getInstance();
+        Log.d(TAG, firebaseAuth.getCurrentUser().getEmail());
 
         if (firebaseAuth.getCurrentUser() == null) {
             finish();
