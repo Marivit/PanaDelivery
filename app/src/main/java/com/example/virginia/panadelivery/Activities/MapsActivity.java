@@ -2,6 +2,7 @@ package com.example.virginia.panadelivery.Activities;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 
 import com.example.virginia.panadelivery.R;
 import com.google.android.gms.maps.CameraUpdate;
@@ -18,6 +19,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private static final int MY_LOCATION_REQUEST_CODE=1;
     private static final int PLACE_PICKER_REQUEST=1;
     private GoogleMap mMap;
+    private String valor_latitud;
+    private String valor_longitud;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +30,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        Bundle bundle = getIntent().getExtras();
+        valor_latitud=bundle.getString("latitud");
+        valor_longitud=bundle.getString("longitud");
 
     }
 
@@ -45,11 +52,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
 
         // Add a marker in Sydney and move the camera
-       LatLng sydney = new LatLng(10.501522500000002, -66.82144921874998);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in MI CASA"));
+       //LatLng sydney = new LatLng(10.501522500000002, -66.82144921874998);
+        Log.d("Latitud",valor_latitud);
+        Log.d("Longitud",valor_longitud);
+        LatLng ubicacion = new LatLng(Double.parseDouble(valor_latitud), Double.parseDouble(valor_longitud));
+        mMap.addMarker(new MarkerOptions().position(ubicacion).title("Marker in MI CASA"));
        // mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
 
-        CameraPosition cameraPosition = new CameraPosition.Builder().target(sydney).zoom(14.0f).build();
+        CameraPosition cameraPosition = new CameraPosition.Builder().target(ubicacion).zoom(14.0f).build();
         CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
         mMap.moveCamera(cameraUpdate);
     }
