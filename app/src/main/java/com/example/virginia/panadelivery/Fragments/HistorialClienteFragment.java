@@ -22,4 +22,5 @@ public class HistorialClienteFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_historial_cliente, container, false);
     }
+
 }
