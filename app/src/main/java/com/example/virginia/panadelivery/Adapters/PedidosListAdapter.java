@@ -1,6 +1,7 @@
 package com.example.virginia.panadelivery.Adapters;
 
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -52,7 +53,7 @@ public class PedidosListAdapter extends RecyclerView.Adapter<PedidosListAdapter.
         public TextView fecha;
         public TextView hora;
         public TextView direccion;
-
+        public FloatingActionButton buttonUbicacion;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -62,10 +63,23 @@ public class PedidosListAdapter extends RecyclerView.Adapter<PedidosListAdapter.
             direccion = (TextView) mView.findViewById(R.id.descripcionDireccion);
             fecha = (TextView) mView.findViewById(R.id.fecha);
             hora = (TextView) mView.findViewById(R.id.hora);
-
+            buttonUbicacion = (FloatingActionButton) mView.findViewById(R.id.buttonUbicacion);
 
 
 
         }
+        public void bind() {
+            buttonUbicacion.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View view) {
+
+                  
+
+
+                }
+
+            });
+        }
+
     }
+
 }
