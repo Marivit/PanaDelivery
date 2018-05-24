@@ -1,9 +1,12 @@
 package com.example.virginia.panadelivery.Services;
 
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.example.virginia.panadelivery.Modelos.Panaderia;
 import com.example.virginia.panadelivery.Modelos.Producto;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.firestore.CollectionReference;
@@ -16,7 +19,10 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 import javax.annotation.Nullable;
 
@@ -60,16 +66,42 @@ public class FirestoreService {
        return listaProductos;
     }
 
-    public void checkout(List<Producto> productosCheckout, String idPanaderia) {
+    public void checkout(final List<Producto> productosCheckout, String idPanaderia) {
         String email = auth.getCurrentUser().getEmail();
 
+
+
         // Disminuir cantidad en stock
-        CollectionReference reference = db.collection("Panaderias").document(idPanaderia).collection("Productos");
+       final  CollectionReference reference = db.collection("Panaderias").document(idPanaderia).collection("Productos");
         for (int j = 0; j < productosCheckout.size(); j++) {
-           
+            final Map<Object, Object> dataToAdd = new HashMap<>();
+            final String idProd = productosCheckout.get(j).getId();
+            final String nombre = productosCheckout.get(j).getNombre();
+
+            final int demanda = productosCheckout.get(j).getCantidad();
+            Log.d("ID", productosCheckout.get(j).getId());
+
+          reference.document(productosCheckout.get(j).getId()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+              @Override
+              public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                  if (task.isSuccessful()) {
+                      Long cantidad = (Long) task.getResult().get("cantidad");
+                      Long cantidadFinal = cantidad - demanda;
+                      Long cantidadNueva = cantidadFinal;
+
+                      dataToAdd.put((String) "cantidad", (Long) cantidadNueva);
+                      dataToAdd.put((String) "nombre", (String)nombre );
+
+                      reference.document(idProd).set(dataToAdd);
+
+                  }
+              }
+          });
+
 
 
         }
+
 
 
         // Agregar a pedidos

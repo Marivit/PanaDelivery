@@ -82,6 +82,7 @@ public class ProductosListAdapter extends RecyclerView.Adapter<ProductosListAdap
             productoCheckout.setCantidad(0);
             productoCheckout.setNombre(producto.getNombre());
             productoCheckout.setId(producto.getId());
+
         }
         public void bind() {
             mas.setOnClickListener(new View.OnClickListener() {
@@ -121,13 +122,13 @@ public class ProductosListAdapter extends RecyclerView.Adapter<ProductosListAdap
 
 
                     if (confirmarProducto.isChecked()) {
-                        checkout.add(producto);
+                        checkout.add(productoCheckout);
 
 
 
                     }
                     if (!confirmarProducto.isChecked()) {
-                        checkout.remove(producto);
+                        checkout.remove(productoCheckout);
                     }
 
 

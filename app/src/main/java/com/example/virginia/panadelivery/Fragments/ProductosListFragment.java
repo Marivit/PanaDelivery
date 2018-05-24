@@ -95,6 +95,14 @@ public class ProductosListFragment extends Fragment {
                         Log.d(TAG, "Se agrego algo a la lista!");
                         productosListAdapter.notifyDataSetChanged();
                     }
+                    if (doc.getType() == DocumentChange.Type.MODIFIED) {
+                        for (int i = 0; i < lProductos.size(); i++) {
+                            if (lProductos.get(i).getId() == doc.getDocument().getId()) {
+                                Producto productoCambiar = doc.getDocument().toObject(Producto.class);
+                                lProductos.get(i).setCantidad(productoCambiar.getCantidad());
+                            }
+                        }
+                    }
                 }
 
             }
