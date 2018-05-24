@@ -61,6 +61,7 @@ public class PedidosListAdapter extends RecyclerView.Adapter<PedidosListAdapter.
         public TextView hora;
         public TextView direccion;
         public FloatingActionButton buttonUbicacion;
+        public FloatingActionButton buttonElegir;
         public String latitud;
         public String longitud;
 
@@ -73,6 +74,7 @@ public class PedidosListAdapter extends RecyclerView.Adapter<PedidosListAdapter.
             fecha = (TextView) mView.findViewById(R.id.fecha);
             hora = (TextView) mView.findViewById(R.id.hora);
             buttonUbicacion = (FloatingActionButton) mView.findViewById(R.id.buttonUbicacion);
+            buttonElegir = (FloatingActionButton) mView.findViewById(R.id.buttonElegir);
 
 
 
@@ -99,7 +101,13 @@ public class PedidosListAdapter extends RecyclerView.Adapter<PedidosListAdapter.
                 }
 
             });
+            buttonElegir.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View view) {
+                    
+                }
+            });
         }
+
 
     }
 
