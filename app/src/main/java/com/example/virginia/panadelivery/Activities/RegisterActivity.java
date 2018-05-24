@@ -211,6 +211,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                                         @Override
                                         public void onSuccess(Void aVoid) {
                                             Log.d("FIREBASE", "DocumentSnapshot successfully written!");
+                                            terminar();
+
                                         }
                                     })
                                     .addOnFailureListener(new OnFailureListener() {
@@ -232,8 +234,12 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         }
                     }
                 });
+
+
+    }
+
+    public void terminar() {
         finish();
         startActivity(new Intent(this, ProfileClienteActivity.class));
-
     }
 }

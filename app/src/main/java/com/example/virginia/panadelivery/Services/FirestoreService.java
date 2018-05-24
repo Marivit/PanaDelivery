@@ -74,8 +74,10 @@ public class FirestoreService {
         // Disminuir cantidad en stock
        final  CollectionReference reference = db.collection("Panaderias").document(idPanaderia).collection("Productos");
         for (int j = 0; j < productosCheckout.size(); j++) {
-            final Map<String, Long> dataToAdd = new HashMap<>();
+            final Map<Object, Object> dataToAdd = new HashMap<>();
             final String idProd = productosCheckout.get(j).getId();
+            final String nombre = productosCheckout.get(j).getNombre();
+
             final int demanda = productosCheckout.get(j).getCantidad();
             Log.d("ID", productosCheckout.get(j).getId());
 
@@ -87,7 +89,9 @@ public class FirestoreService {
                       Long cantidadFinal = cantidad - demanda;
                       Long cantidadNueva = cantidadFinal;
 
-                      dataToAdd.put("cantidad", cantidadNueva);
+                      dataToAdd.put((String) "cantidad", (Long) cantidadNueva);
+                      dataToAdd.put((String) "nombre", (String)nombre );
+
                       reference.document(idProd).set(dataToAdd);
 
                   }
