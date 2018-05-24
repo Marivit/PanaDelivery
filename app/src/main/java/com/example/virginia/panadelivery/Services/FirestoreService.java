@@ -66,7 +66,7 @@ public class FirestoreService {
        return listaProductos;
     }
 
-    public void checkout(final List<Producto> productosCheckout, String idPanaderia) {
+    public void checkout(final List<Producto> productosCheckout, String idPanaderia, String nombrePanaderia) {
         String email = auth.getCurrentUser().getEmail();
 
 
@@ -105,7 +105,20 @@ public class FirestoreService {
 
 
         // Agregar a pedidos
+        final Map<Object, Object> dataPedido = new HashMap<>();
+        DocumentReference reference2 = db.collection("Usuarios").document(auth.getCurrentUser().getEmail());
 
+        reference2.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                      if (task.isSuccessful()) {
+                            dataPedido.put("latitud", task.getResult().getString("latitud"));
+                            dataPedido.put("longitud", task.getResult().getString("longitud"));
+
+                      }
+                }
+        }
+        );
 
     }
 

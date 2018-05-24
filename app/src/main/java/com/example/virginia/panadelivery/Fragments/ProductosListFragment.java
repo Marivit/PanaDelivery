@@ -35,7 +35,7 @@ public class ProductosListFragment extends Fragment {
     private ProductosListAdapter productosListAdapter;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private Button checkout;
-    private String idPanaderia;
+    private String idPanaderia, nombrePanaderia;
 
 
 
@@ -71,6 +71,7 @@ public class ProductosListFragment extends Fragment {
         listaProductos.setLayoutManager(new LinearLayoutManager(getContext()));
         listaProductos.setAdapter(productosListAdapter);
         idPanaderia = this.getArguments().getString("id");
+        nombrePanaderia = this.getArguments().getString("nombre");
         checkout = (Button) mView.findViewById(R.id.checkout);
         bind();
 
@@ -136,7 +137,7 @@ return mView;
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
                                     FirestoreService fs =  new FirestoreService();
-                                    fs.checkout(lCheckout, idPanaderia);
+                                    fs.checkout(lCheckout, idPanaderia, nombrePanaderia);
 
                                     dialog.cancel();
 
