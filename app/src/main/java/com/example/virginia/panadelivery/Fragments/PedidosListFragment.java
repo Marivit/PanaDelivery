@@ -58,8 +58,8 @@ public class PedidosListFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View mView = inflater.inflate(R.layout.fragment_pedidos_list, container, false);
-        buttonUbicacion = (FloatingActionButton) mView.findViewById(R.id.buttonUbicacion);
-        bind();
+       // buttonUbicacion = (FloatingActionButton) mView.findViewById(R.id.buttonUbicacion);
+        //bind();
         lPedidos = new ArrayList<>();
 
         listaPedidos = (RecyclerView) mView.findViewById(R.id.pedidosActuales);
@@ -133,17 +133,6 @@ public class PedidosListFragment extends Fragment {
         return mView;
     }
 
-    public void bind() {
-        buttonUbicacion.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-
-                Log.d(TAG, "ERES LO MAXIMO");
-
-
-            }
-
-        });
-    }
 
 }
 
