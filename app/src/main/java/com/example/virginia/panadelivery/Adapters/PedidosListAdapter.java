@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.virginia.panadelivery.Activities.MapsActivity;
 import com.example.virginia.panadelivery.Activities.ProfileClienteActivity;
 import com.example.virginia.panadelivery.Modelos.Pedido;
 import com.example.virginia.panadelivery.R;
@@ -42,7 +43,7 @@ public class PedidosListAdapter extends RecyclerView.Adapter<PedidosListAdapter.
         holder.fecha.setText(pedidos.get(position).getFecha());
         holder.hora.setText(pedidos.get(position).getHora());
         holder.direccion.setText(pedidos.get(position).getDireccion());
-
+        holder.bind();
 
     }
 
@@ -81,8 +82,8 @@ public class PedidosListAdapter extends RecyclerView.Adapter<PedidosListAdapter.
                   Log.d("Mensaje:","ERES LO MAXIMO");
                     //context.startActivity(new Intent(context, ProfileClienteActivity.class));
 
-                    view.getContext().getApplicationContext().startActivity(new Intent(view.getContext().getApplicationContext(), ProfileClienteActivity.class));
-                    
+                    view.getContext().startActivity(new Intent(view.getContext().getApplicationContext(), MapsActivity.class));
+
 
 
 
