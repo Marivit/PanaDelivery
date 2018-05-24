@@ -18,7 +18,11 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,11 +32,15 @@ import javax.annotation.Nullable;
 
 public class FirestoreService {
 
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
-    String TAG = "FService";
-    FirebaseAuth auth = FirebaseAuth.getInstance();
 
-    public FirestoreService() {}
+    String TAG = "FService";
+    FirebaseFirestore db;
+    FirebaseAuth auth;
+
+    public FirestoreService() {
+       this.db = FirebaseFirestore.getInstance();
+        this.auth = FirebaseAuth.getInstance();
+    }
 
 
    public List<Producto> getProductosPanaderia(String id ) {
@@ -68,7 +76,7 @@ public class FirestoreService {
 
     public void checkout(final List<Producto> productosCheckout, String idPanaderia, String nombrePanaderia) {
         String email = auth.getCurrentUser().getEmail();
-
+        Log.d("CHECKOUT", email);
 
 
         // Disminuir cantidad en stock
@@ -106,21 +114,72 @@ public class FirestoreService {
 
         // Agregar a pedidos
         final Map<Object, Object> dataPedido = new HashMap<>();
-        DocumentReference reference2 = db.collection("Usuarios").document(auth.getCurrentUser().getEmail());
+        Log.d("AP", "Se agregara a pedidos");
+
+        DocumentReference reference2 = db.collection("Usuarios").document(email);
 
         reference2.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                       if (task.isSuccessful()) {
-                            dataPedido.put("latitud", task.getResult().getString("latitud"));
-                            dataPedido.put("longitud", task.getResult().getString("longitud"));
+                            dataPedido.put("latitud", task.getResult().get("latitud"));
+                            dataPedido.put("longitud", task.getResult().get("longitud"));
 
                       }
                 }
         }
         );
 
+
+        dataPedido.put("conductor", "conductorPlaceHolder");
+        dataPedido.put("estado", "En espera");
+        dataPedido.put("montoTotal", "Placeholder");
+        dataPedido.put("panaderia", nombrePanaderia);
+        //TODO: Me gustaria quitar esto
+        dataPedido.put("numPedido", 500);
+
+
+        // TODO: Quitar placeholder de detalle direccion
+
+        Date date = new Date();
+        SimpleDateFormat Formater = new SimpleDateFormat("dd/MM/yyyy");
+        String  fecha = Formater.format(date);
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+        String hora = timeFormat.format(calendar.getTime());
+
+
+        dataPedido.put("fecha",fecha );
+        dataPedido.put("hora",hora);
+
+
+        dataPedido.put("direccion", "PLACEHOLDER");
+        Log.d("OBJETO", dataPedido.toString());
+        reference2.collection("pedidos").add(dataPedido);
+
+
     }
 
 
+
+    public Long getNumPedidos() {
+       final Map<String, Long> numPedidos = new HashMap<>();
+
+         db.collection("Extra").document("data").get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+
+
+             @Override
+
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    Long numerito = (Long) task.getResult().get("numPedidos");
+                    numerito++;
+                    numPedidos.put("numPedidos", numerito);
+                }
+            }
+        });
+        db.collection("Extra").document("data").set(numPedidos);
+        return numPedidos.get("numPedidos");
+
+    }
 }

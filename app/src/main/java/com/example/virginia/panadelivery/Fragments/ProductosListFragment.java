@@ -2,6 +2,7 @@ package com.example.virginia.panadelivery.Fragments;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.example.virginia.panadelivery.Activities.ProfileClienteActivity;
 import com.example.virginia.panadelivery.Adapters.ProductosListAdapter;
 import com.example.virginia.panadelivery.Modelos.Producto;
 import com.example.virginia.panadelivery.R;
@@ -73,7 +75,7 @@ public class ProductosListFragment extends Fragment {
         idPanaderia = this.getArguments().getString("id");
         nombrePanaderia = this.getArguments().getString("nombre");
         checkout = (Button) mView.findViewById(R.id.checkout);
-        bind();
+        bind(mView);
 
         db.collection("Panaderias").document(idPanaderia).collection("Productos").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
@@ -111,9 +113,9 @@ public class ProductosListFragment extends Fragment {
 return mView;
 
     }
-    public void bind() {
+    public void bind(final View view) {
         checkout.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
+            public void onClick(final View view) {
 
                     Log.d(TAG, "Se hara checkout");
                     Log.d(TAG, Integer.toString(lCheckout.size()));
