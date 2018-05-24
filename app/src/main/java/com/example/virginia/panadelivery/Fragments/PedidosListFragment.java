@@ -1,6 +1,7 @@
 package com.example.virginia.panadelivery.Fragments;
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -8,7 +9,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import com.example.virginia.panadelivery.Adapters.PedidosListAdapter;
 import com.example.virginia.panadelivery.Modelos.Pedido;
@@ -35,8 +35,8 @@ public class PedidosListFragment extends Fragment {
     private List<String> listaEmails;
     private PedidosListAdapter pedidosListAdapter;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private Button buttonUbicacion;
-    private Button buttonElegir;
+    private FloatingActionButton buttonUbicacion;
+    private FloatingActionButton buttonElegir;
 
     public PedidosListFragment() {
         // Required empty public constructor
@@ -58,19 +58,8 @@ public class PedidosListFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View mView = inflater.inflate(R.layout.fragment_pedidos_list, container, false);
-        /*buttonUbicacion = (Button) mView.findViewById(R.id.buttonUbicacion);
-        buttonElegir = (Button) mView.findViewById(R.id.buttonElegir);
-        buttonUbicacion.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                if (v == buttonUbicacion) {
-                    Log.d(TAG, "ERES LO MAXIMO!!");
-                }
-            }
-        });*/
-        //buttonElegir.setOnClickListener((mView.onclick   OnClickListener) this);
+        buttonUbicacion = (FloatingActionButton) mView.findViewById(R.id.buttonUbicacion);
+        bind();
         lPedidos = new ArrayList<>();
 
         listaPedidos = (RecyclerView) mView.findViewById(R.id.pedidosActuales);
@@ -143,16 +132,17 @@ public class PedidosListFragment extends Fragment {
         return mView;
     }
 
-    public void onClick(View view) {
-        if (view == buttonUbicacion) {
-            Log.d(TAG, "ERES LO MAXIMO!!");
-        }
-        if (view == buttonElegir) {
-            //Algo hara
+    public void bind() {
+        buttonUbicacion.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
 
-        }
+                Log.d(TAG, "ERES LO MAXIMO");
+
+
+            }
+
+        });
     }
-
 
 }
 
