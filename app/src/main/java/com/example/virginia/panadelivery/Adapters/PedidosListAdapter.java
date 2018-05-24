@@ -37,6 +37,7 @@ public class PedidosListAdapter extends RecyclerView.Adapter<PedidosListAdapter.
         holder.hora.setText(pedidos.get(position).getHora());
         holder.direccion.setText(pedidos.get(position).getDireccion());
 
+
     }
 
     @Override
@@ -52,6 +53,7 @@ public class PedidosListAdapter extends RecyclerView.Adapter<PedidosListAdapter.
         public TextView hora;
         public TextView direccion;
 
+
         public ViewHolder(View itemView) {
             super(itemView);
             mView = itemView;
@@ -60,6 +62,7 @@ public class PedidosListAdapter extends RecyclerView.Adapter<PedidosListAdapter.
             direccion = (TextView) mView.findViewById(R.id.descripcionDireccion);
             fecha = (TextView) mView.findViewById(R.id.fecha);
             hora = (TextView) mView.findViewById(R.id.hora);
+
 
 
 

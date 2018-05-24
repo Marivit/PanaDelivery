@@ -3,11 +3,11 @@ package com.example.virginia.panadelivery.Activities;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -45,6 +45,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private TextView textViewDireccion;
     private ProgressDialog progressDialog;
     private String direccionLatLng;
+    private double latitud;
+    private double longitud;
     //Base de datos
     private FirebaseAuth firebaseauth;
     private FirebaseFirestore firestore;
@@ -130,6 +132,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 String address = String.format("Direccion: %s", place.getAddress());
                 textViewDireccion.setText(address);
                 direccionLatLng = String.format("%s", place.getLatLng());
+                latitud= place.getLatLng().latitude;
+                longitud= place.getLatLng().longitude;
                 //Mensajito
                 // Toast.makeText(this, direccionLatLng, Toast.LENGTH_LONG).show();
             }
@@ -161,7 +165,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         String fechaN = editTextFecha.getText().toString().trim();
         String telefono = editTextTelefono.getText().toString().trim();
         String direccion = textViewDireccion.getText().toString().trim();
-        //String dir2 = direccionLatLng.trim();
 
         //Validaciones
         if(TextUtils.isEmpty(email)) {
@@ -172,7 +175,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             Toast.makeText(this, "Porfavor ingrese la contraseña", Toast.LENGTH_SHORT).show();
             return;
         }
-        if(TextUtils.isEmpty(name) || TextUtils.isEmpty(lastname) || TextUtils.isEmpty(fechaN) || TextUtils.isEmpty(telefono) || TextUtils.isEmpty(direccion) || TextUtils.isEmpty(direccionLatLng)){
+        if(TextUtils.isEmpty(name) || TextUtils.isEmpty(lastname) || TextUtils.isEmpty(fechaN) || TextUtils.isEmpty(telefono) || TextUtils.isEmpty(direccion)){
             Toast.makeText(this, "Porfavor rellene todos los campos", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -191,13 +194,15 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                             updateUI(user);*/
 
                             Map<String, Object> usuario = new HashMap<>();
-                            //Colocar resto de la info
+
                             usuario.put("nombre", editTextName.getText().toString().trim());
                             usuario.put("apellido", editTextLastname.getText().toString().trim());
                             usuario.put("fechaNacimiento", editTextFecha.getText().toString().trim());
                             usuario.put("email", editTextEmail.getText().toString().trim());
                             usuario.put("telefono", editTextTelefono.getText().toString().trim());
-                            usuario.put("direccion", direccionLatLng);
+                            //usuario.put("direccion", direccion);
+                            usuario.put("latitud", latitud);
+                            usuario.put("longitud", longitud);
                             usuario.put("rol", 1);
 
 

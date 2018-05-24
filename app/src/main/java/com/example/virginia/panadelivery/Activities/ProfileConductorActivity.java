@@ -27,12 +27,12 @@ public class ProfileConductorActivity extends AppCompatActivity {
 
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    return true;
-                case R.id.navigation_dashboard:
                     fragmentManager.beginTransaction().replace(R.id.containerConductor, new PedidosListFragment()).commit();
                     return true;
-                case R.id.navigation_notifications:
+                case R.id.navigation_pedidoActual:
                     fragmentManager.beginTransaction().replace(R.id.containerConductor, new PedidoClienteFragment()).commit();
+                    return true;
+                case R.id.navigation_historial:
                     return true;
             }
             return false;
@@ -47,6 +47,9 @@ public class ProfileConductorActivity extends AppCompatActivity {
         mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.containerConductor, new PedidosListFragment()).commit();
 
 
     }

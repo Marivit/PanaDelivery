@@ -10,9 +10,9 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_client">ClientActivity</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_home">Inicio</string>
+    <string name="title_dashboard">Pedido</string>
+    <string name="title_notifications">Historial</string>
     <string name="need_location_permission_message">Necesitas habilitar el permiso de ubicacion</string>
 
     <!-- TODO: Remove or change this placeholder text -->
