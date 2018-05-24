@@ -1,5 +1,6 @@
 package com.example.virginia.panadelivery.Fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -63,7 +64,9 @@ public class PedidosListFragment extends Fragment {
         lPedidos = new ArrayList<>();
 
         listaPedidos = (RecyclerView) mView.findViewById(R.id.pedidosActuales);
-        pedidosListAdapter = new PedidosListAdapter(lPedidos);
+
+        Context cont = getActivity().getApplicationContext();
+        pedidosListAdapter = new PedidosListAdapter(lPedidos, cont);
         listaPedidos.setHasFixedSize(true);
         listaPedidos.setLayoutManager(new LinearLayoutManager(getContext()));
         listaPedidos.setAdapter(pedidosListAdapter);

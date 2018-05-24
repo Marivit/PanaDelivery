@@ -1,5 +1,7 @@
 package com.example.virginia.panadelivery.Adapters;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.RecyclerView;
@@ -9,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.virginia.panadelivery.Activities.ProfileClienteActivity;
 import com.example.virginia.panadelivery.Modelos.Pedido;
 import com.example.virginia.panadelivery.R;
 
@@ -17,9 +20,11 @@ import java.util.List;
 public class PedidosListAdapter extends RecyclerView.Adapter<PedidosListAdapter.ViewHolder> {
 
     public List<Pedido> pedidos;
+    public Context context;
 
-    public PedidosListAdapter(List<Pedido> pedidos) {
+    public PedidosListAdapter(List<Pedido> pedidos, Context context) {
         this.pedidos = pedidos;
+        this.context = context;
 
     }
     @NonNull
@@ -71,6 +76,13 @@ public class PedidosListAdapter extends RecyclerView.Adapter<PedidosListAdapter.
         public void bind() {
             buttonUbicacion.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View view) {
+
+
+                  Log.d("Mensaje:","ERES LO MAXIMO");
+                    //context.startActivity(new Intent(context, ProfileClienteActivity.class));
+
+                    view.getContext().getApplicationContext().startActivity(new Intent(view.getContext().getApplicationContext(), ProfileClienteActivity.class));
+                    
 
 
 
