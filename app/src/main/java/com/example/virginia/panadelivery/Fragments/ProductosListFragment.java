@@ -140,7 +140,8 @@ return mView;
                                 public void onClick(DialogInterface dialog, int id) {
                                     FirestoreService fs =  new FirestoreService();
                                     fs.checkout(lCheckout, idPanaderia, nombrePanaderia);
-
+                                    getActivity().finish();
+                                    startActivity(new Intent(view.getContext(), ProfileClienteActivity.class));
                                     dialog.cancel();
 
                     }

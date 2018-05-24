@@ -22,6 +22,7 @@ import com.example.virginia.panadelivery.Fragments.PanaderiasListFragment;
 import com.example.virginia.panadelivery.Fragments.PedidoClienteFragment;
 import com.example.virginia.panadelivery.Modelos.Panaderia;
 import com.example.virginia.panadelivery.R;
+import com.example.virginia.panadelivery.Services.FirestoreService;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -47,6 +48,8 @@ public class    ProfileClienteActivity extends AppCompatActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_cliente);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -56,7 +59,7 @@ public class    ProfileClienteActivity extends AppCompatActivity
 
 
         firebaseAuth = FirebaseAuth.getInstance();
-        Log.d(TAG, firebaseAuth.getCurrentUser().getEmail());
+
 
         if (firebaseAuth.getCurrentUser() == null) {
             finish();

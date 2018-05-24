@@ -118,6 +118,8 @@ public class PedidosListFragment extends Fragment {
                                 if (doc.getType() == DocumentChange.Type.ADDED) {
                                     //String email = doc.getDocument().getString("email");
                                     //Log.d(TAG, email);
+                                    Log.d("ID BUG", doc.getDocument().getId());
+                                    Log.d("OBJETO",doc.getDocument().toString());
                                     Pedido pedido = doc.getDocument().toObject(Pedido.class);
                                     lPedidos.add(pedido);
                                     Log.d(TAG, "Se agrego algo a la lista!");

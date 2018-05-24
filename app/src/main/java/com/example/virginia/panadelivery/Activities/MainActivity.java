@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,6 +18,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 //import static com.example.virginia.panadelivery.R.*;
 
@@ -28,7 +31,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView textViewSignUp;
     private ProgressDialog progressDialog;
     private FirebaseAuth firebaseauth;
-
+    private FirebaseFirestore db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void LoginUser() {
-        String email = editTextEmail.getText().toString().trim();
+        final String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
 
         if(TextUtils.isEmpty(email)) {
@@ -73,9 +76,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         progressDialog.dismiss();
                         if (task.isSuccessful()) {
+
                             Toast.makeText(getApplicationContext(), "Se logro hacer el login", Toast.LENGTH_SHORT).show();
-                            finish();
-                            startActivity(new Intent(getApplicationContext(), ProfileClienteActivity.class));
+                            db = FirebaseFirestore.getInstance();
+
+                            db.collection("Usuarios").document(email).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                    Long rol = (Long) task.getResult().get("rol");
+                                    Log.d("ROL", Long.toString(rol));
+                                    if (rol == 1) {
+                                        finish();
+                                        startActivity(new Intent(getApplicationContext(), ProfileClienteActivity.class));
+                                    }
+                                    if (rol == 2) {
+                                        finish();
+                                        startActivity(new Intent(getApplicationContext(), ProfileConductorActivity.class));
+                                    }
+
+                                }
+                            });
+
+
 
                             /* //Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success");
