@@ -122,10 +122,9 @@ public class FirestoreService {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                       if (task.isSuccessful()) {
-                          Log.d("TAG", Double.toString(  (Double) task.getResult().get("latitud")) );
                           Map<Object, Object> dataPedido = new HashMap<>();
-                          dataPedido.put("latitud", Long.toString( (Long) task.getResult().get("latitud")));
-                          dataPedido.put("longitud", Long.toString( (Long) task.getResult().get("longitud")));
+                          dataPedido.put("latitud",  task.getResult().get("latitud"));
+                          dataPedido.put("longitud",task.getResult().get("longitud"));
                           dataPedido.put("conductor", "conductorPlaceHolder");
                           dataPedido.put("estado", "En espera");
                           dataPedido.put("montoTotal", "Placeholder");
