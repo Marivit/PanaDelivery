@@ -28,7 +28,10 @@ import javax.annotation.Nullable;
 public class PedidosListFragment extends Fragment {
     private RecyclerView listaPedidos;
     private String TAG = "Firelog";
+    private String TAG2 = "Lista de emails";
+    private String TAG3 = "bichito";
     private List<Pedido> lPedidos;
+    private List<String> listaEmails;
     private PedidosListAdapter pedidosListAdapter;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -53,6 +56,7 @@ public class PedidosListFragment extends Fragment {
         // Inflate the layout for this fragment
         View mView = inflater.inflate(R.layout.fragment_pedidos_list, container, false);
         lPedidos = new ArrayList<>();
+
         listaPedidos = (RecyclerView) mView.findViewById(R.id.pedidosActuales);
         pedidosListAdapter = new PedidosListAdapter(lPedidos);
         listaPedidos.setHasFixedSize(true);
@@ -60,10 +64,13 @@ public class PedidosListFragment extends Fragment {
         listaPedidos.setAdapter(pedidosListAdapter);
         //String id = this.getArguments().getString("id");
 
-        Query resultado = db
+        //PRUEBA
+        listaEmails = new ArrayList<>();
+        /*Query resultado = db
                 .collection("Usuarios").document("evitali44@gmail.com")
-                .collection("pedidos").whereEqualTo("estado","En espera");
-        resultado.addSnapshotListener(new EventListener<QuerySnapshot>() {
+                .collection("pedidos").whereEqualTo("estado","En espera");*/
+
+        db.collection("Usuarios").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
 
@@ -76,20 +83,55 @@ public class PedidosListFragment extends Fragment {
                     //TODO: Agregar modified
 
                     if (doc.getType() == DocumentChange.Type.ADDED) {
-                        String name = doc.getDocument().getString("direccion");
-                        Log.d(TAG, name);
-                        Pedido pedido = doc.getDocument().toObject(Pedido.class);
-
-                        lPedidos.add(pedido);
-                        Log.d(TAG, "Se agrego algo a la lista!");
-                        pedidosListAdapter.notifyDataSetChanged();
+                        String email = doc.getDocument().getString("email");
+                        //Log.d(TAG, email);
+                        listaEmails.add(email);
+                        Log.d(TAG, "Se agrego un email!");
                     }
                 }
+                Log.d(TAG2, String.valueOf(listaEmails));
+                for(String i:listaEmails){
+                    //Log.d(TAG3, i);
+                    Query resultado = db
+                            .collection("Usuarios").document(i)
+                            .collection("pedidos").whereEqualTo("estado","En espera");
+                    resultado.addSnapshotListener(new EventListener<QuerySnapshot>() {
+                        @Override
+                        public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
 
+                            if (e != null) {
+                                Log.d(TAG, e.getMessage());
+
+                            }
+
+                            for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
+                                //TODO: Agregar modified
+
+                                if (doc.getType() == DocumentChange.Type.ADDED) {
+                                    //String email = doc.getDocument().getString("email");
+                                    //Log.d(TAG, email);
+                                    Pedido pedido = doc.getDocument().toObject(Pedido.class);
+                                    lPedidos.add(pedido);
+                                    Log.d(TAG, "Se agrego algo a la lista!");
+                                    pedidosListAdapter.notifyDataSetChanged();
+                                }
+                            }
+
+                        }
+                    });
+                }
             }
         });
+
         return mView;
     }
 
 
 }
+
+
+
+
+
+
+

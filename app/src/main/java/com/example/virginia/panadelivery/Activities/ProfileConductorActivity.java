@@ -27,14 +27,11 @@ public class ProfileConductorActivity extends AppCompatActivity {
 
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    mTextMessage.setText(R.string.title_home);
                     return true;
                 case R.id.navigation_dashboard:
-                    mTextMessage.setText(R.string.title_dashboard);
                     fragmentManager.beginTransaction().replace(R.id.containerConductor, new PedidosListFragment()).commit();
                     return true;
                 case R.id.navigation_notifications:
-                    mTextMessage.setText(R.string.title_notifications);
                     fragmentManager.beginTransaction().replace(R.id.containerConductor, new PedidoClienteFragment()).commit();
                     return true;
             }

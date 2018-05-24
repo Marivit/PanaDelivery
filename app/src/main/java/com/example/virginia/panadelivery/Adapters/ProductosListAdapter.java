@@ -2,13 +2,11 @@ package com.example.virginia.panadelivery.Adapters;
 
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.TextView;
 
 import com.example.virginia.panadelivery.Modelos.Producto;
@@ -63,9 +61,9 @@ public class ProductosListAdapter extends RecyclerView.Adapter<ProductosListAdap
             mView = itemView;
 
 
-            nombreProducto = (TextView) mView.findViewById(R.id.nombre);
+            /*nombreProducto = (TextView) mView.findViewById(R.id.nombre);
             mas = (FloatingActionButton) mView.findViewById(R.id.mas);
-            cantidadProducto = (TextView) mView.findViewById(R.id.cantidadProducto);
+            cantidadProducto = (TextView) mView.findViewById(R.id.cantidadProducto);*/
 
             nombreProducto = (TextView) mView.findViewById(R.id.nombre2);
             descripcion = (TextView) mView.findViewById(R.id.descripcion);
