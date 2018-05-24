@@ -1,5 +1,7 @@
 package com.example.virginia.panadelivery.Fragments;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,10 +10,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.example.virginia.panadelivery.Adapters.ProductosListAdapter;
 import com.example.virginia.panadelivery.Modelos.Producto;
 import com.example.virginia.panadelivery.R;
+import com.example.virginia.panadelivery.Services.FirestoreService;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -27,12 +31,11 @@ import javax.annotation.Nullable;
 public class ProductosListFragment extends Fragment {
     private RecyclerView listaProductos;
     private String TAG = "Firelog";
-    private List<Producto> lProductos;
+    private List<Producto> lProductos, lCheckout;
     private ProductosListAdapter productosListAdapter;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-
-       //TODO Cambiar
+    private Button checkout;
+    private String idPanaderia;
 
 
 
@@ -61,15 +64,17 @@ public class ProductosListFragment extends Fragment {
         // Inflate the layout for this fragment
         View mView = inflater.inflate(R.layout.fragment_productos_list, container, false);
         lProductos = new ArrayList<>();
+        lCheckout = new ArrayList<>();
         listaProductos = (RecyclerView) mView.findViewById(R.id.productos);
-        productosListAdapter = new ProductosListAdapter(lProductos);
+        productosListAdapter = new ProductosListAdapter(lProductos, lCheckout);
         listaProductos.setHasFixedSize(true);
         listaProductos.setLayoutManager(new LinearLayoutManager(getContext()));
         listaProductos.setAdapter(productosListAdapter);
-        String id = this.getArguments().getString("id");
+        idPanaderia = this.getArguments().getString("id");
+        checkout = (Button) mView.findViewById(R.id.checkout);
+        bind();
 
-
-        db.collection("Panaderias").document(id).collection("Productos").addSnapshotListener(new EventListener<QuerySnapshot>() {
+        db.collection("Panaderias").document(idPanaderia).collection("Productos").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
 
@@ -85,7 +90,7 @@ public class ProductosListFragment extends Fragment {
                         String name = doc.getDocument().getString("nombre");
                         Log.d(TAG, name);
                         Producto producto = doc.getDocument().toObject(Producto.class);
-
+                        producto.setId(doc.getDocument().getId());
                         lProductos.add(producto);
                         Log.d(TAG, "Se agrego algo a la lista!");
                         productosListAdapter.notifyDataSetChanged();
@@ -96,6 +101,55 @@ public class ProductosListFragment extends Fragment {
         });
 return mView;
 
+    }
+    public void bind() {
+        checkout.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+
+                    Log.d(TAG, "Se hara checkout");
+                    Log.d(TAG, Integer.toString(lCheckout.size()));
+                    //TODO pasar a lista bonita
+                    String confirmacion = "Desea confirmar su orden de:\n ";
+                            for (int i = 0; i < lCheckout.size(); i++) {
+                                confirmacion = confirmacion + lCheckout.get(i).getNombre() + ": ";
+                                confirmacion = confirmacion + "  ";
+                                confirmacion = confirmacion + Integer.toString(lCheckout.get(i).getCantidad());
+                                confirmacion = confirmacion + "\n ";
+
+                            }
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                    builder.setMessage(confirmacion);
+                    builder.setCancelable(true);
+
+
+                    builder.setPositiveButton(
+                            "Si",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    FirestoreService fs =  new FirestoreService();
+                                    fs.checkout(lCheckout, idPanaderia);
+
+                                    dialog.cancel();
+
+                    }
+                }
+                    );
+                builder.setNegativeButton(
+                        "No",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+
+                            }
+                        }
+                );
+                AlertDialog checkout = builder.create();
+                checkout.show();
+
+            }
+
+        });
     }
 
 

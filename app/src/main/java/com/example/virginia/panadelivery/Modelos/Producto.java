@@ -2,7 +2,7 @@ package com.example.virginia.panadelivery.Modelos;
 
 public class Producto {
 
-     String nombre, proveedor;
+     String nombre, proveedor, id ;
      int cantidad;
 
     @Override
@@ -14,8 +14,16 @@ public class Producto {
                 '}';
     }
 
-    Producto() {
+    public Producto() {
 
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public Producto(String nombre, String proveedor, int cantidad) {

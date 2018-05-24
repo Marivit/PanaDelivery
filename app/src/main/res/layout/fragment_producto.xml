@@ -29,17 +29,18 @@
             app:srcCompat="@drawable/ic_launcher_background" />
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/cantidadProducto"
             android:layout_width="42dp"
             android:layout_height="30dp"
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:text="000"
+            android:text="0"
             android:textAllCaps="false"
             android:textSize="24sp"
             android:textStyle="bold"
+            android:gravity = "center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -66,7 +67,7 @@
             app:layout_constraintVertical_bias="0.455" />
 
         <TextView
-            android:id="@+id/nombre2"
+            android:id="@+id/nombre"
             android:layout_width="224dp"
             android:layout_height="23dp"
             android:layout_marginBottom="8dp"
@@ -84,7 +85,7 @@
             app:layout_constraintVertical_bias="0.117" />
 
         <android.support.design.widget.FloatingActionButton
-            android:id="@+id/floatingActionButton"
+            android:id="@+id/mas"
             android:layout_width="31dp"
             android:layout_height="31dp"
             android:layout_marginBottom="8dp"
@@ -102,7 +103,7 @@
             app:srcCompat="@mipmap/add" />
 
         <android.support.design.widget.FloatingActionButton
-            android:id="@+id/floatingActionButton3"
+            android:id="@+id/menos"
             android:layout_width="31dp"
             android:layout_height="31dp"
             android:layout_marginBottom="8dp"

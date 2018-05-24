@@ -9,20 +9,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.example.virginia.panadelivery.Modelos.Producto;
 import com.example.virginia.panadelivery.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProductosListAdapter extends RecyclerView.Adapter<ProductosListAdapter.ViewHolder> {
 
     public List<Producto> productos;
-
-    public ProductosListAdapter(List<Producto> productos) {
+    public List<Producto> checkout;
+    public ProductosListAdapter(List<Producto> productos, List<Producto> checkout) {
         this.productos = productos;
-
+        this.checkout = checkout;
     }
     @NonNull
     @Override
@@ -38,10 +40,10 @@ public class ProductosListAdapter extends RecyclerView.Adapter<ProductosListAdap
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-
+        holder.setProducto(productos.get(position));
         holder.nombreProducto.setText(productos.get(position).getNombre());
         holder.descripcion.setText(productos.get(position).getProveedor());
-
+        holder.bind();
 
     }
 
@@ -57,6 +59,9 @@ public class ProductosListAdapter extends RecyclerView.Adapter<ProductosListAdap
         public TextView descripcion;
         public TextView cantidadProducto;
         public FloatingActionButton mas, menos;
+        public CheckBox confirmarProducto;
+        public Producto producto, productoCheckout;
+
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -65,21 +70,71 @@ public class ProductosListAdapter extends RecyclerView.Adapter<ProductosListAdap
 
             nombreProducto = (TextView) mView.findViewById(R.id.nombre);
             mas = (FloatingActionButton) mView.findViewById(R.id.mas);
+            menos = (FloatingActionButton) mView.findViewById(R.id.menos);
             cantidadProducto = (TextView) mView.findViewById(R.id.cantidadProducto);
-
-            nombreProducto = (TextView) mView.findViewById(R.id.nombre2);
             descripcion = (TextView) mView.findViewById(R.id.descripcion);
+            confirmarProducto = (CheckBox) mView.findViewById(R.id.checkBoxAñadir);
 
-
+        }
+        public void setProducto(Producto producto) {
+            this.producto = producto;
+            productoCheckout = new Producto();
+            productoCheckout.setCantidad(0);
+            productoCheckout.setNombre(producto.getNombre());
+            productoCheckout.setId(producto.getId());
         }
         public void bind() {
             mas.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View view ) {
-                    int numero = Integer.parseInt(cantidadProducto.toString());
-                    numero--;
-                    Log.d("Numero", Integer.toString(numero));
+
+
+
+                    int numero = Integer.parseInt(cantidadProducto.getText().toString());
+                    numero++;
+                    if (numero > producto.getCantidad()) {
+                        numero--;
+
+                    }
+                    productoCheckout.setCantidad(numero);
+                    cantidadProducto.setText(Integer.toString(numero));
+
+
                 }
             });
+            menos.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View view ) {
+
+
+                    int numero = Integer.parseInt(cantidadProducto.getText().toString());
+                    numero--;
+                    if (numero < 0) {
+                        numero = 0;
+                    }
+                    productoCheckout.setCantidad(numero);
+                    cantidadProducto.setText(Integer.toString(numero));
+
+
+                }
+            });
+            confirmarProducto.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View view ) {
+
+
+                    if (confirmarProducto.isChecked()) {
+                        checkout.add(producto);
+
+
+
+                    }
+                    if (!confirmarProducto.isChecked()) {
+                        checkout.remove(producto);
+                    }
+
+
+                    Log.d("LISTA CHECKOUT TAMANO", Integer.toString(checkout.size()));
+                }
+            });
+
         }
 
     }

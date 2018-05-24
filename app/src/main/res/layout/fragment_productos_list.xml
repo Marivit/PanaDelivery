@@ -13,4 +13,18 @@
 
     </android.support.v7.widget.RecyclerView>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="bottom"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/checkout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorPrimary"
+            android:text="Checkout" />
+    </LinearLayout>
+
 </FrameLayout>
