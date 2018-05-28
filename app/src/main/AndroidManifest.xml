@@ -13,7 +13,7 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/pansito"
+        android:icon="@mipmap/pansito_round"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/pansito_round"
         android:supportsRtl="true"

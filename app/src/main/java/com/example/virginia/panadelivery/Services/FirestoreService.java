@@ -123,8 +123,8 @@ public class FirestoreService {
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                       if (task.isSuccessful()) {
                           Map<Object, Object> dataPedido = new HashMap<>();
-                          dataPedido.put("latitud",  task.getResult().get("latitud"));
-                          dataPedido.put("longitud",task.getResult().get("longitud"));
+                          dataPedido.put("latitud",  Double.toString( (Double) task.getResult().get("latitud")));
+                          dataPedido.put("longitud", Double.toString((Double) task.getResult().get("longitud")));
                           dataPedido.put("conductor", "conductorPlaceHolder");
                           dataPedido.put("estado", "En espera");
                           dataPedido.put("montoTotal", "Placeholder");
