@@ -23,8 +23,8 @@
             android:id="@+id/checkout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/colorPrimary"
-            android:text="Checkout" />
+            android:backgroundTint="@color/colorVerde"
+            android:text="Confirmar" />
     </LinearLayout>
 
 </FrameLayout>

@@ -103,7 +103,7 @@ public class PedidosListAdapter extends RecyclerView.Adapter<PedidosListAdapter.
             });
             buttonElegir.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View view) {
-                    
+
                 }
             });
         }
