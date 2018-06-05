@@ -86,21 +86,21 @@
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/mas"
-            android:layout_width="31dp"
+            android:layout_width="45dp"
             android:layout_height="31dp"
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:clickable="true"
-            app:backgroundTint="@color/color1"
+            app:backgroundTint="@color/colorSegundo"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.654"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="1.0"
-            app:srcCompat="@mipmap/add" />
+            android:src="@mipmap/add" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/menos"
@@ -111,14 +111,14 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:clickable="true"
-            app:backgroundTint="@color/color1"
+            app:backgroundTint="@color/colorSegundo"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.345"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="1.0"
-            app:srcCompat="@mipmap/menos" />
+            android:src="@mipmap/menos" />
 
         <CheckBox
             android:id="@+id/checkBoxAñadir"

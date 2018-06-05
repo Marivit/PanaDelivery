@@ -15,5 +15,9 @@
         android:id="@+id/navigation_historial"
         android:icon="@drawable/ic_dashboard_black_24dp"
         android:title="@string/title_notifications" />
+    <item
+        android:id="@+id/nav_logout"
+        android:icon="@drawable/ic_exit_to_app_black_24dp"
+        android:title="Cerrar sesión" />
 
 </menu>
