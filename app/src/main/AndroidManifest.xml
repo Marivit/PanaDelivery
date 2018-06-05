@@ -48,7 +48,8 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activities.ProfileConductorActivity"
-            android:label="@string/title_activity_profile_conductor"></activity>
+            android:label="@string/title_activity_profile_conductor" />
+        <activity android:name=".Activities.CheckoutActivity"></activity>
     </application>
 
 </manifest>
