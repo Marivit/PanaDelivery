@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.example.virginia.panadelivery.Activities.CheckoutActivity;
 import com.example.virginia.panadelivery.Activities.ProfileClienteActivity;
 import com.example.virginia.panadelivery.Adapters.ProductosListAdapter;
 import com.example.virginia.panadelivery.Modelos.Producto;
@@ -119,45 +121,11 @@ return mView;
 
                     Log.d(TAG, "Se hara checkout");
                     Log.d(TAG, Integer.toString(lCheckout.size()));
-                    //TODO pasar a lista bonita
-                    String confirmacion = "Desea confirmar su orden de:\n ";
-                            for (int i = 0; i < lCheckout.size(); i++) {
-                                confirmacion = confirmacion + lCheckout.get(i).getNombre() + ": ";
-                                confirmacion = confirmacion + "  ";
-                                confirmacion = confirmacion + Integer.toString(lCheckout.get(i).getCantidad());
-                                confirmacion = confirmacion + "\n ";
-
-                            }
-
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                    builder.setMessage(confirmacion);
-                    builder.setCancelable(true);
-
-
-                    builder.setPositiveButton(
-                            "Si",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    FirestoreService fs =  new FirestoreService();
-                                    fs.checkout(lCheckout, idPanaderia, nombrePanaderia);
-                                    getActivity().finish();
-                                    startActivity(new Intent(view.getContext(), ProfileClienteActivity.class));
-                                    dialog.cancel();
-
-                    }
-                }
-                    );
-                builder.setNegativeButton(
-                        "No",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
-
-                            }
-                        }
-                );
-                AlertDialog checkout = builder.create();
-                checkout.show();
+                    Intent intent = new Intent(getContext(), CheckoutActivity.class);
+                    Bundle b = new Bundle();
+                    b.putParcelableArrayList("lCheckout", (ArrayList<? extends Parcelable>) lCheckout);
+                    intent.putExtra("listas", b);
+                    startActivity(intent);
 
             }
 

@@ -1,11 +1,23 @@
 package com.example.virginia.panadelivery.Modelos;
 
-public class Producto {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Producto implements Parcelable {
 
      String nombre, proveedor, id ;
      int cantidad;
 
+    public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
+        public Producto createFromParcel(Parcel in) {
+            return new Producto(in);
+        }
 
+        public Producto[] newArray(int size) {
+            return new Producto[size];
+        }
+
+    };
 
 
     @Override
@@ -59,5 +71,27 @@ public class Producto {
 
     public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
+    }
+
+
+    public Producto(Parcel in) {
+        this.nombre = in.readString();
+        this.proveedor = in.readString();
+        this.id = in.readString();
+        this.cantidad = in.readInt();
+
+    }
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(nombre);
+        dest.writeString(proveedor);
+        dest.writeString(id);
+        dest.writeInt(cantidad);
+
     }
 }

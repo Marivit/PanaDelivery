@@ -13,5 +13,5 @@
     <color name="colorPrimary">#FF8000</color>
     <color name="colorSegundo">#ffcc40</color>
     <color name="colorTercero">#FF4000</color>
-
+    <color name="colorBlue"> #ADD8E6 </color>
 </resources>

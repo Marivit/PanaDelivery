@@ -13,32 +13,54 @@
             android:id="@+id/imageView2"
             android:layout_width="101dp"
             android:layout_height="99dp"
+            android:layout_marginBottom="412dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@android:drawable/alert_dark_frame" />
 
         <TextView
-            android:id="@+id/textView15"
+            android:id="@+id/nombreProducto"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="16dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="169dp"
+            android:layout_marginStart="9dp"
+            android:layout_marginTop="16dp"
             android:text="nombreProducto"
-            tools:layout_editor_absoluteX="109dp"
-            tools:layout_editor_absoluteY="16dp" />
+            app:layout_constraintBottom_toTopOf="@+id/textView16"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageView2"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textView16"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="450dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="9dp"
+            android:layout_marginTop="7dp"
             android:text="Cantidad (Medida)"
-            tools:layout_editor_absoluteX="109dp"
-            tools:layout_editor_absoluteY="43dp" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/floatingActionButton"
+            app:layout_constraintStart_toEndOf="@+id/imageView2"
+            app:layout_constraintTop_toBottomOf="@+id/nombreProducto" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/floatingActionButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="436dp"
+            android:layout_marginEnd="45dp"
+            android:layout_marginStart="75dp"
+            android:layout_marginTop="35dp"
             android:clickable="true"
-            app:srcCompat="@android:drawable/ic_delete"
-            tools:layout_editor_absoluteX="299dp"
-            tools:layout_editor_absoluteY="35dp" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textView16"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@android:drawable/ic_delete" />
 
     </android.support.constraint.ConstraintLayout>
 </LinearLayout>
