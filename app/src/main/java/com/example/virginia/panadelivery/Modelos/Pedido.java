@@ -3,12 +3,11 @@ package com.example.virginia.panadelivery.Modelos;
 public class Pedido {
 
      String direccion, hora, fecha, ubicacionDireccion, latitud, longitud;
-     int numPedido;
+     String idPedido;
 
     @Override
     public String toString() {
         return "Pedido{" +
-                "numPedido='" + numPedido + '\'' +
                 ", direccion='" + direccion + '\'' +
                 ", fecha=" + fecha + '\'' +
                 ", hora=" + hora + '\'' +
@@ -21,13 +20,20 @@ public class Pedido {
 
     }
 
-    public Pedido(String direccion, String fecha, String hora, int numPedido, String latitud, String longitud) {
+    public Pedido(String direccion, String fecha, String hora, String latitud, String longitud) {
         this.direccion = direccion;
         this.fecha = fecha;
         this.hora = hora;
-        this.numPedido = numPedido;
         this.latitud = latitud;
         this.longitud = longitud;
+    }
+
+    public String getIdPedido() {
+        return idPedido;
+    }
+
+    public void setIdPedido(String idPedido) {
+        this.idPedido = idPedido;
     }
 
     public String getDireccion() {
@@ -50,12 +56,6 @@ public class Pedido {
 
     public void setHora(String hora) {
         this.hora = hora;
-    }
-
-    public int getNumPedido() { return numPedido; }
-
-    public void setNumPedido(int numPedido) {
-        this.numPedido = numPedido;
     }
 
     public String getUbicacion() { return hora; }

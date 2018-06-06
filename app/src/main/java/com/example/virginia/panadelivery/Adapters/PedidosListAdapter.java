@@ -38,7 +38,7 @@ public class PedidosListAdapter extends RecyclerView.Adapter<PedidosListAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.numPedido.setText(Integer.toString(pedidos.get(position).getNumPedido()));
+
         holder.fecha.setText(pedidos.get(position).getFecha());
         holder.hora.setText(pedidos.get(position).getHora());
         holder.direccion.setText(pedidos.get(position).getDireccion());

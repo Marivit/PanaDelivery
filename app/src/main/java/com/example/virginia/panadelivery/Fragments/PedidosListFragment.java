@@ -121,6 +121,7 @@ public class PedidosListFragment extends Fragment {
                                     Log.d("ID BUG", doc.getDocument().getId());
                                     Log.d("OBJETO",doc.getDocument().toString());
                                     Pedido pedido = doc.getDocument().toObject(Pedido.class);
+                                    pedido.setIdPedido(doc.getDocument().getId());
                                     lPedidos.add(pedido);
                                     Log.d(TAG, "Se agrego algo a la lista!");
                                     Log.d(TAG, String.valueOf(pedido));
