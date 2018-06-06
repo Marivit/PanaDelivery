@@ -129,8 +129,7 @@ public class FirestoreService {
                           dataPedido.put("estado", "En espera");
                           dataPedido.put("montoTotal", "Placeholder");
                           dataPedido.put("panaderia", nombrePanaderia);
-                          //TODO: Me gustaria quitar esto
-                          dataPedido.put("numPedido", 500);
+
 
 
                           // TODO: Quitar placeholder de detalle direccion

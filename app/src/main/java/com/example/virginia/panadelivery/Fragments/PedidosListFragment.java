@@ -99,6 +99,7 @@ public class PedidosListFragment extends Fragment {
                 }
                 Log.d(TAG2, String.valueOf(listaEmails));
                 for(String i:listaEmails){
+                    final String correoUsuario = i;
                     //Log.d(TAG3, i);
                     Query resultado = db
                             .collection("Usuarios").document(i)
@@ -122,6 +123,7 @@ public class PedidosListFragment extends Fragment {
                                     Log.d("OBJETO",doc.getDocument().toString());
                                     Pedido pedido = doc.getDocument().toObject(Pedido.class);
                                     pedido.setIdPedido(doc.getDocument().getId());
+                                    pedido.setCorreoCliente(correoUsuario);
                                     lPedidos.add(pedido);
                                     Log.d(TAG, "Se agrego algo a la lista!");
                                     Log.d(TAG, String.valueOf(pedido));
