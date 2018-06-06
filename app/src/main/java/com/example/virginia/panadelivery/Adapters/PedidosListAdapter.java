@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,21 +14,30 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.virginia.panadelivery.Activities.MapsActivity;
+import com.example.virginia.panadelivery.Fragments.PedidoConductorFragment;
 import com.example.virginia.panadelivery.Modelos.Pedido;
 import com.example.virginia.panadelivery.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class PedidosListAdapter extends RecyclerView.Adapter<PedidosListAdapter.ViewHolder> {
-
+    private String TAG = "PRUEBA:";
     public List<Pedido> pedidos;
     public Context context;
+    FragmentManager fm;
 
     public PedidosListAdapter(List<Pedido> pedidos, Context context) {
         this.pedidos = pedidos;
         this.context = context;
 
     }
+
     @NonNull
     @Override
 
@@ -44,6 +55,9 @@ public class PedidosListAdapter extends RecyclerView.Adapter<PedidosListAdapter.
         holder.direccion.setText(pedidos.get(position).getDireccion());
         holder.latitud = pedidos.get(position).getLatitud();
         holder.longitud = pedidos.get(position).getLongitud();
+        holder.idPedido = pedidos.get(position).getIdPedido();
+        holder.correoCliente = pedidos.get(position).getCorreoCliente();
+
         holder.bind();
 
     }
@@ -64,6 +78,8 @@ public class PedidosListAdapter extends RecyclerView.Adapter<PedidosListAdapter.
         public FloatingActionButton buttonElegir;
         public String latitud;
         public String longitud;
+        public String idPedido;
+        public String correoCliente;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -77,7 +93,6 @@ public class PedidosListAdapter extends RecyclerView.Adapter<PedidosListAdapter.
             buttonElegir = (FloatingActionButton) mView.findViewById(R.id.buttonElegir);
 
 
-
         }
 
         public void bind() {
@@ -85,8 +100,8 @@ public class PedidosListAdapter extends RecyclerView.Adapter<PedidosListAdapter.
                 public void onClick(View view) {
 
 
-                  Log.d("Mensaje:", String.valueOf(latitud));
-                  Log.d("Mensaje2:", String.valueOf(longitud));
+                    Log.d("Mensaje:", String.valueOf(latitud));
+                    Log.d("Mensaje2:", String.valueOf(longitud));
                     //context.startActivity(new Intent(context, ProfileClienteActivity.class));
 
                     //view.getContext().startActivity(new Intent(view.getContext().getApplicationContext(), MapsActivity.class));
@@ -103,12 +118,38 @@ public class PedidosListAdapter extends RecyclerView.Adapter<PedidosListAdapter.
             });
             buttonElegir.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View view) {
+                    Log.d(TAG, idPedido);
+                    FirebaseFirestore db = FirebaseFirestore.getInstance();
+                    FirebaseAuth firebaseAuth;
+
+
+                    firebaseAuth = FirebaseAuth.getInstance();
+                    final String emailConductor = firebaseAuth.getCurrentUser().getEmail();
+
+                    // Actualizar el campo conductor y su correo para asignarselo a este
+                    Map<String, Object> actPedido = new HashMap<>();
+                    actPedido.put("estado", "En proceso");
+                    actPedido.put("conductor", "probando");
+                    actPedido.put("conductorEmail", emailConductor);
+
+                    DocumentReference resultado = db.collection("Usuarios").document(correoCliente)
+                            .collection("pedidos").document(idPedido);
+
+                    resultado.set(actPedido, SetOptions.merge());
+
+                    FragmentTransaction ft = fm.beginTransaction();
+                    final PedidoConductorFragment fragmentoP = new PedidoConductorFragment();
+                    ft.replace(R.id.contenedorCliente, fragmentoP);
+                    ft.commit();
 
                 }
+
+
             });
+
+
         }
 
-
     }
-
 }
+
