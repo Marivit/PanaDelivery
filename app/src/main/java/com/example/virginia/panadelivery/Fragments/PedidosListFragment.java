@@ -126,6 +126,7 @@ public class PedidosListFragment extends Fragment {
                                     Pedido pedido = doc.getDocument().toObject(Pedido.class);
                                     pedido.setIdPedido(doc.getDocument().getId());
                                     pedido.setCorreoCliente(correoUsuario);
+
                                     lPedidos.add(pedido);
                                     Log.d(TAG, "Se agrego algo a la lista!");
                                     Log.d(TAG, String.valueOf(pedido));

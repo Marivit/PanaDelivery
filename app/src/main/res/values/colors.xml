@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimero">#f96516</color>
     <color name="colorPrimaryDark">#b66235</color>
-    <color name="color4">#FF4081</color>
+    <color name="color4">#ff4081</color>
     <color name="color1">#faa76f</color>
     <color name="color2">#f41023</color>
     <color name="color3">#ffffff</color>
@@ -14,4 +14,10 @@
     <color name="colorSegundo">#ffcc40</color>
     <color name="colorTercero">#FF4000</color>
     <color name="colorBlue"> #ADD8E6 </color>
+
+    <color name="colorMorado">#b94fff</color>
+    <color name="colorAzul">#1395ec</color>
+
+
+
 </resources>
