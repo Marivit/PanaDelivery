@@ -32,9 +32,10 @@ public class PedidosListAdapter extends RecyclerView.Adapter<PedidosListAdapter.
     public Context context;
     FragmentManager fm;
 
-    public PedidosListAdapter(List<Pedido> pedidos, Context context) {
+    public PedidosListAdapter(List<Pedido> pedidos, Context context, FragmentManager fm) {
         this.pedidos = pedidos;
         this.context = context;
+        this.fm = fm;
 
     }
 
