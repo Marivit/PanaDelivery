@@ -89,12 +89,14 @@ public class ProductosListFragment extends Fragment {
                 }
 
                 for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
-                    //TODO: Agregar modified
+
 
                     if (doc.getType() == DocumentChange.Type.ADDED) {
                         String name = doc.getDocument().getString("nombre");
                         Log.d(TAG, name);
+                        Log.d("AIUA", (String) doc.getDocument().getString("foto"));
                         Producto producto = doc.getDocument().toObject(Producto.class);
+
                         producto.setId(doc.getDocument().getId());
                         lProductos.add(producto);
                         Log.d(TAG, "Se agrego algo a la lista!");
@@ -105,6 +107,7 @@ public class ProductosListFragment extends Fragment {
                             if (lProductos.get(i).getId() == doc.getDocument().getId()) {
                                 Producto productoCambiar = doc.getDocument().toObject(Producto.class);
                                 lProductos.get(i).setCantidad(productoCambiar.getCantidad());
+                                productosListAdapter.notifyDataSetChanged();
                             }
                         }
                     }

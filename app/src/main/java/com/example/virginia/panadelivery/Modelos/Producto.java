@@ -5,8 +5,9 @@ import android.os.Parcelable;
 
 public class Producto implements Parcelable {
 
-     String nombre, proveedor, id ;
+     String nombre, foto, id ;
      int cantidad;
+
 
     public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
         public Producto createFromParcel(Parcel in) {
@@ -24,7 +25,7 @@ public class Producto implements Parcelable {
     public String toString() {
         return "Producto{" +
                 "nombre='" + nombre + '\'' +
-                ", proveedor='" + proveedor + '\'' +
+                ", proveedor='" + foto + '\'' +
                 ", cantidad=" + cantidad +
                 '}';
     }
@@ -43,7 +44,7 @@ public class Producto implements Parcelable {
 
     public Producto(String nombre, String proveedor, int cantidad) {
         this.nombre = nombre;
-        this.proveedor = proveedor;
+        this.foto = proveedor;
         this.cantidad = cantidad;
     }
 
@@ -57,12 +58,12 @@ public class Producto implements Parcelable {
 
 
 
-    public String getProveedor() {
-        return proveedor;
+    public String getFoto() {
+        return foto;
     }
 
-    public void setProveedor(String proveedor) {
-        this.proveedor = proveedor;
+    public void setFoto(String proveedor) {
+        this.foto = proveedor;
     }
 
     public int getCantidad() {
@@ -76,7 +77,7 @@ public class Producto implements Parcelable {
 
     public Producto(Parcel in) {
         this.nombre = in.readString();
-        this.proveedor = in.readString();
+        this.foto = in.readString();
         this.id = in.readString();
         this.cantidad = in.readInt();
 
@@ -89,7 +90,7 @@ public class Producto implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(nombre);
-        dest.writeString(proveedor);
+        dest.writeString(foto);
         dest.writeString(id);
         dest.writeInt(cantidad);
 

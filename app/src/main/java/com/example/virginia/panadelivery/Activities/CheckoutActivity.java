@@ -34,9 +34,8 @@ public class CheckoutActivity extends AppCompatActivity {
 
 
         checkoutListAdapter = new CheckoutListAdapter(lCheckout);
-        listaCheckout.setHasFixedSize(true);
         listaCheckout.setLayoutManager(new LinearLayoutManager(this));
         listaCheckout.setAdapter(checkoutListAdapter);
-
+        checkoutListAdapter.notifyDataSetChanged();
     }
 }

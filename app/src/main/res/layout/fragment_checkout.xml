@@ -2,22 +2,22 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <android.support.constraint.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="101dp"
-            android:layout_height="99dp"
-            android:layout_marginBottom="412dp"
+            android:id="@+id/imagenCheckout"
+            android:layout_width="90dp"
+            android:layout_height="91dp"
+            android:layout_marginBottom="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@android:drawable/alert_dark_frame" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/nombreProducto"
@@ -30,28 +30,28 @@
             android:text="nombreProducto"
             app:layout_constraintBottom_toTopOf="@+id/textView16"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imageView2"
+            app:layout_constraintStart_toEndOf="@+id/imagenCheckout"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textView16"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="450dp"
+            android:layout_marginBottom="50dp"
             android:layout_marginEnd="10dp"
             android:layout_marginStart="9dp"
             android:layout_marginTop="7dp"
             android:text="Cantidad (Medida)"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/floatingActionButton"
-            app:layout_constraintStart_toEndOf="@+id/imageView2"
+            app:layout_constraintStart_toEndOf="@+id/imagenCheckout"
             app:layout_constraintTop_toBottomOf="@+id/nombreProducto" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/floatingActionButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="436dp"
+            android:layout_marginBottom="50dp"
             android:layout_marginEnd="45dp"
             android:layout_marginStart="75dp"
             android:layout_marginTop="35dp"

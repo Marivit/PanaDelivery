@@ -10,10 +10,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.virginia.panadelivery.Modelos.Producto;
 import com.example.virginia.panadelivery.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +44,8 @@ public class ProductosListAdapter extends RecyclerView.Adapter<ProductosListAdap
 
         holder.setProducto(productos.get(position));
         holder.nombreProducto.setText(productos.get(position).getNombre());
-        holder.descripcion.setText(productos.get(position).getProveedor());
+        Picasso.get().load(productos.get(position).getFoto()).resize(90,91).centerCrop().into(holder.imagenProducto);
+
         holder.bind();
 
     }
@@ -61,7 +64,7 @@ public class ProductosListAdapter extends RecyclerView.Adapter<ProductosListAdap
         public FloatingActionButton mas, menos;
         public CheckBox confirmarProducto;
         public Producto producto, productoCheckout;
-
+        public ImageView imagenProducto;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -74,7 +77,7 @@ public class ProductosListAdapter extends RecyclerView.Adapter<ProductosListAdap
             cantidadProducto = (TextView) mView.findViewById(R.id.cantidadProducto);
             descripcion = (TextView) mView.findViewById(R.id.descripcion);
             confirmarProducto = (CheckBox) mView.findViewById(R.id.checkBoxAñadir);
-
+            imagenProducto = (ImageView) mView.findViewById(R.id.imagenProducto);
         }
         public void setProducto(Producto producto) {
             this.producto = producto;
@@ -82,6 +85,7 @@ public class ProductosListAdapter extends RecyclerView.Adapter<ProductosListAdap
             productoCheckout.setCantidad(0);
             productoCheckout.setNombre(producto.getNombre());
             productoCheckout.setId(producto.getId());
+            productoCheckout.setFoto(producto.getFoto());
 
         }
         public void bind() {
