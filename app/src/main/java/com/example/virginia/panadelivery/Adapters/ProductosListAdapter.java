@@ -45,6 +45,7 @@ public class ProductosListAdapter extends RecyclerView.Adapter<ProductosListAdap
         holder.setProducto(productos.get(position));
         holder.nombreProducto.setText(productos.get(position).getNombre());
         Picasso.get().load(productos.get(position).getFoto()).resize(90,91).centerCrop().into(holder.imagenProducto);
+        holder.descripcion.setText(productos.get(position).getDescripcion());
 
         holder.bind();
 
@@ -66,6 +67,7 @@ public class ProductosListAdapter extends RecyclerView.Adapter<ProductosListAdap
         public Producto producto, productoCheckout;
         public ImageView imagenProducto;
 
+
         public ViewHolder(View itemView) {
             super(itemView);
             mView = itemView;
@@ -86,6 +88,8 @@ public class ProductosListAdapter extends RecyclerView.Adapter<ProductosListAdap
             productoCheckout.setNombre(producto.getNombre());
             productoCheckout.setId(producto.getId());
             productoCheckout.setFoto(producto.getFoto());
+            productoCheckout.setDescripcion(producto.getDescripcion());
+            Log.d("HOL","HOLA");
 
         }
         public void bind() {

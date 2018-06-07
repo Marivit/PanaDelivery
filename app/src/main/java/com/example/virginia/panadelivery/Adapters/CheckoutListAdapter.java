@@ -36,6 +36,9 @@ public class CheckoutListAdapter extends RecyclerView.Adapter<CheckoutListAdapte
     public void onBindViewHolder(@NonNull CheckoutListAdapter.ViewHolder holder, int position) {
         final int posicion = position;
         holder.nombreProducto.setText(checkout.get(position).getNombre());
+        holder.cantidad.setText(Integer.toString(checkout.get(position).getCantidad()));
+        holder.descripcion.setText(checkout.get(position).getDescripcion());
+        Log.d( "???", checkout.get(position).getDescripcion());
         Picasso.get().load(checkout.get(position).getFoto()).resize(90,91).centerCrop().into(holder.imagenCheckout);
         holder.cancelarPedido.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,12 +58,16 @@ public class CheckoutListAdapter extends RecyclerView.Adapter<CheckoutListAdapte
         public TextView nombreProducto;
         public ImageView imagenCheckout;
         public FloatingActionButton cancelarPedido;
+        public TextView cantidad;
+        public TextView descripcion;
         public ViewHolder(View itemView) {
             super(itemView);
             mView = itemView;
             nombreProducto = mView.findViewById(R.id.nombreProducto);
             imagenCheckout = mView.findViewById(R.id.imagenCheckout);
             cancelarPedido = mView.findViewById(R.id.cancelarProducto);
+            cantidad = mView.findViewById(R.id.cantidad);
+            descripcion = mView.findViewById(R.id.descripcion);
         }
     }
 }

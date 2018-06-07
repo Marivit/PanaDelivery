@@ -17,6 +17,7 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.SetOptions;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -100,7 +101,7 @@ public class FirestoreService {
                       dataToAdd.put((String) "cantidad", (Long) cantidadNueva);
                       dataToAdd.put((String) "nombre", (String)nombre );
 
-                      reference.document(idProd).set(dataToAdd);
+                      reference.document(idProd).set(dataToAdd, SetOptions.merge());
 
                   }
               }

@@ -93,8 +93,7 @@ public class ProductosListFragment extends Fragment {
 
                     if (doc.getType() == DocumentChange.Type.ADDED) {
                         String name = doc.getDocument().getString("nombre");
-                        Log.d(TAG, name);
-                        Log.d("AIUA", (String) doc.getDocument().getString("foto"));
+
                         Producto producto = doc.getDocument().toObject(Producto.class);
 
                         producto.setId(doc.getDocument().getId());
@@ -127,6 +126,8 @@ return mView;
                     Intent intent = new Intent(getContext(), CheckoutActivity.class);
                     Bundle b = new Bundle();
                     b.putParcelableArrayList("lCheckout", (ArrayList<? extends Parcelable>) lCheckout);
+                    b.putString("idPanaderia", idPanaderia);
+                    b.putString("nombrePanaderia", nombrePanaderia);
                     intent.putExtra("listas", b);
                     startActivity(intent);
 

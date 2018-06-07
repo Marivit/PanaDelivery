@@ -23,44 +23,59 @@
             android:id="@+id/nombreProducto"
             android:layout_width="wrap_content"
             android:layout_height="16dp"
-            android:layout_marginBottom="8dp"
             android:layout_marginEnd="169dp"
             android:layout_marginStart="9dp"
             android:layout_marginTop="16dp"
             android:text="nombreProducto"
-            app:layout_constraintBottom_toTopOf="@+id/textView16"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imagenCheckout"
             app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/textView16"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="50dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginStart="9dp"
-            android:layout_marginTop="7dp"
-            android:text="Cantidad (Medida)"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/cancelarProducto"
-            app:layout_constraintStart_toEndOf="@+id/imagenCheckout"
-            app:layout_constraintTop_toBottomOf="@+id/nombreProducto" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/cancelarProducto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="50dp"
-            android:layout_marginEnd="45dp"
-            android:layout_marginStart="75dp"
-            android:layout_marginTop="35dp"
+            android:layout_marginEnd="44dp"
+            android:layout_marginStart="280dp"
             android:clickable="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/textView16"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.769"
             app:srcCompat="@android:drawable/ic_delete" />
+
+        <TextView
+            android:id="@+id/descripcion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="47dp"
+            android:layout_marginEnd="70dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="13dp"
+            android:text="TextView"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/nombreProducto"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <TextView
+            android:id="@+id/cantidad"
+            android:layout_width="wrap_content"
+            android:layout_height="15dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginEnd="29dp"
+            android:layout_marginStart="60dp"
+            android:layout_marginTop="16dp"
+            android:text="TextView"
+            android:textStyle="bold"
+            android:gravity="center"
+            app:layout_constraintBottom_toTopOf="@+id/cancelarProducto"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/nombreProducto"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </android.support.constraint.ConstraintLayout>
 </LinearLayout>
