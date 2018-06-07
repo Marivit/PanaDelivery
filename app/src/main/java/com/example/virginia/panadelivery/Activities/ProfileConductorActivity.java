@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
@@ -32,9 +33,14 @@ public class ProfileConductorActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private String TAG = "Prueba";
     private String TAG2 = "PEDIDO ACTUAL";
+    private String TAG3 = "CorreoCliente";
+
     private List<Pedido> lPedidos;
     private Pedido pedidoActual;
     private List<String> listaEmails;
+    private String correoCliente;
+    private String correoConductor;
+    private String correoUsuario;
 
     private TextView mTextMessage;
 
@@ -52,7 +58,21 @@ public class ProfileConductorActivity extends AppCompatActivity {
                     return true;
                 case R.id.navigation_pedidoActual:
                     getPedidoActual();
-                    fragmentManager.beginTransaction().replace(R.id.containerConductor, new PedidoConductorFragment()).commit();
+                    //Pasar algunos parametros necesarios
+                    Log.d(TAG3, correoCliente);
+                    Log.d(TAG, correoConductor);
+                    Bundle args = new Bundle();
+                    args.putString("emailCliente", correoCliente);
+                    args.putString("emailConductor", correoConductor);
+
+                    //Cambiar de fragment al del pedido actual
+                    FragmentTransaction ft = fragmentManager.beginTransaction();
+                    final PedidoConductorFragment fragmentoP = new PedidoConductorFragment();
+                    fragmentoP.setArguments(args);
+                    ft.replace(R.id.containerConductor, fragmentoP);
+                    ft.commit();
+
+                    //fragmentManager.beginTransaction().replace(R.id.containerConductor, new PedidoConductorFragment()).commit();
                     return true;
                 case R.id.navigation_historial:
                     return true;
@@ -86,6 +106,7 @@ public class ProfileConductorActivity extends AppCompatActivity {
         listaEmails = new ArrayList<>();
         lPedidos = new ArrayList<>();
         firebaseAuth = FirebaseAuth.getInstance();
+        correoConductor = firebaseAuth.getCurrentUser().getEmail();
 
         db.collection("Usuarios").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
@@ -104,7 +125,7 @@ public class ProfileConductorActivity extends AppCompatActivity {
                 }
                 Log.d(TAG, String.valueOf(listaEmails));
                 for(String i:listaEmails){
-                    final String correoUsuario = i;
+                    correoUsuario = i;
                     Query resultado = db
                             .collection("Usuarios").document(i)
                             .collection("pedidos").whereEqualTo("estado","En proceso");
@@ -122,14 +143,14 @@ public class ProfileConductorActivity extends AppCompatActivity {
 
                                 if (doc.getType() == DocumentChange.Type.ADDED) {
                                     Pedido pedido = doc.getDocument().toObject(Pedido.class);
-
-                                    if(pedido.getConductorEmail()==firebaseAuth.getCurrentUser().getEmail()){
+                                    if(pedido.getConductorEmail().equals(firebaseAuth.getCurrentUser().getEmail())){
                                         pedidoActual=pedido;
-                                        Log.d(TAG2, String.valueOf(pedido));
+                                        Log.d(TAG2, String.valueOf(pedidoActual));
+                                        Log.d(TAG, correoUsuario);
+                                        correoCliente=correoUsuario;
                                     }
                                     //lPedidos.add(pedido);
-                                    //Log.d(TAG, "Se agrego algo a la lista!");
-                                    Log.d(TAG, String.valueOf(pedido));
+                                    //Log.d(TAG, String.valueOf(pedido));
                                 }
 
                             }

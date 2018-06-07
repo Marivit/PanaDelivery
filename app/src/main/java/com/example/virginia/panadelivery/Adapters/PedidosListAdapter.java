@@ -71,7 +71,6 @@ public class PedidosListAdapter extends RecyclerView.Adapter<PedidosListAdapter.
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         View mView;
-
         public TextView numPedido;
         public TextView fecha;
         public TextView hora;
@@ -143,7 +142,7 @@ public class PedidosListAdapter extends RecyclerView.Adapter<PedidosListAdapter.
                     //Pasar algunos parametros necesarios
                     Bundle args = new Bundle();
                     args.putString("emailCliente", correoCliente);
-                    args.putString("idPedido", idPedido);
+                    args.putString("emailConductor", emailConductor);
 
                     //Cambiar de fragment al del pedido actual
                     FragmentTransaction ft = fm.beginTransaction();
