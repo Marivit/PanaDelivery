@@ -61,7 +61,7 @@ public class PedidoConductorFragment extends Fragment {
 
          View view = inflater.inflate(R.layout.fragment_pedido_conductor, container, false);
 
-        buttonEstado = (Button) view.findViewById(R.id.buttonLogin);
+        buttonEstado = (Button) view.findViewById(R.id.buttonEstado);
         textViewEstado2 = (TextView) view.findViewById(R.id.textViewEstado2);
         textViewMonto2 = (TextView) view.findViewById(R.id.textViewMonto2);
         textViewPanaderia2 = (TextView) view.findViewById(R.id.textViewPanaderia2);

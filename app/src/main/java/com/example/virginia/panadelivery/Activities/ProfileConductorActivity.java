@@ -59,18 +59,7 @@ public class ProfileConductorActivity extends AppCompatActivity {
                 case R.id.navigation_pedidoActual:
                     getPedidoActual();
                     //Pasar algunos parametros necesarios
-                    Log.d(TAG3, correoCliente);
-                    Log.d(TAG, correoConductor);
-                    Bundle args = new Bundle();
-                    args.putString("emailCliente", correoCliente);
-                    args.putString("emailConductor", correoConductor);
 
-                    //Cambiar de fragment al del pedido actual
-                    FragmentTransaction ft = fragmentManager.beginTransaction();
-                    final PedidoConductorFragment fragmentoP = new PedidoConductorFragment();
-                    fragmentoP.setArguments(args);
-                    ft.replace(R.id.containerConductor, fragmentoP);
-                    ft.commit();
 
                     //fragmentManager.beginTransaction().replace(R.id.containerConductor, new PedidoConductorFragment()).commit();
                     return true;
@@ -148,6 +137,19 @@ public class ProfileConductorActivity extends AppCompatActivity {
                                         Log.d(TAG2, String.valueOf(pedidoActual));
                                         Log.d(TAG, correoUsuario);
                                         correoCliente=correoUsuario;
+                                        Log.d(TAG3, correoCliente);
+                                        Log.d(TAG, correoConductor);
+                                        Bundle args = new Bundle();
+                                        args.putString("emailCliente", correoCliente);
+                                        args.putString("emailConductor", correoConductor);
+
+                                        //Cambiar de fragment al del pedido actual
+                                        FragmentManager fragmentManager = getSupportFragmentManager();
+                                        FragmentTransaction ft = fragmentManager.beginTransaction();
+                                        final PedidoConductorFragment fragmentoP = new PedidoConductorFragment();
+                                        fragmentoP.setArguments(args);
+                                        ft.replace(R.id.containerConductor, fragmentoP);
+                                        ft.commit();
                                     }
                                     //lPedidos.add(pedido);
                                     //Log.d(TAG, String.valueOf(pedido));

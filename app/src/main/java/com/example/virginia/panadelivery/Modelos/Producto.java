@@ -5,7 +5,7 @@ import android.os.Parcelable;
 
 public class Producto implements Parcelable {
 
-     String nombre, foto, id ;
+     String nombre, foto, id, descripcion;
      int cantidad;
 
 
@@ -32,6 +32,14 @@ public class Producto implements Parcelable {
 
     public Producto() {
 
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
     public String getId() {
