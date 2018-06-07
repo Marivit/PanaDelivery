@@ -1,6 +1,7 @@
 package com.example.virginia.panadelivery.Adapters;
 
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -33,8 +34,16 @@ public class CheckoutListAdapter extends RecyclerView.Adapter<CheckoutListAdapte
 
     @Override
     public void onBindViewHolder(@NonNull CheckoutListAdapter.ViewHolder holder, int position) {
+        final int posicion = position;
         holder.nombreProducto.setText(checkout.get(position).getNombre());
         Picasso.get().load(checkout.get(position).getFoto()).resize(90,91).centerCrop().into(holder.imagenCheckout);
+        holder.cancelarPedido.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                checkout.remove(posicion);
+                notifyDataSetChanged();
+            }
+        });
     }
 
     @Override
@@ -45,11 +54,13 @@ public class CheckoutListAdapter extends RecyclerView.Adapter<CheckoutListAdapte
         View mView;
         public TextView nombreProducto;
         public ImageView imagenCheckout;
+        public FloatingActionButton cancelarPedido;
         public ViewHolder(View itemView) {
             super(itemView);
             mView = itemView;
             nombreProducto = mView.findViewById(R.id.nombreProducto);
             imagenCheckout = mView.findViewById(R.id.imagenCheckout);
+            cancelarPedido = mView.findViewById(R.id.cancelarProducto);
         }
     }
 }

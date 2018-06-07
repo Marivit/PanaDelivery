@@ -43,12 +43,12 @@
             android:layout_marginTop="7dp"
             android:text="Cantidad (Medida)"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/floatingActionButton"
+            app:layout_constraintEnd_toStartOf="@+id/cancelarProducto"
             app:layout_constraintStart_toEndOf="@+id/imagenCheckout"
             app:layout_constraintTop_toBottomOf="@+id/nombreProducto" />
 
         <android.support.design.widget.FloatingActionButton
-            android:id="@+id/floatingActionButton"
+            android:id="@+id/cancelarProducto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="50dp"
