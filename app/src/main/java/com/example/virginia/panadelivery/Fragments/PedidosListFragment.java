@@ -19,7 +19,6 @@ import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
@@ -76,9 +75,7 @@ public class PedidosListFragment extends Fragment {
 
         //PRUEBA
         listaEmails = new ArrayList<>();
-        /*Query resultado = db
-                .collection("Usuarios").document("evitali44@gmail.com")
-                .collection("pedidos").whereEqualTo("estado","En espera");*/
+
         db.collection("Pedidos").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
@@ -87,11 +84,11 @@ public class PedidosListFragment extends Fragment {
                 }
                 for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
                     if (doc.getType() == DocumentChange.Type.ADDED) {
-                        if ((Integer) doc.getDocument().get("activo") == 1 && doc.getDocument().get("conductor") == null) {
+                        if (Integer.parseInt(doc.getDocument().get("activo").toString())== 1
+                                && doc.getDocument().get("conductor") == null) {
                             Pedido pedido = doc.getDocument().toObject(Pedido.class);
                             pedido.setIdPedido(doc.getDocument().getId());
                             pedido.setCorreoCliente((String) doc.getDocument().get("Cliente"));
-
                             lPedidos.add(pedido);
                             Log.d(TAG, "Se agrego algo a la lista!");
                             Log.d(TAG, String.valueOf(pedido));
@@ -101,7 +98,8 @@ public class PedidosListFragment extends Fragment {
                     if (doc.getType() == DocumentChange.Type.MODIFIED) {
                         for (int i = 0; i < lPedidos.size(); i++) {
                             if (lPedidos.get(i).getIdPedido() == doc.getDocument().getId()) {
-                                if ((Integer) doc.getDocument().get("activo") == 1 && doc.getDocument().get("conductor") == null) {
+                                if (Integer.parseInt(doc.getDocument().get("activo").toString())== 1
+                                        && doc.getDocument().get("conductor") == null) {
                                     Pedido pedidonuevo = doc.getDocument().toObject(Pedido.class);
                                     pedidonuevo.setIdPedido(doc.getDocument().getId());
                                     pedidonuevo.setCorreoCliente((String) doc.getDocument().get("Cliente"));
@@ -127,68 +125,7 @@ public class PedidosListFragment extends Fragment {
                 }
             }
         });
-        /*
-        db.collection("Usuarios").addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
 
-                if (e != null) {
-                    Log.d(TAG, e.getMessage());
-
-                }
-
-                for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
-
-
-                    if (doc.getType() == DocumentChange.Type.ADDED) {
-                        String email = doc.getDocument().getString("email");
-                        //Log.d(TAG, email);
-                        listaEmails.add(email);
-                        Log.d(TAG, "Se agrego un email!");
-                    }
-                }
-                Log.d(TAG2, String.valueOf(listaEmails));
-                for(String i:listaEmails){
-                    final String correoUsuario = i;
-                    //Log.d(TAG3, i);
-                    Query resultado = db
-                            .collection("Usuarios").document(i)
-                            .collection("pedidos").whereEqualTo("estado","En espera");
-                    resultado.addSnapshotListener(new EventListener<QuerySnapshot>() {
-                        @Override
-                        public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-
-                            if (e != null) {
-                                Log.d(TAG, e.getMessage());
-
-                            }
-
-                            for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
-
-
-                                if (doc.getType() == DocumentChange.Type.ADDED) {
-                                    //String email = doc.getDocument().getString("email");
-                                    //Log.d(TAG, email);
-                                    Log.d("ID BUG", doc.getDocument().getId());
-                                    Log.d("OBJETO",doc.getDocument().toString());
-                                    Pedido pedido = doc.getDocument().toObject(Pedido.class);
-                                    pedido.setIdPedido(doc.getDocument().getId());
-                                    pedido.setCorreoCliente(correoUsuario);
-
-                                    lPedidos.add(pedido);
-                                    Log.d(TAG, "Se agrego algo a la lista!");
-                                    Log.d(TAG, String.valueOf(pedido));
-                                    pedidosListAdapter.notifyDataSetChanged();
-                                }
-
-                            }
-
-                        }
-                    });
-                }
-            }
-        });
-        */
 
         return mView;
     }

@@ -1,6 +1,7 @@
 package com.example.virginia.panadelivery.Fragments;
 
 import android.annotation.SuppressLint;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.virginia.panadelivery.Modelos.Pedido;
 import com.example.virginia.panadelivery.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
@@ -30,16 +32,18 @@ import javax.annotation.Nullable;
 public class PedidoConductorFragment extends Fragment {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private FirebaseAuth firebaseAuth;
-    private String emailCliente;
     private String emailConductor;
+
     private String TAG = "resultConductor";
+    private String TAG2 = "probando";
+
     private TextView textViewEstado2;
     private TextView textViewMonto2;
     private TextView textViewConductor2;
     private TextView textViewPanaderia2;
     private Button buttonEstado;
     private String idPedido;
-
+    private Pedido pedido;
 
 
     public PedidoConductorFragment() {
@@ -49,10 +53,7 @@ public class PedidoConductorFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-
-
+        obtenerPedidoActual();
     }
 
     @Override
@@ -67,29 +68,25 @@ public class PedidoConductorFragment extends Fragment {
         textViewPanaderia2 = (TextView) view.findViewById(R.id.textViewPanaderia2);
         textViewConductor2 = (TextView) view.findViewById(R.id.textViewConductor2);
 
-        obtenerPedidoActual();
-
         buttonEstado.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                DocumentReference resultado = db.collection("Usuarios").document(emailCliente)
-                    .collection("pedidos").document(idPedido);
+                Log.d(TAG2, "Entro en boton");
+                Log.d(TAG2, pedido.getIdPedido());
+                DocumentReference resultado = db.collection("Pedidos").document(pedido.getIdPedido());
                 Map<String, Object> actualizarEstado = new HashMap<>();
 
-                if(textViewEstado2.equals("En proceso")){
-                    actualizarEstado.put("estado", "En tránsito");
-                    resultado.set(actualizarEstado, SetOptions.merge());
-                    textViewEstado2.setText("En tránsito");
-                }
-                if(textViewEstado2.equals("En tránsito")){
-                    actualizarEstado.put("estado", "Completado");
+                if(pedido.getEstado()==2){
+                    pedido.setEstado(3);
+                    actualizarEstado.put("estado", 3); //Pasar a completado
                     resultado.set(actualizarEstado, SetOptions.merge());
                     textViewEstado2.setText("Completado");
                 }
-                if(textViewEstado2.equals("Completado")){
-                    actualizarEstado.put("estado", "Entregado");
+                else if(pedido.getEstado()==3){
+                    pedido.setEstado(4);
+                    actualizarEstado.put("activo", 0); //FINALIZAR EL PEDIDO, aqui iria el QR
                     resultado.set(actualizarEstado, SetOptions.merge());
                     textViewEstado2.setText("Entregado");
                 }
@@ -97,52 +94,52 @@ public class PedidoConductorFragment extends Fragment {
                 configurarBoton(textViewEstado2);
             }
         });
+
+
         return view;
 
     }
 
     @SuppressLint("ResourceAsColor")
     private void configurarBoton(TextView estado){
-        if(estado.equals("En proceso")){
-            buttonEstado.setText("En tránsito");
-            buttonEstado.setBackgroundColor(R.color.colorAzul);
+        if(pedido.getEstado()==2){
+            Drawable d = getResources().getDrawable(R.color.colorMorado);
+            buttonEstado.setText("Completar");
+            buttonEstado.setBackground(d);
         }
-        if(estado.equals("En tránsito")){
-            buttonEstado.setText("Completado");
-            buttonEstado.setBackgroundColor(R.color.colorMorado);
-        }
-        if(estado.equals("Completado")){
-            buttonEstado.setText("Entregado");
-            buttonEstado.setBackgroundColor(R.color.colorVerde);
+        if(pedido.getEstado()==3){
+            Drawable d = getResources().getDrawable(R.color.colorVerde);
+            buttonEstado.setText("Entregar");
+            buttonEstado.setBackground(d);
         }
 
     }
 
     private void obtenerPedidoActual() {
-        if(getArguments()!=null){
-            emailCliente= getArguments().getString("emailCliente");
-            emailConductor= getArguments().getString("emailConductor");
-            Query resultado = db
-                    .collection("Usuarios").document(emailCliente)
-                    .collection("pedidos").whereEqualTo("estado","En proceso").whereEqualTo("conductorEmail", emailConductor);
+        firebaseAuth = FirebaseAuth.getInstance();
+        emailConductor = firebaseAuth.getCurrentUser().getEmail();
+        Query resultado = db
+                .collection("Pedidos").whereEqualTo("conductor", emailConductor);
+        if(resultado!=null) {
+            resultado.addSnapshotListener(new EventListener<QuerySnapshot>() {
+                @Override
+                public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
 
-            if(resultado!=null){
-                resultado.addSnapshotListener(new EventListener<QuerySnapshot>() {
-                    @Override
-                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                    if (e != null) {
+                        Log.d(TAG, e.getMessage());
+                        return;
 
-                        if (e != null) {
-                            Log.d(TAG, e.getMessage());
+                    }
+                    for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
+                        //TODO: Agregar modified
 
-                        }
-                        for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
-                            //TODO: Agregar modified
-
-                            if(doc.getType() == DocumentChange.Type.ADDED) {
-                                idPedido=doc.getDocument().getId();
-                                String estado = "";
-                                estado = doc.getDocument().getString("estado");
-                                Log.d(TAG, estado);
+                        if (doc.getType() == DocumentChange.Type.ADDED) {
+                            if (Integer.parseInt(doc.getDocument().get("activo").toString())== 1) {
+                                idPedido = doc.getDocument().getId();
+                                int estado;
+                                estado=doc.getDocument().getLong("estado").intValue();
+                                pedido = new Pedido(idPedido, estado);
+                                Log.d(TAG2, idPedido);
                                 String conductor = "";
                                 conductor = doc.getDocument().getString("conductor");
                                 String monto = "";
@@ -150,17 +147,33 @@ public class PedidoConductorFragment extends Fragment {
                                 String panaderia = "";
                                 panaderia = doc.getDocument().getString("panaderia");
 
-                                textViewEstado2.setText(estado);
+                                setearEstados(estado);
                                 textViewMonto2.setText(monto);
                                 textViewConductor2.setText(conductor);
                                 textViewPanaderia2.setText(panaderia);
                                 configurarBoton(textViewEstado2);
                             }
+                            Log.d(TAG2, String.valueOf(pedido));
                         }
                     }
-                });
-            }
+                }
+            });
+        }
+        if(pedido == null || resultado == null){
+            Log.d(TAG2, "SON NULL");
         }
 
+    }
+
+    public void setearEstados(int estado){
+        if (estado==1){
+            textViewEstado2.setText("En espera");
+        }
+        if (estado==2){
+            textViewEstado2.setText("En tránsito");
+        }
+        if (estado==3){
+            textViewEstado2.setText("Completado");
+        }
     }
 }

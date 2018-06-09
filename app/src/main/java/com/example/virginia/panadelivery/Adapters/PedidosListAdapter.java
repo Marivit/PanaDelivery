@@ -2,7 +2,6 @@ package com.example.virginia.panadelivery.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
@@ -130,25 +129,25 @@ public class PedidosListAdapter extends RecyclerView.Adapter<PedidosListAdapter.
 
                     // Actualizar el campo conductor y su correo para asignarselo a este
                     Map<String, Object> actPedido = new HashMap<>();
-                    //actPedido.put("estado", "En proceso");
-                    actPedido.put("conductor", "probando");
-                    actPedido.put("conductorEmail", emailConductor);
+                    actPedido.put("estado", 2);
+                    actPedido.put("conductor", emailConductor);
 
-                    DocumentReference resultado = db.collection("Usuarios").document(correoCliente)
-                            .collection("pedidos").document(idPedido);
+                    /*DocumentReference resultado = db.collection("Usuarios").document(correoCliente)
+                            .collection("pedidos").document(idPedido);*/
+                    DocumentReference resultado = db.collection("Pedidos").document(idPedido);
 
                     resultado.set(actPedido, SetOptions.merge());
 
                     //Pasar algunos parametros necesarios
-                    Bundle args = new Bundle();
+                    /*Bundle args = new Bundle();
                     args.putString("emailCliente", correoCliente);
-                    args.putString("emailConductor", emailConductor);
+                    args.putString("emailConductor", emailConductor);*/
 
                     //Cambiar de fragment al del pedido actual
                     FragmentTransaction ft = fm.beginTransaction();
 
                     final PedidoConductorFragment fragmentoP = new PedidoConductorFragment();
-                    fragmentoP.setArguments(args);
+                    //fragmentoP.setArguments(args);
                     ft.replace(R.id.containerConductor, fragmentoP);
                     ft.commit();
 

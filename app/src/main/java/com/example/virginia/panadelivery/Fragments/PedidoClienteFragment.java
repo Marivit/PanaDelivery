@@ -49,17 +49,8 @@ public class PedidoClienteFragment extends Fragment {
         final String  email= firebaseAuth.getCurrentUser().getEmail();
 
         Query resultado = db
-                .collection("Usuarios").document(email)
-                .collection("pedidos").whereEqualTo("estado","En espera");
-        Query resultado1 = db
-                .collection("Usuarios").document(email)
-                .collection("pedidos").whereEqualTo("estado","En proceso");
-        Query resultado2 = db
-                .collection("Usuarios").document(email)
-                .collection("pedidos").whereEqualTo("estado","En tránsito");
-        Query resultado3 = db
-                .collection("Usuarios").document(email)
-                .collection("pedidos").whereEqualTo("estado","Completo");
+                .collection("Pedidos").whereEqualTo("cliente", email);
+                //.whereEqualTo("activo","1"); //En espera
 
         if(resultado!=null){
             resultado.addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -72,164 +63,40 @@ public class PedidoClienteFragment extends Fragment {
                     }
                     for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
                         //TODO: Agregar modified
+                        Log.d(TAG, String.valueOf(doc));
+                        if(doc.getType() == DocumentChange.Type.ADDED || doc.getType() == DocumentChange.Type.MODIFIED) {
+                            if (Integer.parseInt(doc.getDocument().get("activo").toString())== 1){
+                                Long estado;
+                                estado=doc.getDocument().getLong("estado");
+                                Log.d(TAG2, String.valueOf(estado));
+                                String conductor = "";
+                                conductor=doc.getDocument().getString("conductor");
+                                Log.d(TAG3, conductor);
+                                String monto = "";
+                                monto=doc.getDocument().getString("montoTotal");
+                                Log.d(TAG4, monto);
+                                String panaderia = "";
+                                panaderia=doc.getDocument().getString("panaderia");
+                                Log.d(TAG5, panaderia);
 
-                        if(doc.getType() == DocumentChange.Type.ADDED) {
-                            String estado = "";
-                            estado=doc.getDocument().getString("estado");
-                            Log.d(TAG2, estado);
-                            String conductor = "";
-                            conductor=doc.getDocument().getString("conductor");
-                            Log.d(TAG3, conductor);
-                            String monto = "";
-                            monto=doc.getDocument().getString("montoTotal");
-                            Log.d(TAG4, monto);
-                            String panaderia = "";
-                            panaderia=doc.getDocument().getString("panaderia");
-                            Log.d(TAG5, panaderia);
+                                setearEstados(estado);
+                                textViewMonto.setText(monto);
+                                textViewConductor.setText(conductor);
+                                textViewPanaderia.setText(panaderia);
+                                try {
+                                    Bitmap qr = QrService.generarQr(doc.getDocument().getId(), black, white);
+                                    codigoQr.setImageBitmap(qr);
+                                } catch (WriterException e1) {
+                                    e1.printStackTrace();
+                                }
 
-                            textViewEstado.setText(estado);
-                            textViewMonto.setText(monto);
-                            textViewConductor.setText(conductor);
-                            textViewPanaderia.setText(panaderia);
-                            try {
-                                Bitmap qr = QrService.generarQr(doc.getDocument().getId(), black, white);
-                                codigoQr.setImageBitmap(qr);
-                            } catch (WriterException e1) {
-                                e1.printStackTrace();
                             }
-
                         }
+
                     }
                 }
             });
          }
-         if(resultado1!=null){
-            resultado1.addSnapshotListener(new EventListener<QuerySnapshot>() {
-                @Override
-                public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-
-                    if (e != null) {
-                        Log.d(TAG, e.getMessage());
-
-                    }
-                    for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
-                        //TODO: Agregar modified
-
-                        if(doc.getType() == DocumentChange.Type.ADDED) {
-                            String estado = "";
-                            estado=doc.getDocument().getString("estado");
-                            Log.d(TAG2, estado);
-                            String conductor = "";
-                            conductor=doc.getDocument().getString("conductor");
-                            Log.d(TAG3, conductor);
-                            String monto = "";
-                            monto=doc.getDocument().getString("montoTotal");
-                            Log.d(TAG4, monto);
-                            String panaderia = "";
-                            panaderia=doc.getDocument().getString("panaderia");
-                            Log.d(TAG5, panaderia);
-
-                            textViewEstado.setText(estado);
-                            textViewMonto.setText(monto);
-                            textViewConductor.setText(conductor);
-                            textViewPanaderia.setText(panaderia);
-                            try {
-                                Bitmap qr = QrService.generarQr(doc.getDocument().getId(), black, white);
-                                codigoQr.setImageBitmap(qr);
-
-                            } catch (WriterException e1) {
-                                e1.printStackTrace();
-                            }
-                        }
-                    }
-                }
-            });
-        }
-        if(resultado2!=null){
-            resultado2.addSnapshotListener(new EventListener<QuerySnapshot>() {
-                @Override
-                public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-
-                    if (e != null) {
-                        Log.d(TAG, e.getMessage());
-
-                    }
-                    for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
-                        //TODO: Agregar modified
-
-                        if(doc.getType() == DocumentChange.Type.ADDED) {
-                            String estado = "";
-                            estado=doc.getDocument().getString("estado");
-                            Log.d(TAG2, estado);
-                            String conductor = "";
-                            conductor=doc.getDocument().getString("conductor");
-                            Log.d(TAG3, conductor);
-                            String monto = "";
-                            monto=doc.getDocument().getString("montoTotal");
-                            Log.d(TAG4, monto);
-                            String panaderia = "";
-                            panaderia=doc.getDocument().getString("panaderia");
-                            Log.d(TAG5, panaderia);
-
-                            textViewEstado.setText(estado);
-                            textViewMonto.setText(monto);
-                            textViewConductor.setText(conductor);
-                            textViewPanaderia.setText(panaderia);
-                            try {
-                                Bitmap qr = QrService.generarQr(doc.getDocument().getId(), black, white);
-                                codigoQr.setImageBitmap(qr);
-                            } catch (WriterException e1) {
-                                e1.printStackTrace();
-                            }
-                        }
-                    }
-                }
-            });
-        }
-        if(resultado3!=null){
-            resultado3.addSnapshotListener(new EventListener<QuerySnapshot>() {
-                @Override
-                public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-
-                    if (e != null) {
-                        Log.d(TAG, e.getMessage());
-
-                    }
-                    for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
-                        //TODO: Agregar modified
-
-                        if(doc.getType() == DocumentChange.Type.ADDED) {
-                            String estado = "";
-                            estado=doc.getDocument().getString("estado");
-                            Log.d(TAG2, estado);
-                            String conductor = "";
-                            conductor=doc.getDocument().getString("conductor");
-                            Log.d(TAG3, conductor);
-                            String monto = "";
-                            monto=doc.getDocument().getString("montoTotal");
-                            Log.d(TAG4, monto);
-                            String panaderia = "";
-                            panaderia=doc.getDocument().getString("panaderia");
-                            Log.d(TAG5, panaderia);
-
-                            textViewEstado.setText(estado);
-                            textViewMonto.setText(monto);
-                            textViewConductor.setText(conductor);
-                            textViewPanaderia.setText(panaderia);
-                            try {
-                                Bitmap qr = QrService.generarQr(doc.getDocument().getId(), black, white);
-                                codigoQr.setImageBitmap(qr);
-
-                            } catch (WriterException e1) {
-                                e1.printStackTrace();
-                            }
-                        }
-                    }
-                }
-            });
-        }
-
-
 
     }
 
@@ -244,5 +111,17 @@ public class PedidoClienteFragment extends Fragment {
         textViewPanaderia = (TextView) view.findViewById(R.id.textViewPanaderia);
         codigoQr = (ImageView) view.findViewById(R.id.qr);
         return view;
+    }
+
+    public void setearEstados(Long estado){
+        if (estado==1){
+            textViewEstado.setText("En espera");
+        }
+        if (estado==2){
+            textViewEstado.setText("En tránsito");
+        }
+        if (estado==3){
+            textViewEstado.setText("Completado");
+        }
     }
 }

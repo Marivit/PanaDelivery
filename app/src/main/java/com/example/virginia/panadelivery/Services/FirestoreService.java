@@ -3,12 +3,10 @@ package com.example.virginia.panadelivery.Services;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.example.virginia.panadelivery.Modelos.Panaderia;
 import com.example.virginia.panadelivery.Modelos.Producto;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
@@ -19,7 +17,6 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -27,7 +24,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.CompletableFuture;
 
 import javax.annotation.Nullable;
 
@@ -124,7 +120,7 @@ public class FirestoreService {
                     Map<Object, Object> dataPedido = new HashMap<>();
                     dataPedido.put("latitud",  Double.toString( (Double) task.getResult().get("latitud")));
                     dataPedido.put("longitud", Double.toString((Double) task.getResult().get("longitud")));
-                    dataPedido.put("estado", "En espera");
+                    dataPedido.put("estado", 1);
                     dataPedido.put("montoTotal", "Placeholder");
                     dataPedido.put("panaderia", nombrePanaderia);
                     dataPedido.put("activo", 1);
