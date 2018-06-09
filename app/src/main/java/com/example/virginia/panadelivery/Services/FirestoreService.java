@@ -124,7 +124,6 @@ public class FirestoreService {
                     Map<Object, Object> dataPedido = new HashMap<>();
                     dataPedido.put("latitud",  Double.toString( (Double) task.getResult().get("latitud")));
                     dataPedido.put("longitud", Double.toString((Double) task.getResult().get("longitud")));
-                    dataPedido.put("conductor", "conductorPlaceHolder");
                     dataPedido.put("estado", "En espera");
                     dataPedido.put("montoTotal", "Placeholder");
                     dataPedido.put("panaderia", nombrePanaderia);
