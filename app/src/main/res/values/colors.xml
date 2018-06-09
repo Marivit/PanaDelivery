@@ -8,7 +8,7 @@
     <color name="color3">#ffffff</color>
     <color name="colorAccent">#ffcc40</color>
     <color name="colorVerde">@android:color/holo_green_light</color>
-
+    <color name="black">#000</color>
 
     <color name="colorPrimary">#FF8000</color>
     <color name="colorSegundo">#ffcc40</color>

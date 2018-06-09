@@ -79,7 +79,45 @@ public class PedidosListFragment extends Fragment {
         /*Query resultado = db
                 .collection("Usuarios").document("evitali44@gmail.com")
                 .collection("pedidos").whereEqualTo("estado","En espera");*/
+        db.collection("Pedidos").addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                if (e != null) {
+                    Log.d(TAG, e.getMessage());
+                }
+                for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
+                    if (doc.getType() == DocumentChange.Type.ADDED) {
+                        Pedido pedido = doc.getDocument().toObject(Pedido.class);
+                        pedido.setIdPedido(doc.getDocument().getId());
+                        pedido.setCorreoCliente((String) doc.getDocument().get("Cliente"));
 
+                        lPedidos.add(pedido);
+                        Log.d(TAG, "Se agrego algo a la lista!");
+                        Log.d(TAG, String.valueOf(pedido));
+                        pedidosListAdapter.notifyDataSetChanged();
+                    }
+                    if (doc.getType() == DocumentChange.Type.MODIFIED) {
+                        for (int i = 0; i < lPedidos.size(); i++) {
+                            if (lPedidos.get(i).getIdPedido() == doc.getDocument().getId()) {
+                                Pedido pedidonuevo = doc.getDocument().toObject(Pedido.class);
+                                pedidonuevo.setIdPedido(doc.getDocument().getId());
+                                pedidonuevo.setCorreoCliente((String) doc.getDocument().get("Cliente"));
+                                    lPedidos.set(i, pedidonuevo);
+                            }
+                        }
+
+                    }
+                    if (doc.getType() == DocumentChange.Type.REMOVED) {
+                        for (int i = 0; i < lPedidos.size(); i++) {
+                            if (lPedidos.get(i).getIdPedido() == doc.getDocument().getId()) {
+                                lPedidos.remove(i);
+                            }
+                        }
+                    }
+                }
+            }
+        });
+        /*
         db.collection("Usuarios").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
@@ -90,7 +128,7 @@ public class PedidosListFragment extends Fragment {
                 }
 
                 for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
-                    //TODO: Agregar modified
+
 
                     if (doc.getType() == DocumentChange.Type.ADDED) {
                         String email = doc.getDocument().getString("email");
@@ -116,7 +154,7 @@ public class PedidosListFragment extends Fragment {
                             }
 
                             for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
-                                //TODO: Agregar modified
+
 
                                 if (doc.getType() == DocumentChange.Type.ADDED) {
                                     //String email = doc.getDocument().getString("email");
@@ -140,6 +178,7 @@ public class PedidosListFragment extends Fragment {
                 }
             }
         });
+        */
 
         return mView;
     }

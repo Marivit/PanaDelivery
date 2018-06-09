@@ -1,14 +1,17 @@
 package com.example.virginia.panadelivery.Fragments;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.virginia.panadelivery.R;
+import com.example.virginia.panadelivery.Services.QrService;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
@@ -16,6 +19,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.zxing.WriterException;
 
 import javax.annotation.Nullable;
 
@@ -31,10 +35,13 @@ public class PedidoClienteFragment extends Fragment {
     private TextView textViewMonto;
     private TextView textViewConductor;
     private TextView textViewPanaderia;
-
+    private ImageView codigoQr;
+    private QrService QrService = new QrService();
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        final int black = getResources().getColor(R.color.black);
+        final int white = getResources().getColor(R.color.color3);
 
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -84,6 +91,12 @@ public class PedidoClienteFragment extends Fragment {
                             textViewMonto.setText(monto);
                             textViewConductor.setText(conductor);
                             textViewPanaderia.setText(panaderia);
+                            try {
+                                Bitmap qr = QrService.generarQr(doc.getDocument().getId(), black, white);
+                                codigoQr.setImageBitmap(qr);
+                            } catch (WriterException e1) {
+                                e1.printStackTrace();
+                            }
 
                         }
                     }
@@ -120,7 +133,13 @@ public class PedidoClienteFragment extends Fragment {
                             textViewMonto.setText(monto);
                             textViewConductor.setText(conductor);
                             textViewPanaderia.setText(panaderia);
+                            try {
+                                Bitmap qr = QrService.generarQr(doc.getDocument().getId(), black, white);
+                                codigoQr.setImageBitmap(qr);
 
+                            } catch (WriterException e1) {
+                                e1.printStackTrace();
+                            }
                         }
                     }
                 }
@@ -156,7 +175,12 @@ public class PedidoClienteFragment extends Fragment {
                             textViewMonto.setText(monto);
                             textViewConductor.setText(conductor);
                             textViewPanaderia.setText(panaderia);
-
+                            try {
+                                Bitmap qr = QrService.generarQr(doc.getDocument().getId(), black, white);
+                                codigoQr.setImageBitmap(qr);
+                            } catch (WriterException e1) {
+                                e1.printStackTrace();
+                            }
                         }
                     }
                 }
@@ -192,7 +216,13 @@ public class PedidoClienteFragment extends Fragment {
                             textViewMonto.setText(monto);
                             textViewConductor.setText(conductor);
                             textViewPanaderia.setText(panaderia);
+                            try {
+                                Bitmap qr = QrService.generarQr(doc.getDocument().getId(), black, white);
+                                codigoQr.setImageBitmap(qr);
 
+                            } catch (WriterException e1) {
+                                e1.printStackTrace();
+                            }
                         }
                     }
                 }
@@ -212,6 +242,7 @@ public class PedidoClienteFragment extends Fragment {
         textViewMonto = (TextView) view.findViewById(R.id.textViewMonto);
         textViewConductor = (TextView) view.findViewById(R.id.textViewConductor);
         textViewPanaderia = (TextView) view.findViewById(R.id.textViewPanaderia);
+        codigoQr = (ImageView) view.findViewById(R.id.qr);
         return view;
     }
 }
