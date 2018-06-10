@@ -1,5 +1,9 @@
 package com.example.virginia.panadelivery.Activities;
 
+import android.app.DatePickerDialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.support.v4.app.DialogFragment;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -12,10 +16,12 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.virginia.panadelivery.Fragments.DatePickerFragment;
 import com.example.virginia.panadelivery.R;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
@@ -29,6 +35,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,7 +43,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     //Variables
     private EditText editTextName;
     private EditText editTextLastname;
-    private EditText editTextFecha;
+    private TextView TextViewFecha;
     private EditText editTextTelefono;
     private Button buttonRegister;
     private EditText editTextEmail;
@@ -54,7 +61,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION =1;
     private int PLACE_PICKER_REQUEST=1;
     private boolean mLocationPermissionGranted=false;
-
+    private Button button;
+    private DatePickerDialog.OnDateSetListener mDateSetListener;
+    private String fecha;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,7 +75,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
         editTextName = (EditText) findViewById(R.id.editTextName);
         editTextLastname = (EditText) findViewById(R.id.editTextLastName);
-        editTextFecha = (EditText) findViewById(R.id.editTextFecha);
+        TextViewFecha = (TextView) findViewById(R.id.TextViewFecha);
         editTextTelefono = (EditText) findViewById(R.id.editTextTelefono);
         textViewDireccion = (TextView) findViewById(R.id.textDireccion);
         editTextEmail = (EditText) findViewById(R.id.editTextEmail);
@@ -78,11 +87,40 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         buttonRegister.setOnClickListener(this);
         textViewSignIn.setOnClickListener(this);
         textViewDireccion.setOnClickListener(this);
+        TextViewFecha.setOnClickListener(this);
+        mDateSetListener = new DatePickerDialog.OnDateSetListener() {
+
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+
+                    fecha = Integer.toString(dayOfMonth);
+                    fecha = fecha + "/" + Integer.toString(month) + "/" + Integer.toString(year);
+
+
+
+            }
+        };
 
     }
 
     @Override
     public void onClick(View view) {
+        if (view == TextViewFecha) {
+            DialogFragment newFragment = new DatePickerFragment();
+            newFragment.show(getSupportFragmentManager(), "DatePickerFragment");
+            /*
+            Log.d("AAA", "AAA");
+            final Calendar c = Calendar.getInstance();
+            int year = c.get(Calendar.YEAR);
+            int month = c.get(Calendar.MONTH);
+            int day = c.get(Calendar.DAY_OF_MONTH);
+            DatePickerDialog dpl = new DatePickerDialog(this, android.R.style.Theme_Holo_Light_Dialog_MinWidth,
+                    mDateSetListener,  year, month, day);
+
+            dpl.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dpl.show();
+            */
+        }
         if (view == buttonRegister) {
             registerUser();
         }
@@ -162,7 +200,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         String password = editTextPassword.getText().toString().trim();
         String name = editTextName.getText().toString().trim();
         String lastname = editTextLastname.getText().toString().trim();
-        String fechaN = editTextFecha.getText().toString().trim();
+        String fechaN = TextViewFecha.getText().toString().trim();
         String telefono = editTextTelefono.getText().toString().trim();
         String direccion = textViewDireccion.getText().toString().trim();
 
@@ -197,7 +235,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
                             usuario.put("nombre", editTextName.getText().toString().trim());
                             usuario.put("apellido", editTextLastname.getText().toString().trim());
-                            usuario.put("fechaNacimiento", editTextFecha.getText().toString().trim());
+                            usuario.put("fechaNacimiento", TextViewFecha.getText().toString().trim());
                             usuario.put("email", editTextEmail.getText().toString().trim());
                             usuario.put("telefono", editTextTelefono.getText().toString().trim());
                             //usuario.put("direccion", direccion);
@@ -242,4 +280,13 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         finish();
         startActivity(new Intent(this, ProfileClienteActivity.class));
     }
+
+
+    public void setEditTextFecha(String fecha) {
+        this.TextViewFecha.setText(fecha);
+    }
+
+
+
+
 }
