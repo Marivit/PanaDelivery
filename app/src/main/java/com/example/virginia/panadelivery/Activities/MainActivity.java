@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         buttonLogin.setOnClickListener(this);
         textViewSignUp.setOnClickListener(this);
+
     }
 
     private void LoginUser() {

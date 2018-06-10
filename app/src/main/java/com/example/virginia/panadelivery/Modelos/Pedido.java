@@ -3,7 +3,8 @@ package com.example.virginia.panadelivery.Modelos;
 public class Pedido {
 
      String direccion, hora, fecha, latitud, longitud, correoCliente;
-     String idPedido, conductorEmail, estado;
+     String idPedido, conductorEmail;
+     int estado;
 
     @Override
     public String toString() {
@@ -18,11 +19,16 @@ public class Pedido {
                 '}';
     }
 
-    Pedido() {
+    public Pedido(String idPedido, int estado) {
+        this.idPedido=idPedido;
+        this.estado=estado;
+    }
+
+    public Pedido() {
 
     }
 
-    public Pedido(String estado, String direccion, String fecha, String hora, String latitud, String longitud, String conductorEmail) {
+    public Pedido(int estado, String direccion, String fecha, String hora, String latitud, String longitud, String conductorEmail) {
         this.estado = estado;
         this.direccion = direccion;
         this.fecha = fecha;
@@ -31,11 +37,11 @@ public class Pedido {
         this.longitud = longitud;
         this.conductorEmail= conductorEmail;
     }
-    public String getEstado() {
+    public int getEstado() {
         return estado;
     }
 
-    public void setEstado(String estado) {
+    public void setEstado(int estado) {
         this.estado = estado;
     }
 
