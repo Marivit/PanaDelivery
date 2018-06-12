@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -43,6 +44,7 @@ public class PedidosListFragment extends Fragment {
         // Required empty public constructor
     }
 
+
     public void setListaPedidos(RecyclerView listaPedidos) {
         this.listaPedidos = listaPedidos;
     }
@@ -64,13 +66,14 @@ public class PedidosListFragment extends Fragment {
         lPedidos = new ArrayList<>();
 
         listaPedidos = (RecyclerView) mView.findViewById(R.id.pedidosActuales);
-
+        listaPedidos.addItemDecoration(new DividerItemDecoration(listaPedidos.getContext(), DividerItemDecoration.HORIZONTAL));
         Context cont = getActivity().getApplicationContext();
         FragmentManager fm = getActivity().getSupportFragmentManager();
         pedidosListAdapter = new PedidosListAdapter(lPedidos, cont, fm);
         listaPedidos.setHasFixedSize(true);
         listaPedidos.setLayoutManager(new LinearLayoutManager(getContext()));
         listaPedidos.setAdapter(pedidosListAdapter);
+
         //String id = this.getArguments().getString("id");
 
         //PRUEBA

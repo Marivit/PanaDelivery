@@ -12,10 +12,13 @@ import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.virginia.panadelivery.Modelos.Producto;
 import com.example.virginia.panadelivery.R;
 import com.squareup.picasso.Picasso;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,9 +27,14 @@ public class ProductosListAdapter extends RecyclerView.Adapter<ProductosListAdap
 
     public List<Producto> productos;
     public List<Producto> checkout;
-    public ProductosListAdapter(List<Producto> productos, List<Producto> checkout) {
+    private TextView montoTotal;
+    private int sumaMonto = 0;
+
+
+    public ProductosListAdapter(List<Producto> productos, List<Producto> checkout, TextView montoTotal) {
         this.productos = productos;
         this.checkout = checkout;
+        this.montoTotal = montoTotal;
     }
     @NonNull
     @Override
@@ -46,8 +54,9 @@ public class ProductosListAdapter extends RecyclerView.Adapter<ProductosListAdap
         holder.nombreProducto.setText(productos.get(position).getNombre());
         Picasso.get().load(productos.get(position).getFoto()).resize(90,91).centerCrop().into(holder.imagenProducto);
         holder.descripcion.setText(productos.get(position).getDescripcion());
-
-        holder.bind();
+        holder.precioUnidad.setText(productos.get(position).getPrecio() + " BSS.");
+        holder.unidadesTotales.setText(Integer.toString(productos.get(position).getCantidad()));
+        holder.bind(productos.get(position));
 
     }
 
@@ -66,8 +75,9 @@ public class ProductosListAdapter extends RecyclerView.Adapter<ProductosListAdap
         public CheckBox confirmarProducto;
         public Producto producto, productoCheckout;
         public ImageView imagenProducto;
-
-
+        public TextView precioUnidad;
+        public TextView precioTotal;
+        public TextView unidadesTotales;
         public ViewHolder(View itemView) {
             super(itemView);
             mView = itemView;
@@ -80,6 +90,10 @@ public class ProductosListAdapter extends RecyclerView.Adapter<ProductosListAdap
             descripcion = (TextView) mView.findViewById(R.id.descripcion);
             confirmarProducto = (CheckBox) mView.findViewById(R.id.checkBoxAñadir);
             imagenProducto = (ImageView) mView.findViewById(R.id.imagenProducto);
+            precioUnidad = (TextView) mView.findViewById(R.id.precioUnidad);
+            precioTotal = (TextView) mView.findViewById(R.id.precioTotal);
+            unidadesTotales = (TextView) mView.findViewById(R.id.unidadesTotales);
+
         }
         public void setProducto(Producto producto) {
             this.producto = producto;
@@ -92,7 +106,7 @@ public class ProductosListAdapter extends RecyclerView.Adapter<ProductosListAdap
             Log.d("HOL","HOLA");
 
         }
-        public void bind() {
+        public void bind(final Producto p2 ) {
             mas.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View view ) {
 
@@ -102,11 +116,14 @@ public class ProductosListAdapter extends RecyclerView.Adapter<ProductosListAdap
                     numero++;
                     if (numero > producto.getCantidad()) {
                         numero--;
-
+                        Toast.makeText(mView.getContext(), "No se puede sobrepasar de la demanda total", Toast.LENGTH_SHORT).show();
                     }
                     productoCheckout.setCantidad(numero);
                     cantidadProducto.setText(Integer.toString(numero));
-
+                    int pt = (numero * Integer.parseInt(p2.getPrecio()));
+                    precioTotal.setText(Integer.toString(pt) + "Bss");
+                    sumaMonto = sumaMonto + pt;
+                    montoTotal.setText(Integer.toString(sumaMonto) + "Bss");
 
                 }
             });
@@ -118,9 +135,14 @@ public class ProductosListAdapter extends RecyclerView.Adapter<ProductosListAdap
                     numero--;
                     if (numero < 0) {
                         numero = 0;
+                        Toast.makeText(mView.getContext(), "No puede pedir unidades negativas", Toast.LENGTH_SHORT).show();
                     }
                     productoCheckout.setCantidad(numero);
                     cantidadProducto.setText(Integer.toString(numero));
+                    int pt = (numero * Integer.parseInt(p2.getPrecio()));
+                    precioTotal.setText(Integer.toString(pt));
+                    int sumaMonto = Integer.parseInt(montoTotal.getText().toString());
+                    montoTotal.setText(Integer.toString(sumaMonto) + "Bss");
 
 
                 }

@@ -19,6 +19,13 @@
         android:gravity="bottom"
         android:orientation="vertical">
 
+        <TextView
+            android:id="@+id/sumaMontos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="0" />
+
         <Button
             android:id="@+id/checkout"
             android:layout_width="match_parent"

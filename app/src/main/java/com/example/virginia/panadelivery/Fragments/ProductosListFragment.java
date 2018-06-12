@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.virginia.panadelivery.Activities.CheckoutActivity;
 import com.example.virginia.panadelivery.Activities.ProfileClienteActivity;
@@ -34,15 +35,14 @@ import javax.annotation.Nullable;
 
 public class ProductosListFragment extends Fragment {
     private RecyclerView listaProductos;
+    private TextView sumaMontos;
     private String TAG = "Firelog";
     private List<Producto> lProductos, lCheckout;
     private ProductosListAdapter productosListAdapter;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private Button checkout;
     private String idPanaderia, nombrePanaderia;
-
-
-
+    private TextView montoTotal;
 
 
     public ProductosListFragment() {
@@ -69,14 +69,18 @@ public class ProductosListFragment extends Fragment {
         View mView = inflater.inflate(R.layout.fragment_productos_list, container, false);
         lProductos = new ArrayList<>();
         lCheckout = new ArrayList<>();
+        montoTotal = (TextView) mView.findViewById(R.id.sumaMontos);
+        montoTotal = montoTotal;
         listaProductos = (RecyclerView) mView.findViewById(R.id.productos);
-        productosListAdapter = new ProductosListAdapter(lProductos, lCheckout);
+        productosListAdapter = new ProductosListAdapter(lProductos, lCheckout, montoTotal);
         listaProductos.setHasFixedSize(true);
         listaProductos.setLayoutManager(new LinearLayoutManager(getContext()));
         listaProductos.setAdapter(productosListAdapter);
         idPanaderia = this.getArguments().getString("id");
         nombrePanaderia = this.getArguments().getString("nombre");
         checkout = (Button) mView.findViewById(R.id.checkout);
+
+
         bind(mView);
 
         db.collection("Panaderias").document(idPanaderia).collection("Productos").addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -112,9 +116,9 @@ public class ProductosListFragment extends Fragment {
                     }
                 }
 
-            }
-        });
-return mView;
+    }
+});
+        return mView;
 
     }
     public void bind(final View view) {
