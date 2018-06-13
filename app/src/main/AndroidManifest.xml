@@ -49,7 +49,12 @@
         <activity
             android:name=".Activities.ProfileConductorActivity"
             android:label="@string/title_activity_profile_conductor" />
-        <activity android:name=".Activities.CheckoutActivity"></activity>
+        <activity android:name=".Activities.CheckoutActivity" />
+
+        <service
+            android:name=".Services.TrackerService"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>
