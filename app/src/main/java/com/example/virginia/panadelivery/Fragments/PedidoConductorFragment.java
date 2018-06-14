@@ -1,18 +1,26 @@
 package com.example.virginia.panadelivery.Fragments;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.virginia.panadelivery.Modelos.Pedido;
 import com.example.virginia.panadelivery.R;
+import com.example.virginia.panadelivery.Services.TrackerService;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
@@ -27,6 +35,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.Nullable;
+
+import static android.content.Context.LOCATION_SERVICE;
 
 
 public class PedidoConductorFragment extends Fragment {
@@ -44,6 +54,7 @@ public class PedidoConductorFragment extends Fragment {
     private Button buttonEstado;
     private String idPedido;
     private Pedido pedido;
+    private static final int PERMISSIONS_REQUEST = 1;
 
 
     public PedidoConductorFragment() {
@@ -83,6 +94,24 @@ public class PedidoConductorFragment extends Fragment {
                     actualizarEstado.put("estado", 3); //Pasar a completado
                     resultado.set(actualizarEstado, SetOptions.merge());
                     textViewEstado2.setText("Completado");
+                    //Aqui comienza el tracking
+                    LocationManager lm = (LocationManager) getActivity().getSystemService(LOCATION_SERVICE);
+                    if (!lm.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                        Toast.makeText(getContext(),  "Please enable location services", Toast.LENGTH_SHORT).show();
+                        //finish();
+                    }
+
+                    // Check location permission is granted - if it is, start
+                    // the service, otherwise request the permission
+                    int permission = ContextCompat.checkSelfPermission(getContext(),
+                            Manifest.permission.ACCESS_FINE_LOCATION);
+                    if (permission == PackageManager.PERMISSION_GRANTED) {
+                        startTrackerService();
+                    } else {
+                        ActivityCompat.requestPermissions(getActivity(),
+                                new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                                PERMISSIONS_REQUEST);
+                    }
                 }
                 else if(pedido.getEstado()==3){
                     pedido.setEstado(4);
@@ -97,6 +126,14 @@ public class PedidoConductorFragment extends Fragment {
 
 
         return view;
+
+    }
+
+    private void startTrackerService() {
+        Intent intent = new Intent(getContext(), TrackerService.class);
+        intent.putExtra("idPedido", pedido.getIdPedido());
+
+        getActivity().startService(intent);
 
     }
 

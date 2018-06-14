@@ -78,7 +78,11 @@ public class PedidoClienteFragment extends Fragment {
                                 String panaderia = "";
                                 panaderia=doc.getDocument().getString("panaderia");
                                 Log.d(TAG5, panaderia);
-
+                                if (doc.getDocument().getString("latitudConductor") != null && doc.getDocument().getString("longitudConductor") != null) {
+                                   String latitud = doc.getDocument().getString("latitudConductor");
+                                   String longitud = doc.getDocument().getString("longitudConductor");
+                                   Log.d("LL", latitud + " y " + longitud);
+                                }
                                 setearEstados(estado);
                                 textViewMonto.setText(monto);
                                 textViewConductor.setText(conductor);

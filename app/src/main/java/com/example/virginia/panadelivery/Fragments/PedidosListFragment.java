@@ -58,7 +58,7 @@ public class PedidosListFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+                             Bundle savedInstanceState) throws java.lang.RuntimeException {
         // Inflate the layout for this fragment
         View mView = inflater.inflate(R.layout.fragment_pedidos_list, container, false);
        // buttonUbicacion = (FloatingActionButton) mView.findViewById(R.id.buttonUbicacion);
@@ -89,13 +89,20 @@ public class PedidosListFragment extends Fragment {
                     if (doc.getType() == DocumentChange.Type.ADDED) {
                         if (Integer.parseInt(doc.getDocument().get("activo").toString())== 1
                                 && doc.getDocument().get("conductor") == null) {
-                            Pedido pedido = doc.getDocument().toObject(Pedido.class);
-                            pedido.setIdPedido(doc.getDocument().getId());
-                            pedido.setCorreoCliente((String) doc.getDocument().get("Cliente"));
-                            lPedidos.add(pedido);
-                            Log.d(TAG, "Se agrego algo a la lista!");
-                            Log.d(TAG, String.valueOf(pedido));
-                            pedidosListAdapter.notifyDataSetChanged();
+                            try  {
+                                Pedido pedido = doc.getDocument().toObject(Pedido.class);
+
+
+                                pedido.setIdPedido(doc.getDocument().getId());
+                                pedido.setCorreoCliente((String) doc.getDocument().get("Cliente"));
+                                lPedidos.add(pedido);
+                                Log.d(TAG, "Se agrego algo a la lista!");
+                                Log.d(TAG, String.valueOf(pedido));
+                                pedidosListAdapter.notifyDataSetChanged();
+                            } catch (java.lang.RuntimeException a) {
+                                Log.d("AD", doc.getDocument().toString());
+                                getActivity().finish();
+                            }
                         }
                     }
                     if (doc.getType() == DocumentChange.Type.MODIFIED) {
@@ -132,7 +139,6 @@ public class PedidosListFragment extends Fragment {
 
         return mView;
     }
-
 
 }
 
