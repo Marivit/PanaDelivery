@@ -18,9 +18,16 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.virginia.panadelivery.Modelos.Pedido;
 import com.example.virginia.panadelivery.R;
+import com.example.virginia.panadelivery.Services.APIKeys;
+import com.example.virginia.panadelivery.Services.HttpService;
 import com.example.virginia.panadelivery.Services.TrackerService;
+import com.example.virginia.panadelivery.Services.VolleyApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
@@ -31,6 +38,9 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
 
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -55,7 +65,7 @@ public class PedidoConductorFragment extends Fragment {
     private String idPedido;
     private Pedido pedido;
     private static final int PERMISSIONS_REQUEST = 1;
-
+    private HttpService httpService =  new HttpService();
 
     public PedidoConductorFragment() {
         // Required empty public constructor
@@ -65,6 +75,7 @@ public class PedidoConductorFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         obtenerPedidoActual();
+
     }
 
     @Override
@@ -213,4 +224,6 @@ public class PedidoConductorFragment extends Fragment {
             textViewEstado2.setText("Completado");
         }
     }
+
+
 }
