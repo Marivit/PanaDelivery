@@ -16,12 +16,10 @@
             android:id="@+id/precioUnidad"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="17dp"
             android:layout_marginEnd="6dp"
             android:layout_marginStart="30dp"
             android:layout_marginTop="28dp"
             android:text="precio (BSS)"
-            app:layout_constraintBottom_toTopOf="@+id/precioTotal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/nombre"
@@ -151,17 +149,29 @@
 
         <TextView
             android:id="@+id/precioTotal"
-            android:layout_width="wrap_content"
+            android:layout_width="55dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="27dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginStart="31dp"
-            android:layout_marginTop="17dp"
-            android:text="MT: (BSS)"
+            android:layout_marginBottom="44dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="MT:"
             app:layout_constraintBottom_toTopOf="@+id/checkBoxAñadir"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/precioTotal2"
+            app:layout_constraintHorizontal_bias="0.833"
             app:layout_constraintStart_toEndOf="@+id/descripcion"
-            app:layout_constraintTop_toBottomOf="@+id/precioUnidad" />
+            app:layout_constraintTop_toBottomOf="@+id/precioUnidad"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <TextView
+            android:id="@+id/precioTotal2"
+            android:layout_width="33dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="44dp"
+            android:layout_marginEnd="4dp"
+            android:text="Bs.S"
+            app:layout_constraintBottom_toTopOf="@+id/checkBoxAñadir"
+            app:layout_constraintEnd_toEndOf="parent" />
 
         <TextView
             android:id="@+id/unidadesTotales2"
