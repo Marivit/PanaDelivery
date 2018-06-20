@@ -2,13 +2,11 @@ package com.example.virginia.panadelivery.Adapters;
 
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -18,9 +16,6 @@ import com.example.virginia.panadelivery.Modelos.Producto;
 import com.example.virginia.panadelivery.R;
 import com.squareup.picasso.Picasso;
 
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class ProductosListAdapter extends RecyclerView.Adapter<ProductosListAdapter.ViewHolder> {
@@ -121,9 +116,9 @@ public class ProductosListAdapter extends RecyclerView.Adapter<ProductosListAdap
                     productoCheckout.setCantidad(numero);
                     cantidadProducto.setText(Integer.toString(numero));
                     int pt = (numero * Integer.parseInt(p2.getPrecio()));
-                    precioTotal.setText(Integer.toString(pt) + "Bss");
+                    precioTotal.setText(Integer.toString(pt));
                     sumaMonto = sumaMonto + pt;
-                    montoTotal.setText(Integer.toString(sumaMonto) + "Bss");
+                    montoTotal.setText(Integer.toString(sumaMonto));
 
                 }
             });
@@ -142,7 +137,7 @@ public class ProductosListAdapter extends RecyclerView.Adapter<ProductosListAdap
                     int pt = (numero * Integer.parseInt(p2.getPrecio()));
                     precioTotal.setText(Integer.toString(pt));
                     int sumaMonto = Integer.parseInt(montoTotal.getText().toString());
-                    montoTotal.setText(Integer.toString(sumaMonto) + "Bss");
+                    montoTotal.setText(Integer.toString(sumaMonto));
 
 
                 }

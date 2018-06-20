@@ -20,9 +20,6 @@ public class ScannerActivity extends AppCompatActivity {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private static final String TAG2 = "probando";
     String idPedido;
-//    public final int black = getResources().getColor(R.color.black);
-  //  public final int white = getResources().getColor(R.color.color3);
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

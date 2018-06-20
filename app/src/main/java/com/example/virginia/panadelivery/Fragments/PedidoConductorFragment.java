@@ -18,19 +18,12 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import com.example.virginia.panadelivery.Activities.ProfileConductorActivity;
 import com.example.virginia.panadelivery.Activities.ScannerActivity;
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.virginia.panadelivery.Modelos.Pedido;
 import com.example.virginia.panadelivery.R;
-import com.example.virginia.panadelivery.Services.APIKeys;
 import com.example.virginia.panadelivery.Services.HttpService;
 import com.example.virginia.panadelivery.Services.TrackerService;
-import com.example.virginia.panadelivery.Services.VolleyApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
@@ -41,9 +34,6 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
 
-import org.json.JSONObject;
-
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -157,13 +147,15 @@ public class PedidoConductorFragment extends Fragment {
     }
 
     private void configurarBoton(){
+        Activity activity = getActivity();
         if(pedido.getEstado()==2){
-            Drawable d = getResources().getDrawable(R.color.colorMorado);
-            buttonEstado.setText("Completar");
-            buttonEstado.setBackground(d);
+            if(activity != null && isAdded()) {
+                Drawable d = getResources().getDrawable(R.color.colorMorado);
+                buttonEstado.setText("Completar");
+                buttonEstado.setBackground(d);
+            }
         }
         if(pedido.getEstado()==3){
-            Activity activity = getActivity();
             if(activity != null && isAdded()) {
                 Drawable d = getResources().getDrawable(R.color.colorVerde);
                 buttonEstado.setText("Entregar");

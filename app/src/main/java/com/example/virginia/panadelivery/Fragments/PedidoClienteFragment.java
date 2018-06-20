@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.virginia.panadelivery.Activities.ProfileConductorActivity;
 import com.example.virginia.panadelivery.R;
 import com.example.virginia.panadelivery.Services.QrService;
 import com.google.firebase.auth.FirebaseAuth;
@@ -71,7 +72,7 @@ public class PedidoClienteFragment extends Fragment {
                                 Log.d(TAG2, String.valueOf(estado));
                                 String conductor = "";
                                 conductor=doc.getDocument().getString("conductor");
-                                Log.d(TAG3, conductor);
+                                //Log.d(TAG3, conductor);
                                 String monto = "";
                                 monto=doc.getDocument().getString("montoTotal");
                                 Log.d(TAG4, monto);
@@ -85,8 +86,12 @@ public class PedidoClienteFragment extends Fragment {
                                 }
                                 setearEstados(estado);
                                 textViewMonto.setText(monto);
-                                textViewConductor.setText(conductor);
                                 textViewPanaderia.setText(panaderia);
+                                if(conductor != null) {
+                                    textViewConductor.setText(conductor);
+                                } else {
+                                    textViewConductor.setText("---");
+                                }
                                 try {
                                     Bitmap qr = QrService.generarQr(doc.getDocument().getId(), black, white);
                                     codigoQr.setImageBitmap(qr);
@@ -100,7 +105,9 @@ public class PedidoClienteFragment extends Fragment {
                     }
                 }
             });
-         }
+         } else {
+            validar();
+        }
 
     }
 
@@ -126,6 +133,12 @@ public class PedidoClienteFragment extends Fragment {
         }
         if (estado==3){
             textViewEstado.setText("Completado");
+        }
+    }
+
+    public void validar() {
+        if(getActivity()!=null){
+            ((ProfileConductorActivity) getActivity()).mostrarEmpty();
         }
     }
 }
