@@ -1,7 +1,7 @@
 package com.example.virginia.panadelivery.Fragments;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
@@ -18,6 +18,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.virginia.panadelivery.Activities.ProfileConductorActivity;
+import com.example.virginia.panadelivery.Activities.ScannerActivity;
 import com.example.virginia.panadelivery.Modelos.Pedido;
 import com.example.virginia.panadelivery.R;
 import com.example.virginia.panadelivery.Services.TrackerService;
@@ -114,13 +116,20 @@ public class PedidoConductorFragment extends Fragment {
                     }
                 }
                 else if(pedido.getEstado()==3){
-                    pedido.setEstado(4);
+                    /*pedido.setEstado(4);
                     actualizarEstado.put("activo", 0); //FINALIZAR EL PEDIDO, aqui iria el QR
                     resultado.set(actualizarEstado, SetOptions.merge());
-                    textViewEstado2.setText("Entregado");
+                    textViewEstado2.setText("Entregado");*/
+
+                    Intent intent = new Intent(getContext(), ScannerActivity.class);
+                    intent.putExtra("idPedido", pedido.getIdPedido());
+                    startActivity(intent);
+
+                    Log.d(TAG2, "REGRESO AQUI DESPUES DE CERRAR LA CAMARA");
+
                 }
 
-                configurarBoton(textViewEstado2);
+                configurarBoton();
             }
         });
 
@@ -137,17 +146,19 @@ public class PedidoConductorFragment extends Fragment {
 
     }
 
-    @SuppressLint("ResourceAsColor")
-    private void configurarBoton(TextView estado){
+    private void configurarBoton(){
         if(pedido.getEstado()==2){
             Drawable d = getResources().getDrawable(R.color.colorMorado);
             buttonEstado.setText("Completar");
             buttonEstado.setBackground(d);
         }
         if(pedido.getEstado()==3){
-            Drawable d = getResources().getDrawable(R.color.colorVerde);
-            buttonEstado.setText("Entregar");
-            buttonEstado.setBackground(d);
+            Activity activity = getActivity();
+            if(activity != null && isAdded()) {
+                Drawable d = getResources().getDrawable(R.color.colorVerde);
+                buttonEstado.setText("Entregar");
+                buttonEstado.setBackground(d);
+            }
         }
 
     }
@@ -188,7 +199,10 @@ public class PedidoConductorFragment extends Fragment {
                                 textViewMonto2.setText(monto);
                                 textViewConductor2.setText(conductor);
                                 textViewPanaderia2.setText(panaderia);
-                                configurarBoton(textViewEstado2);
+                                configurarBoton();
+                            }
+                            else {
+                                validar();
                             }
                             Log.d(TAG2, String.valueOf(pedido));
                         }
@@ -196,10 +210,18 @@ public class PedidoConductorFragment extends Fragment {
                 }
             });
         }
-        if(pedido == null || resultado == null){
+        if(resultado == null){
             Log.d(TAG2, "SON NULL");
+            validar();
         }
 
+    }
+
+    public void validar() {
+        if(getActivity()!=null){
+            ((ProfileConductorActivity) getActivity()).mostrarEmpty();
+
+        }
     }
 
     public void setearEstados(int estado){
@@ -212,5 +234,21 @@ public class PedidoConductorFragment extends Fragment {
         if (estado==3){
             textViewEstado2.setText("Completado");
         }
+        if (estado==4){
+            textViewEstado2.setText("Entregado");
+        }
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+    }
+
+
 }
