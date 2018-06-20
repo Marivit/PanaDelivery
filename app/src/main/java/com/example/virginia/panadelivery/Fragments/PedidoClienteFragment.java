@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.virginia.panadelivery.Activities.ProfileClienteActivity;
 import com.example.virginia.panadelivery.Activities.ProfileConductorActivity;
 import com.example.virginia.panadelivery.R;
 import com.example.virginia.panadelivery.Services.QrService;
@@ -62,8 +63,9 @@ public class PedidoClienteFragment extends Fragment {
                         Log.d(TAG, e.getMessage());
 
                     }
-                    for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
-                        //TODO: Agregar modified
+                    for (int i = 0; i < queryDocumentSnapshots.getDocumentChanges().size(); i++ ) {
+
+                    DocumentChange doc = queryDocumentSnapshots.getDocumentChanges().get(i);
                         Log.d(TAG, String.valueOf(doc));
                         if(doc.getType() == DocumentChange.Type.ADDED || doc.getType() == DocumentChange.Type.MODIFIED) {
                             if (Integer.parseInt(doc.getDocument().get("activo").toString())== 1){
@@ -100,8 +102,17 @@ public class PedidoClienteFragment extends Fragment {
                                 }
 
                             }
+                            else if (Integer.parseInt(doc.getDocument().get("activo").toString())== 0 && i == queryDocumentSnapshots.getDocumentChanges().size() ) {
+                                if(getActivity()!=null){
+                                    ((ProfileConductorActivity) getActivity()).mostrarEmpty();
+                                }
+                            }
                         }
 
+                    }
+                    Log.d("TAMANO", Integer.toString(queryDocumentSnapshots.getDocumentChanges().size()));
+                    if (queryDocumentSnapshots.getDocumentChanges().size() == 0) {
+                        validar();
                     }
                 }
             });
@@ -138,7 +149,8 @@ public class PedidoClienteFragment extends Fragment {
 
     public void validar() {
         if(getActivity()!=null){
-            ((ProfileConductorActivity) getActivity()).mostrarEmpty();
+
+            ((ProfileClienteActivity) getActivity()).mostrarEmpty();
         }
     }
 }

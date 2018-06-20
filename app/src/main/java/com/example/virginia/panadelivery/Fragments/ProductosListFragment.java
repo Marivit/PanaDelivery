@@ -132,6 +132,8 @@ public class ProductosListFragment extends Fragment {
                     b.putParcelableArrayList("lCheckout", (ArrayList<? extends Parcelable>) lCheckout);
                     b.putString("idPanaderia", idPanaderia);
                     b.putString("nombrePanaderia", nombrePanaderia);
+                    int mt = Integer.parseInt(montoTotal.getText().toString());
+                    b.putInt("montoTotal", mt);
                     intent.putExtra("listas", b);
                     startActivity(intent);
 

@@ -98,6 +98,7 @@ public class ProductosListAdapter extends RecyclerView.Adapter<ProductosListAdap
             productoCheckout.setId(producto.getId());
             productoCheckout.setFoto(producto.getFoto());
             productoCheckout.setDescripcion(producto.getDescripcion());
+            productoCheckout.setPrecio(producto.getPrecio());
             Log.d("HOL","HOLA");
 
         }
@@ -109,17 +110,25 @@ public class ProductosListAdapter extends RecyclerView.Adapter<ProductosListAdap
 
                     int numero = Integer.parseInt(cantidadProducto.getText().toString());
                     numero++;
+
                     if (numero > producto.getCantidad()) {
                         numero--;
                         Toast.makeText(mView.getContext(), "No se puede sobrepasar de la demanda total", Toast.LENGTH_SHORT).show();
                     }
-                    productoCheckout.setCantidad(numero);
-                    cantidadProducto.setText(Integer.toString(numero));
-                    int pt = (numero * Integer.parseInt(p2.getPrecio()));
-                    precioTotal.setText(Integer.toString(pt));
-                    sumaMonto = sumaMonto + pt;
-                    montoTotal.setText(Integer.toString(sumaMonto));
-
+                    else {
+                        productoCheckout.setCantidad(numero);
+                        cantidadProducto.setText(Integer.toString(numero));
+                        int pt = Integer.parseInt(p2.getPrecio());
+                        int pt2 = pt * productoCheckout.getCantidad();
+                        precioTotal.setText(Integer.toString(pt2));
+                        Log.d("CANTIDAD", Integer.toString(productoCheckout.getCantidad()));
+                        sumaMonto = sumaMonto + Integer.parseInt(productoCheckout.getPrecio());
+                        montoTotal.setText(Integer.toString(sumaMonto));
+                        if (numero == 1) {
+                            confirmarProducto.setChecked(true);
+                            checkout.add(productoCheckout);
+                        }
+                    }
                 }
             });
             menos.setOnClickListener(new View.OnClickListener() {
@@ -131,14 +140,26 @@ public class ProductosListAdapter extends RecyclerView.Adapter<ProductosListAdap
                     if (numero < 0) {
                         numero = 0;
                         Toast.makeText(mView.getContext(), "No puede pedir unidades negativas", Toast.LENGTH_SHORT).show();
+                        confirmarProducto.setChecked(false);
                     }
-                    productoCheckout.setCantidad(numero);
-                    cantidadProducto.setText(Integer.toString(numero));
-                    int pt = (numero * Integer.parseInt(p2.getPrecio()));
-                    precioTotal.setText(Integer.toString(pt));
-                    int sumaMonto = Integer.parseInt(montoTotal.getText().toString());
-                    montoTotal.setText(Integer.toString(sumaMonto));
-
+                    else {
+                        productoCheckout.setCantidad(numero);
+                        cantidadProducto.setText(Integer.toString(numero));
+                        int pt = Integer.parseInt(p2.getPrecio());
+                        int pt2 = pt * productoCheckout.getCantidad();
+                        precioTotal.setText(Integer.toString(pt2));
+                        sumaMonto = Integer.parseInt(montoTotal.getText().toString());
+                        Log.d("CANTIDAD", Integer.toString(productoCheckout.getCantidad()));
+                        sumaMonto = sumaMonto - Integer.parseInt(productoCheckout.getPrecio());
+                        if (sumaMonto < 0) {
+                            sumaMonto = 0;
+                        }
+                        montoTotal.setText(Integer.toString(sumaMonto));
+                        if (numero == 0) {
+                            confirmarProducto.setChecked(false);
+                            checkout.remove(productoCheckout);
+                        }
+                    }
 
                 }
             });

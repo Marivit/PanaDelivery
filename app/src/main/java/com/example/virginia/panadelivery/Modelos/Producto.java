@@ -97,7 +97,7 @@ public class Producto implements Parcelable {
         this.id = in.readString();
         this.cantidad = in.readInt();
         this.descripcion = in.readString();
-
+        this.precio = in.readString();
     }
     @Override
     public int describeContents() {
@@ -111,6 +111,6 @@ public class Producto implements Parcelable {
         dest.writeString(id);
         dest.writeInt(cantidad);
         dest.writeString(descripcion);
-
+        dest.writeString(precio);
     }
 }

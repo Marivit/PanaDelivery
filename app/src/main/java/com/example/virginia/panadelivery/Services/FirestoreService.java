@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.example.virginia.panadelivery.Modelos.Producto;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
@@ -71,7 +72,7 @@ public class FirestoreService {
        return listaProductos;
     }
 
-    public void checkout(final List<Producto> productosCheckout, String idPanaderia, final String nombrePanaderia) {
+    public void checkout(final List<Producto> productosCheckout, String idPanaderia, final String nombrePanaderia, final int montoTotal) {
         final String email = auth.getCurrentUser().getEmail();
         Log.d("CHECKOUT", email);
 
@@ -121,7 +122,7 @@ public class FirestoreService {
                     dataPedido.put("latitud",  Double.toString( (Double) task.getResult().get("latitud")));
                     dataPedido.put("longitud", Double.toString((Double) task.getResult().get("longitud")));
                     dataPedido.put("estado", 1);
-                    dataPedido.put("montoTotal", "Placeholder");
+                    dataPedido.put("montoTotal", Integer.toString(montoTotal));
                     dataPedido.put("panaderia", nombrePanaderia);
                     dataPedido.put("activo", 1);
                     dataPedido.put("cliente", email);
@@ -141,7 +142,22 @@ public class FirestoreService {
                     Log.d("OBJETO", dataPedido.toString());
 
                     final CollectionReference reference3 = db.collection("Pedidos");
-                    reference3.add(dataPedido);
+                    reference3.add(dataPedido).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                        @Override
+                        public void onSuccess(DocumentReference documentReference) {
+                            CollectionReference referenciaProductos = documentReference.collection("Productos");
+
+                            for (int i = 0; i < productosCheckout.size(); i++) {
+                                Map<String, Object> mapaProductos = new HashMap<>();
+                                mapaProductos.put("nombre", productosCheckout.get(i).getNombre());
+                                mapaProductos.put("foto", productosCheckout.get(i).getFoto());
+                                mapaProductos.put("descripcion", productosCheckout.get(i).getDescripcion());
+                                mapaProductos.put("precio", productosCheckout.get(i).getPrecio());
+                                mapaProductos.put("cantidad", productosCheckout.get(i).getCantidad());
+                                referenciaProductos.add(mapaProductos);
+                            }
+                        }
+                    });
 
                 }
             }
