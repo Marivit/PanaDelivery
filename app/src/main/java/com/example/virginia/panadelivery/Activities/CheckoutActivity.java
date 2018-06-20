@@ -1,19 +1,15 @@
 package com.example.virginia.panadelivery.Activities;
 
 import android.content.Intent;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.virginia.panadelivery.Adapters.CheckoutListAdapter;
-import com.example.virginia.panadelivery.Adapters.PanaderiasListAdapter;
 import com.example.virginia.panadelivery.Modelos.Producto;
 import com.example.virginia.panadelivery.R;
 import com.example.virginia.panadelivery.Services.FirestoreService;
@@ -22,14 +18,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CheckoutActivity extends AppCompatActivity implements View.OnClickListener {
-       private List<Producto> checkout;
-       private RecyclerView listaCheckout;
-       private  CheckoutListAdapter checkoutListAdapter;
-       private Button confirmarCheckout;
-       private FirestoreService fss = new FirestoreService();
-       private ArrayList<Producto> lCheckout;
-       private String idPanaderia, nombrePanaderia;
-       private int montoTotal;
+    private List<Producto> checkout;
+    private RecyclerView listaCheckout;
+    private  CheckoutListAdapter checkoutListAdapter;
+    private Button confirmarCheckout;
+    private FirestoreService fss = new FirestoreService();
+    private ArrayList<Producto> lCheckout;
+    private String idPanaderia, nombrePanaderia;
+    private int montoTotal;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -62,4 +59,6 @@ public class CheckoutActivity extends AppCompatActivity implements View.OnClickL
             startActivity(new Intent(this, MainActivity.class));
         }
     }
+
+
 }

@@ -1,11 +1,10 @@
 package com.example.virginia.panadelivery.Fragments;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -14,17 +13,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.virginia.panadelivery.Activities.CheckoutActivity;
-import com.example.virginia.panadelivery.Activities.ProfileClienteActivity;
 import com.example.virginia.panadelivery.Adapters.ProductosListAdapter;
 import com.example.virginia.panadelivery.Modelos.Producto;
 import com.example.virginia.panadelivery.R;
-import com.example.virginia.panadelivery.Services.FirestoreService;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
@@ -37,12 +37,18 @@ public class ProductosListFragment extends Fragment {
     private RecyclerView listaProductos;
     private TextView sumaMontos;
     private String TAG = "Firelog";
+    private String TAG2 = "probando";
     private List<Producto> lProductos, lCheckout;
     private ProductosListAdapter productosListAdapter;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private Button checkout;
     private String idPanaderia, nombrePanaderia;
     private TextView montoTotal;
+    boolean validar=false;
+
+    private FirebaseAuth firebaseAuth;
+    private FragmentManager fm;
+
 
 
     public ProductosListFragment() {
@@ -79,7 +85,7 @@ public class ProductosListFragment extends Fragment {
         idPanaderia = this.getArguments().getString("id");
         nombrePanaderia = this.getArguments().getString("nombre");
         checkout = (Button) mView.findViewById(R.id.checkout);
-
+        validarSolicitud();
 
         bind(mView);
 
@@ -124,22 +130,100 @@ public class ProductosListFragment extends Fragment {
     public void bind(final View view) {
         checkout.setOnClickListener(new View.OnClickListener() {
             public void onClick(final View view) {
-
-                    Log.d(TAG, "Se hara checkout");
-                    Log.d(TAG, Integer.toString(lCheckout.size()));
-                    Intent intent = new Intent(getContext(), CheckoutActivity.class);
-                    Bundle b = new Bundle();
-                    b.putParcelableArrayList("lCheckout", (ArrayList<? extends Parcelable>) lCheckout);
-                    b.putString("idPanaderia", idPanaderia);
-                    b.putString("nombrePanaderia", nombrePanaderia);
-                    int mt = Integer.parseInt(montoTotal.getText().toString());
-                    b.putInt("montoTotal", mt);
-                    intent.putExtra("listas", b);
-                    startActivity(intent);
+                //boolean validar = validarSolicitud();
+                    if(validar){
+                        validar();
+                    } else if (!validar){
+                        Log.d(TAG, "Se hara checkout");
+                        Log.d(TAG, Integer.toString(lCheckout.size()));
+                        Intent intent = new Intent(getContext(), CheckoutActivity.class);
+                        Bundle b = new Bundle();
+                        b.putParcelableArrayList("lCheckout", (ArrayList<? extends Parcelable>) lCheckout);
+                        b.putString("idPanaderia", idPanaderia);
+                        b.putString("nombrePanaderia", nombrePanaderia);
+                        int mt = Integer.parseInt(montoTotal.getText().toString());
+                        b.putInt("montoTotal", mt);
+                        intent.putExtra("listas", b);
+                        startActivity(intent);
+                    }
 
             }
 
         });
+    }
+
+    public void validarSolicitud() {
+        firebaseAuth = FirebaseAuth.getInstance();
+        final String  email= firebaseAuth.getCurrentUser().getEmail();
+        Log.d("CHECKOUT", email);
+
+        Query resultado = db
+                .collection("Pedidos").whereEqualTo("cliente", email);
+
+        if(resultado!=null){
+            resultado.addSnapshotListener(new EventListener<QuerySnapshot>() {
+                @Override
+                public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+
+                    if (e != null) {
+                        Log.d(TAG, e.getMessage());
+
+                    }
+                    for (int i = 0; i < queryDocumentSnapshots.getDocumentChanges().size(); i++ ) {
+
+                        DocumentChange doc = queryDocumentSnapshots.getDocumentChanges().get(i);
+                        if(doc.getType() == DocumentChange.Type.ADDED || doc.getType() == DocumentChange.Type.MODIFIED) {
+                            if (Integer.parseInt(doc.getDocument().get("activo").toString())== 1){
+                                //&& i == queryDocumentSnapshots.getDocumentChanges().size()
+                                //validar();
+                                validar=true;
+                                Log.d(TAG2, "esta dentro de que es 1!");
+                                return;
+
+                            }
+                            else {
+                                //fss.checkout(lCheckout,idPanaderia, nombrePanaderia, montoTotal);
+                                Log.d(TAG2, "Entro en en else");
+                                validar=false;
+                            }
+                        }
+
+                    }
+                    if (queryDocumentSnapshots.getDocumentChanges().size() == 0) {
+                        //validar();
+                        validar=true;
+                    }
+                }
+            });
+        } else {
+            //validar();
+            validar=true;
+        }
+    }
+
+    public void validar() {
+        Toast.makeText(getActivity().getApplicationContext(), "Ya tienes un pedido en curso, debes esperar a que finalice!", Toast.LENGTH_LONG).show();
+        /*if(getActivity()!=null){
+            Pasar algunos parametros necesarios
+            Bundle args = new Bundle();
+            String texto = "Ya tienes un pedido en curso, debes esperar a que finalice!";
+            args.putString("textoMostrar", texto);
+            //Cambiar de fragment al del pedido actual
+            FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+
+            final PedidoClienteVacioFragment fragmentoP = new PedidoClienteVacioFragment();
+            fragmentoP.setArguments(args);
+            ft.replace(R.id.contenedorCliente, fragmentoP);
+            ft.commit();
+
+            //((ProfileClienteActivity) getActivity()).mostrarEmpty();
+            //((ProfileClienteActivity) getActivity()).getSupportFragmentManager().beginTransaction().replace(R.id.contenedorCliente, new PedidoClienteVacioFragment() ).commit();
+        }*/
+
+
+
+
+
     }
 
 

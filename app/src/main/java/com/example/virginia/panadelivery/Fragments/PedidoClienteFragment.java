@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.virginia.panadelivery.Activities.ProfileClienteActivity;
-import com.example.virginia.panadelivery.Activities.ProfileConductorActivity;
 import com.example.virginia.panadelivery.R;
 import com.example.virginia.panadelivery.Services.QrService;
 import com.google.firebase.auth.FirebaseAuth;
@@ -103,9 +102,7 @@ public class PedidoClienteFragment extends Fragment {
 
                             }
                             else if (Integer.parseInt(doc.getDocument().get("activo").toString())== 0 && i == queryDocumentSnapshots.getDocumentChanges().size() ) {
-                                if(getActivity()!=null){
-                                    ((ProfileConductorActivity) getActivity()).mostrarEmpty();
-                                }
+                                validar();
                             }
                         }
 

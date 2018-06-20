@@ -73,9 +73,9 @@ public class FirestoreService {
     }
 
     public void checkout(final List<Producto> productosCheckout, String idPanaderia, final String nombrePanaderia, final int montoTotal) {
+
         final String email = auth.getCurrentUser().getEmail();
         Log.d("CHECKOUT", email);
-
 
         // Disminuir cantidad en stock
        final  CollectionReference reference = db.collection("Panaderias").document(idPanaderia).collection("Productos");
@@ -103,15 +103,9 @@ public class FirestoreService {
                   }
               }
           });
-
-
-
         }
 
-
-
         // Agregar a pedidos
-
         Log.d("AP", "Se agregara a pedidos");
         DocumentReference reference2 = db.collection("Usuarios").document(email);
         reference2.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -163,58 +157,9 @@ public class FirestoreService {
             }
         });
 
-
-        /*
-        final DocumentReference reference2 = db.collection("Usuarios").document(email);
-
-
-        reference2.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                      if (task.isSuccessful()) {
-                          Map<Object, Object> dataPedido = new HashMap<>();
-                          dataPedido.put("latitud",  Double.toString( (Double) task.getResult().get("latitud")));
-                          dataPedido.put("longitud", Double.toString((Double) task.getResult().get("longitud")));
-                          dataPedido.put("conductor", "conductorPlaceHolder");
-                          dataPedido.put("estado", "En espera");
-                          dataPedido.put("montoTotal", "Placeholder");
-                          dataPedido.put("panaderia", nombrePanaderia);
-
-
-
-                          // TODO: Quitar placeholder de detalle direccion
-
-                          Date date = new Date();
-                          SimpleDateFormat Formater = new SimpleDateFormat("dd/MM/yyyy");
-                          String  fecha = Formater.format(date);
-                          Calendar calendar = Calendar.getInstance();
-                          SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
-                          String hora = timeFormat.format(calendar.getTime());
-
-
-                          dataPedido.put("fecha",fecha );
-                          dataPedido.put("hora",hora);
-
-
-                          dataPedido.put("direccion", "PLACEHOLDER");
-                          Log.d("OBJETO", dataPedido.toString());
-                          reference2.collection("pedidos").add(dataPedido);
-
-                      }
-                }
-        }
-        );
-*/
-
-
-
-
     }
 
     public void getRol(String email) {
-
-
-
     }
 
     public Long getNumPedidos() {
@@ -237,4 +182,5 @@ public class FirestoreService {
         return numPedidos.get("numPedidos");
 
     }
+
 }
