@@ -1,20 +1,13 @@
 package com.example.virginia.panadelivery.Services;
 
-import android.util.Log;
 
+import android.util.Log;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-
-
 import org.json.JSONObject;
-
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-
-import javax.net.ssl.HttpsURLConnection;
 
 public class HttpService {
 
@@ -23,7 +16,6 @@ public class HttpService {
     }
 
     public String getTiempo(String latitudDestino, String longitudDestino, String latitudConductor, String longitudConductor) throws IOException {
-
         APIKeys ApiKeys = new APIKeys();
         String key = "&key=" + ApiKeys.getDirectionsKey();
         String direccionOrigen = "origin=" + latitudConductor + "," + longitudConductor;

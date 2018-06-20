@@ -46,7 +46,13 @@ dependencies {
     implementation 'com.google.android.gms:play-services-location:15.0.1'
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'com.google.zxing:core:3.2.1'
+<<<<<<< HEAD
     implementation 'com.android.volley:volley:1.1.0'
+=======
+    implementation 'com.journeyapps:zxing-android-embedded:3.5.0'
+    implementation 'com.volley'
+
+>>>>>>> d11f028115c90323e7713ef3bafd55ff4cba4db1
 }
 
 

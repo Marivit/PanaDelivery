@@ -1,25 +1,18 @@
 package com.example.virginia.panadelivery.Activities;
 
-import android.Manifest;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.example.virginia.panadelivery.Fragments.EmptyPedidoFragment;
 import com.example.virginia.panadelivery.Fragments.PedidoConductorFragment;
 import com.example.virginia.panadelivery.Fragments.PedidosListFragment;
 import com.example.virginia.panadelivery.Modelos.Pedido;
 import com.example.virginia.panadelivery.R;
-import com.example.virginia.panadelivery.Services.TrackerService;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -39,15 +32,15 @@ public class ProfileConductorActivity extends AppCompatActivity {
     private String correoCliente;
     private String correoConductor;
     private String correoUsuario;
+    FragmentManager fragmentManager = getSupportFragmentManager();
 
     private TextView mTextMessage;
 
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+    public BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            FragmentManager fragmentManager = getSupportFragmentManager();
 
 
             switch (item.getItemId()) {
@@ -72,19 +65,14 @@ public class ProfileConductorActivity extends AppCompatActivity {
         mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-
+        navigation.setSelectedItemId(R.id.navigation_pedidoActual);
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.containerConductor, new PedidosListFragment()).commit();
+        fragmentManager.beginTransaction().replace(R.id.containerConductor,  new PedidoConductorFragment()).commit();
 
     }
 
-
-
-    private void openFragmentPedido() {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.containerConductor, new PedidoConductorFragment()).commit();
+    public void mostrarEmpty(){
+        fragmentManager.beginTransaction().replace(R.id.containerConductor, new EmptyPedidoFragment()).commit();
     }
-
-
 
 }
