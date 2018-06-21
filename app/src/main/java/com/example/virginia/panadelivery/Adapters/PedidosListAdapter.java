@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.virginia.panadelivery.Activities.MapsActivity;
 import com.example.virginia.panadelivery.Fragments.PedidoConductorFragment;
@@ -31,12 +32,15 @@ public class PedidosListAdapter extends RecyclerView.Adapter<PedidosListAdapter.
     public List<Pedido> pedidos;
     public Context context;
     FragmentManager fm;
+    public boolean validar;
+    private String TAG2 = "probando";
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-    public PedidosListAdapter(List<Pedido> pedidos, Context context, FragmentManager fm) {
+    public PedidosListAdapter(List<Pedido> pedidos, Context context, FragmentManager fm, boolean validar) {
         this.pedidos = pedidos;
         this.context = context;
         this.fm = fm;
-
+        this.validar = validar;
     }
 
     @NonNull
@@ -119,38 +123,39 @@ public class PedidosListAdapter extends RecyclerView.Adapter<PedidosListAdapter.
             });
             buttonElegir.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View view) {
-                    Log.d(TAG, idPedido);
-                    FirebaseFirestore db = FirebaseFirestore.getInstance();
-                    FirebaseAuth firebaseAuth;
+                    if(validar){
+                        validar();
+                    } else if (!validar) {
+                        Log.d(TAG, idPedido);
+                        FirebaseFirestore db = FirebaseFirestore.getInstance();
+                        FirebaseAuth firebaseAuth;
 
 
-                    firebaseAuth = FirebaseAuth.getInstance();
-                    final String emailConductor = firebaseAuth.getCurrentUser().getEmail();
+                        firebaseAuth = FirebaseAuth.getInstance();
+                        final String emailConductor = firebaseAuth.getCurrentUser().getEmail();
 
-                    // Actualizar el campo conductor y su correo para asignarselo a este
-                    Map<String, Object> actPedido = new HashMap<>();
-                    actPedido.put("estado", 2);
-                    actPedido.put("conductor", emailConductor);
+                        // Actualizar el campo conductor y su correo para asignarselo a este
+                        Map<String, Object> actPedido = new HashMap<>();
+                        actPedido.put("estado", 2);
+                        actPedido.put("conductor", emailConductor);
 
-                    /*DocumentReference resultado = db.collection("Usuarios").document(correoCliente)
-                            .collection("pedidos").document(idPedido);*/
-                    DocumentReference resultado = db.collection("Pedidos").document(idPedido);
+                        DocumentReference resultado = db.collection("Pedidos").document(idPedido);
 
-                    resultado.set(actPedido, SetOptions.merge());
+                        resultado.set(actPedido, SetOptions.merge());
 
-                    //Pasar algunos parametros necesarios
-                    /*Bundle args = new Bundle();
-                    args.putString("emailCliente", correoCliente);
-                    args.putString("emailConductor", emailConductor);*/
+                        //Pasar algunos parametros necesarios
+                        /*Bundle args = new Bundle();
+                        args.putString("emailCliente", correoCliente);
+                        args.putString("emailConductor", emailConductor);*/
 
-                    //Cambiar de fragment al del pedido actual
-                    FragmentTransaction ft = fm.beginTransaction();
+                        //Cambiar de fragment al del pedido actual
+                        FragmentTransaction ft = fm.beginTransaction();
 
-                    final PedidoConductorFragment fragmentoP = new PedidoConductorFragment();
-                    //fragmentoP.setArguments(args);
-                    ft.replace(R.id.containerConductor, fragmentoP);
-                    ft.commit();
-
+                        final PedidoConductorFragment fragmentoP = new PedidoConductorFragment();
+                        //fragmentoP.setArguments(args);
+                        ft.replace(R.id.containerConductor, fragmentoP);
+                        ft.commit();
+                    }
 
 
 
@@ -162,6 +167,12 @@ public class PedidosListAdapter extends RecyclerView.Adapter<PedidosListAdapter.
 
         }
 
+    }
+
+
+
+    public void validar() {
+        Toast.makeText(context, "Ya tienes un pedido en curso, debes esperar a que finalice!", Toast.LENGTH_LONG).show();
     }
 }
 
