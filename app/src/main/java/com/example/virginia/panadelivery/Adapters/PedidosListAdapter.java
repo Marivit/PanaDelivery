@@ -96,7 +96,7 @@ public class PedidosListAdapter extends RecyclerView.Adapter<PedidosListAdapter.
 
         }
 
-        public void bind() {
+        /*public void bind() {
             buttonUbicacion.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View view) {
 
@@ -162,6 +162,8 @@ public class PedidosListAdapter extends RecyclerView.Adapter<PedidosListAdapter.
 
         }
 
-    }
+    }*/
+
+
 }
 

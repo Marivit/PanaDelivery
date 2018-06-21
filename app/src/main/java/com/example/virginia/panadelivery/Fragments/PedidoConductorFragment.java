@@ -59,6 +59,7 @@ public class PedidoConductorFragment extends Fragment {
     private Pedido pedido;
     private static final int PERMISSIONS_REQUEST = 1;
     private HttpService httpService =  new HttpService();
+    private boolean validar=true;
 
     public PedidoConductorFragment() {
         // Required empty public constructor
@@ -180,11 +181,13 @@ public class PedidoConductorFragment extends Fragment {
                         return;
 
                     }
-                    for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
+                    for (int i = 0; i < queryDocumentSnapshots.getDocumentChanges().size(); i++) {
+                        DocumentChange doc = queryDocumentSnapshots.getDocumentChanges().get(i);
                         //TODO: Agregar modified
 
                         if (doc.getType() == DocumentChange.Type.ADDED) {
                             if (Integer.parseInt(doc.getDocument().get("activo").toString())== 1) {
+                                validar=false;
                                 idPedido = doc.getDocument().getId();
                                 int estado;
                                 estado=doc.getDocument().getLong("estado").intValue();
@@ -203,11 +206,17 @@ public class PedidoConductorFragment extends Fragment {
                                 textViewPanaderia2.setText(panaderia);
                                 configurarBoton();
                             }
-                            else {
+                            /*else if (Integer.parseInt(doc.getDocument().get("activo").toString())== 0 && i==queryDocumentSnapshots.getDocumentChanges().size()){
                                 validar();
-                            }
+                            }*/
                             Log.d(TAG2, String.valueOf(pedido));
                         }
+                    }
+                    if(queryDocumentSnapshots.getDocumentChanges().size()==0){
+                        validar();
+                    }
+                    if(validar){
+                        validar();
                     }
                 }
             });

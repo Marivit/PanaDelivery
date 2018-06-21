@@ -203,27 +203,6 @@ public class ProductosListFragment extends Fragment {
 
     public void validar() {
         Toast.makeText(getActivity().getApplicationContext(), "Ya tienes un pedido en curso, debes esperar a que finalice!", Toast.LENGTH_LONG).show();
-        /*if(getActivity()!=null){
-            Pasar algunos parametros necesarios
-            Bundle args = new Bundle();
-            String texto = "Ya tienes un pedido en curso, debes esperar a que finalice!";
-            args.putString("textoMostrar", texto);
-            //Cambiar de fragment al del pedido actual
-            FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-
-            final PedidoClienteVacioFragment fragmentoP = new PedidoClienteVacioFragment();
-            fragmentoP.setArguments(args);
-            ft.replace(R.id.contenedorCliente, fragmentoP);
-            ft.commit();
-
-            //((ProfileClienteActivity) getActivity()).mostrarEmpty();
-            //((ProfileClienteActivity) getActivity()).getSupportFragmentManager().beginTransaction().replace(R.id.contenedorCliente, new PedidoClienteVacioFragment() ).commit();
-        }*/
-
-
-
-
-
     }
 
 

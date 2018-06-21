@@ -38,6 +38,7 @@ public class PedidoClienteFragment extends Fragment {
     private TextView textViewPanaderia;
     private ImageView codigoQr;
     private QrService QrService = new QrService();
+    private boolean validar=true;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +69,7 @@ public class PedidoClienteFragment extends Fragment {
                         Log.d(TAG, String.valueOf(doc));
                         if(doc.getType() == DocumentChange.Type.ADDED || doc.getType() == DocumentChange.Type.MODIFIED) {
                             if (Integer.parseInt(doc.getDocument().get("activo").toString())== 1){
+                                validar=false;
                                 Long estado;
                                 estado=doc.getDocument().getLong("estado");
                                 Log.d(TAG2, String.valueOf(estado));
@@ -99,16 +101,17 @@ public class PedidoClienteFragment extends Fragment {
                                 } catch (WriterException e1) {
                                     e1.printStackTrace();
                                 }
+                                return;
 
-                            }
-                            else if (Integer.parseInt(doc.getDocument().get("activo").toString())== 0 && i == queryDocumentSnapshots.getDocumentChanges().size() ) {
-                                validar();
                             }
                         }
 
                     }
                     Log.d("TAMANO", Integer.toString(queryDocumentSnapshots.getDocumentChanges().size()));
                     if (queryDocumentSnapshots.getDocumentChanges().size() == 0) {
+                        validar();
+                    }
+                    if(validar){
                         validar();
                     }
                 }
