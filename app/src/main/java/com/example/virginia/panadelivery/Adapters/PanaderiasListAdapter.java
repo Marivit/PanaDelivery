@@ -48,11 +48,13 @@ public class PanaderiasListAdapter extends RecyclerView.Adapter<PanaderiasListAd
             bundle.putString("nombre", panaderias.get(position).getNombre());
             bundle.putString("latitud", panaderias.get(position).getLatitud());
             bundle.putString("longitud",panaderias.get(position).getLongitud());
-            final ProductosListFragment fragmentoPL = new ProductosListFragment();
-            fragmentoPL.setArguments(bundle);
+            final ProductosListFragment fragmentoP = new ProductosListFragment();
+            fragmentoP.setArguments(bundle);
 
             holder.mView.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View view ) {
+                    final ProductosListFragment fragmentoPL = fragmentoP;
+
                    FragmentTransaction ft = fm.beginTransaction();
 
 
