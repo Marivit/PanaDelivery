@@ -56,6 +56,7 @@ public class PedidoConductorFragment extends Fragment {
     private Button buttonEstado;
     private String idPedido;
     private Pedido pedido;
+
     private static final int PERMISSIONS_REQUEST = 1;
 
 
@@ -138,25 +139,7 @@ public class PedidoConductorFragment extends Fragment {
 
     private void configurarBoton(){
         Activity activity = getActivity();
-        if (activity != null) {
-            LocationManager lm = (LocationManager) getActivity().getSystemService(LOCATION_SERVICE);
-            if (!lm.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-                Toast.makeText(getContext(), "Please enable location services", Toast.LENGTH_SHORT).show();
-                //finish();
-            }
 
-            // Check location permission is granted - if it is, start
-            // the service, otherwise request the permission
-            int permission = ContextCompat.checkSelfPermission(getContext(),
-                    Manifest.permission.ACCESS_FINE_LOCATION);
-            if (permission == PackageManager.PERMISSION_GRANTED) {
-                startTrackerService();
-            } else {
-                ActivityCompat.requestPermissions(getActivity(),
-                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                        PERMISSIONS_REQUEST);
-            }
-        }
         if(pedido.getEstado()==2){
             if(activity != null && isAdded()) {
                 Drawable d = getResources().getDrawable(R.color.colorMorado);
@@ -212,7 +195,26 @@ public class PedidoConductorFragment extends Fragment {
                                 textViewMonto2.setText(monto);
                                 textViewConductor2.setText(conductor);
                                 textViewPanaderia2.setText(panaderia);
+                                Activity activity = getActivity();
+                                if (activity != null) {
+                                    LocationManager lm = (LocationManager) getActivity().getSystemService(LOCATION_SERVICE);
+                                    if (!lm.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                                        Toast.makeText(getContext(), "Please enable location services", Toast.LENGTH_SHORT).show();
+                                        //finish();
+                                    }
 
+                                    // Check location permission is granted - if it is, start
+                                    // the service, otherwise request the permission
+                                    int permission = ContextCompat.checkSelfPermission(getContext(),
+                                            Manifest.permission.ACCESS_FINE_LOCATION);
+                                    if (permission == PackageManager.PERMISSION_GRANTED) {
+                                        startTrackerService();
+                                    } else {
+                                        ActivityCompat.requestPermissions(getActivity(),
+                                                new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                                                PERMISSIONS_REQUEST);
+                                    }
+                                }
                                 configurarBoton();
 
                             }

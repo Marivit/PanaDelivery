@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.example.virginia.panadelivery.Fragments.EmptyPedidoFragment;
 import com.example.virginia.panadelivery.Fragments.PedidoConductorFragment;
 import com.example.virginia.panadelivery.Fragments.PedidosListFragment;
+import com.example.virginia.panadelivery.Fragments.historialConductorFragment;
 import com.example.virginia.panadelivery.Modelos.Pedido;
 import com.example.virginia.panadelivery.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -51,6 +52,7 @@ public class ProfileConductorActivity extends AppCompatActivity {
                     fragmentManager.beginTransaction().replace(R.id.containerConductor, new PedidoConductorFragment()).commit();
                     return true;
                 case R.id.navigation_historial:
+                    fragmentManager.beginTransaction().replace(R.id.containerConductor, new historialConductorFragment()).commit();
                     return true;
             }
             return false;
