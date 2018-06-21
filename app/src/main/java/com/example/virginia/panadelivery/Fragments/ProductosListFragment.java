@@ -191,7 +191,7 @@ public class ProductosListFragment extends Fragment {
                     }
                     if (queryDocumentSnapshots.getDocumentChanges().size() == 0) {
                         //validar();
-                        validar=true;
+                        //validar=true;
                     }
                 }
             });
