@@ -72,13 +72,14 @@ public class FirestoreService {
        return listaProductos;
     }
 
-    public void checkout(final List<Producto> productosCheckout, String idPanaderia, final String nombrePanaderia, final int montoTotal) {
+    public void checkout(final List<Producto> productosCheckout, String idPanaderia, final String nombrePanaderia, final String latitudPanaderia, final String longitudPanaderia, final int montoTotal) {
 
         final String email = auth.getCurrentUser().getEmail();
         Log.d("CHECKOUT", email);
 
         // Disminuir cantidad en stock
        final  CollectionReference reference = db.collection("Panaderias").document(idPanaderia).collection("Productos");
+
         for (int j = 0; j < productosCheckout.size(); j++) {
             final Map<Object, Object> dataToAdd = new HashMap<>();
             final String idProd = productosCheckout.get(j).getId();
@@ -115,6 +116,8 @@ public class FirestoreService {
                     Map<Object, Object> dataPedido = new HashMap<>();
                     dataPedido.put("latitud",  Double.toString( (Double) task.getResult().get("latitud")));
                     dataPedido.put("longitud", Double.toString((Double) task.getResult().get("longitud")));
+                    dataPedido.put("latitudPanaderia", latitudPanaderia);
+                    dataPedido.put("longitudPanaderia", longitudPanaderia);
                     dataPedido.put("estado", 1);
                     dataPedido.put("montoTotal", Integer.toString(montoTotal));
                     dataPedido.put("panaderia", nombrePanaderia);

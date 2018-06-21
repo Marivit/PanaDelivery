@@ -43,7 +43,7 @@ public class ProductosListFragment extends Fragment {
     private ProductosListAdapter productosListAdapter;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private Button checkout;
-    private String idPanaderia, nombrePanaderia;
+    private String idPanaderia, nombrePanaderia, latitudPanaderia, longitudPanaderia;
     private TextView montoTotal;
     boolean validar=false;
 
@@ -85,6 +85,9 @@ public class ProductosListFragment extends Fragment {
         listaProductos.setAdapter(productosListAdapter);
         idPanaderia = this.getArguments().getString("id");
         nombrePanaderia = this.getArguments().getString("nombre");
+        latitudPanaderia = this.getArguments().getString("latitud");
+        longitudPanaderia = this.getArguments().getString("longitud");
+
         checkout = (Button) mView.findViewById(R.id.checkout);
         validarSolicitud();
 
@@ -142,6 +145,8 @@ public class ProductosListFragment extends Fragment {
                         b.putParcelableArrayList("lCheckout", (ArrayList<? extends Parcelable>) lCheckout);
                         b.putString("idPanaderia", idPanaderia);
                         b.putString("nombrePanaderia", nombrePanaderia);
+                        b.putString("latitudPanaderia", latitudPanaderia);
+                        b.putString("longitudPanaderia", longitudPanaderia);
                         int mt = Integer.parseInt(montoTotal.getText().toString());
                         b.putInt("montoTotal", mt);
                         intent.putExtra("listas", b);

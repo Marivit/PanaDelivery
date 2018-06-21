@@ -43,6 +43,14 @@ public class PedidosListAdapter extends RecyclerView.Adapter<PedidosListAdapter.
         this.validar = validar;
     }
 
+    public boolean isValidar() {
+        return validar;
+    }
+
+    public void setValidar(boolean validar) {
+        this.validar = validar;
+    }
+
     @NonNull
     @Override
 

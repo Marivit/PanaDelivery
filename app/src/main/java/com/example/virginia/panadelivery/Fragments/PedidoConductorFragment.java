@@ -87,6 +87,8 @@ public class PedidoConductorFragment extends Fragment {
         textViewPanaderia2 = (TextView) view.findViewById(R.id.textViewPanaderia2);
         textViewConductor2 = (TextView) view.findViewById(R.id.textViewConductor2);
 
+
+
         buttonEstado.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -103,23 +105,7 @@ public class PedidoConductorFragment extends Fragment {
                     resultado.set(actualizarEstado, SetOptions.merge());
                     textViewEstado2.setText("Completado");
                     //Aqui comienza el tracking
-                    LocationManager lm = (LocationManager) getActivity().getSystemService(LOCATION_SERVICE);
-                    if (!lm.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-                        Toast.makeText(getContext(),  "Please enable location services", Toast.LENGTH_SHORT).show();
-                        //finish();
-                    }
 
-                    // Check location permission is granted - if it is, start
-                    // the service, otherwise request the permission
-                    int permission = ContextCompat.checkSelfPermission(getContext(),
-                            Manifest.permission.ACCESS_FINE_LOCATION);
-                    if (permission == PackageManager.PERMISSION_GRANTED) {
-                        startTrackerService();
-                    } else {
-                        ActivityCompat.requestPermissions(getActivity(),
-                                new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                                PERMISSIONS_REQUEST);
-                    }
                 }
                 else if(pedido.getEstado()==3){
                     /*pedido.setEstado(4);
@@ -152,6 +138,25 @@ public class PedidoConductorFragment extends Fragment {
 
     private void configurarBoton(){
         Activity activity = getActivity();
+        if (activity != null) {
+            LocationManager lm = (LocationManager) getActivity().getSystemService(LOCATION_SERVICE);
+            if (!lm.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                Toast.makeText(getContext(), "Please enable location services", Toast.LENGTH_SHORT).show();
+                //finish();
+            }
+
+            // Check location permission is granted - if it is, start
+            // the service, otherwise request the permission
+            int permission = ContextCompat.checkSelfPermission(getContext(),
+                    Manifest.permission.ACCESS_FINE_LOCATION);
+            if (permission == PackageManager.PERMISSION_GRANTED) {
+                startTrackerService();
+            } else {
+                ActivityCompat.requestPermissions(getActivity(),
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                        PERMISSIONS_REQUEST);
+            }
+        }
         if(pedido.getEstado()==2){
             if(activity != null && isAdded()) {
                 Drawable d = getResources().getDrawable(R.color.colorMorado);
@@ -207,7 +212,9 @@ public class PedidoConductorFragment extends Fragment {
                                 textViewMonto2.setText(monto);
                                 textViewConductor2.setText(conductor);
                                 textViewPanaderia2.setText(panaderia);
+
                                 configurarBoton();
+
                             }
                             /*else if (Integer.parseInt(doc.getDocument().get("activo").toString())== 0 && i==queryDocumentSnapshots.getDocumentChanges().size()){
                                 validar();

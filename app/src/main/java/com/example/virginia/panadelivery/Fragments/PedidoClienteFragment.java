@@ -102,8 +102,10 @@ public class PedidoClienteFragment extends Fragment {
                                    Log.d("LL", latitudConductor + " y " + longitudConductor);
                                    String latitudCliente = doc.getDocument().getString("latitud");
                                    String longitudCliente = doc.getDocument().getString("longitud");
+                                   String latitudPanaderia = doc.getDocument().getString("latitudPanaderia");
+                                   String longitudPanaderia = doc.getDocument().getString("longitudPanaderia");
                                     try {
-                                        getTiempo(latitudCliente,longitudCliente,latitudConductor,longitudConductor);
+                                        getTiempo(latitudCliente,longitudCliente,latitudConductor,longitudConductor, latitudPanaderia, longitudPanaderia);
                                     } catch (IOException e1) {
                                         e1.printStackTrace();
                                     }
@@ -182,12 +184,15 @@ public class PedidoClienteFragment extends Fragment {
         }
     }
 
-    public void getTiempo(String latitudDestino, String longitudDestino, String latitudConductor, String longitudConductor) throws IOException {
+    public void getTiempo(String latitudDestino, String longitudDestino, String latitudConductor, String longitudConductor, String latitudPanaderia,
+                          String longitudPanaderia) throws IOException {
         APIKeys ApiKeys = new APIKeys();
         String key = "&key=" + ApiKeys.getDirectionsKey();
         String direccionOrigen = "origin=" + latitudConductor + "," + longitudConductor;
         String direccionDestino = "&destination=" + latitudDestino + "," + longitudDestino;
-        String request = "https://maps.googleapis.com/maps/api/directions/json?" + direccionOrigen + direccionDestino + key;
+        String waypoints = "&waypoints=" + latitudPanaderia + "," + longitudPanaderia;
+        waypoints.replaceAll(" ","");
+        String request = "https://maps.googleapis.com/maps/api/directions/json?" + direccionOrigen + direccionDestino + waypoints +  key;
         Log.d("URL", request);
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest

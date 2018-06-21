@@ -24,7 +24,7 @@ public class CheckoutActivity extends AppCompatActivity implements View.OnClickL
     private Button confirmarCheckout;
     private FirestoreService fss = new FirestoreService();
     private ArrayList<Producto> lCheckout;
-    private String idPanaderia, nombrePanaderia;
+    private String idPanaderia, nombrePanaderia, latitudPanaderia, longitudPanaderia;
     private int montoTotal;
 
     @Override
@@ -36,6 +36,9 @@ public class CheckoutActivity extends AppCompatActivity implements View.OnClickL
         idPanaderia = getIntent().getBundleExtra("listas").getString("idPanaderia");
         nombrePanaderia = getIntent().getBundleExtra("listas").getString("nombrePanaderia");
         montoTotal = getIntent().getBundleExtra("listas").getInt("montoTotal");
+        //TODO VOLVER PANADERiA PARCELABLE
+        latitudPanaderia = getIntent().getBundleExtra("listas").getString("latitudPanaderia");
+        longitudPanaderia = getIntent().getBundleExtra("listas").getString("longitudPanaderia");
         setContentView(R.layout.activity_checkout);
 
         listaCheckout =  (RecyclerView) findViewById(R.id.listaCheckout);
@@ -52,7 +55,7 @@ public class CheckoutActivity extends AppCompatActivity implements View.OnClickL
     public void onClick(View view) {
 
         if (view == confirmarCheckout) {
-            fss.checkout(lCheckout,idPanaderia, nombrePanaderia, montoTotal );
+            fss.checkout(lCheckout,idPanaderia, nombrePanaderia, latitudPanaderia, longitudPanaderia, montoTotal );
             Toast.makeText(this, "Se ha realizado el Checkout. ", Toast.LENGTH_SHORT).show();
             finish();
 

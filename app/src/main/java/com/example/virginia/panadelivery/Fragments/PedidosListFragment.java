@@ -92,6 +92,7 @@ public class PedidosListFragment extends Fragment {
                     Log.d(TAG, e.getMessage());
                 }
                 for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
+
                     if (doc.getType() == DocumentChange.Type.ADDED) {
                         if (Integer.parseInt(doc.getDocument().get("activo").toString())== 1
                                 && doc.getDocument().get("conductor") == null) {
@@ -168,6 +169,7 @@ public class PedidosListFragment extends Fragment {
                         if(doc.getType() == DocumentChange.Type.ADDED || doc.getType() == DocumentChange.Type.MODIFIED) {
                             if (Integer.parseInt(doc.getDocument().get("activo").toString())== 1){
                                 validar=true;
+                                pedidosListAdapter.setValidar(validar);
                                 Log.d(TAG2, "esta dentro de que es 1!");
                                 return;
 
@@ -175,6 +177,7 @@ public class PedidosListFragment extends Fragment {
                             else {
                                 Log.d(TAG2, "Entro en en else");
                                 validar=false;
+                                pedidosListAdapter.setValidar(validar);
                             }
                         }
 
@@ -187,6 +190,7 @@ public class PedidosListFragment extends Fragment {
             });
         } else {
             validar=true;
+            pedidosListAdapter.setValidar(validar);
         }
     }
 

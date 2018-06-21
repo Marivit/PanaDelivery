@@ -76,7 +76,7 @@ public class TrackerService extends Service {
 
     public int onStartCommand (Intent intent, int flags, int startId) {
        idPedido = (String) intent.getExtras().get("idPedido");
-       Log.d("ENTRO", idPedido);
+
        return Service.START_STICKY;
     }
 
