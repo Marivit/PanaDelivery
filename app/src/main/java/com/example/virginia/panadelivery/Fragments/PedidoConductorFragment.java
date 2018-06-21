@@ -29,6 +29,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
@@ -56,7 +57,7 @@ public class PedidoConductorFragment extends Fragment {
     private Button buttonEstado;
     private String idPedido;
     private Pedido pedido;
-
+    private  ListenerRegistration registration;
     private static final int PERMISSIONS_REQUEST = 1;
 
 
@@ -74,6 +75,16 @@ public class PedidoConductorFragment extends Fragment {
         super.onCreate(savedInstanceState);
         obtenerPedidoActual();
 
+    }
+
+    public void onDestroy() {
+        super.onDestroy();
+        if (!noiniciado) {
+            finishTrackerService();
+        }
+        if (registration != null) {
+            registration.remove();
+        }
     }
 
     @Override
@@ -165,7 +176,7 @@ public class PedidoConductorFragment extends Fragment {
         Query resultado = db
                 .collection("Pedidos").whereEqualTo("conductor", emailConductor);
         if(resultado!=null) {
-            resultado.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            registration =  resultado.addSnapshotListener(new EventListener<QuerySnapshot>() {
                 @Override
                 public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
 

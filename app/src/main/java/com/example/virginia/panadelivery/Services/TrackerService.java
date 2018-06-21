@@ -84,8 +84,8 @@ public class TrackerService extends Service {
     private void requestLocationUpdates() {
         if (seguirActualizando) {
             LocationRequest request = new LocationRequest();
-            request.setInterval(20000);
-            request.setFastestInterval(10000);
+            request.setInterval(40000);
+            request.setFastestInterval(20000);
             request.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
             FusedLocationProviderClient client = LocationServices.getFusedLocationProviderClient(this);
             //final String path = getString(R.string.firebase_path) + "/" + getString(R.string.transport_id);
