@@ -12,6 +12,23 @@
         android:layout_height="match_parent">
 
         <TextView
+            android:id="@+id/TiempoM"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="Tiempo:"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.137"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
             android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -81,7 +98,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.205"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.574" />
 
         <TextView
             android:id="@+id/textView12"
@@ -195,10 +213,26 @@
             android:layout_marginBottom="30dp"
             android:layout_marginEnd="92dp"
             android:layout_marginStart="92dp"
-            android:layout_marginTop="33dp"
+            android:layout_marginTop="5dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView6" />
+            app:layout_constraintTop_toBottomOf="@+id/textView6"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/tiempo"
+            android:layout_width="175dp"
+            android:layout_height="22dp"
+            android:layout_marginBottom="12dp"
+            android:layout_marginEnd="51dp"
+            android:layout_marginStart="42dp"
+            android:layout_marginTop="15dp"
+            android:text="---"
+            app:layout_constraintBottom_toTopOf="@+id/textView6"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/TiempoM"
+            app:layout_constraintTop_toBottomOf="@+id/textViewPanaderia" />
     </android.support.constraint.ConstraintLayout>
 </FrameLayout>

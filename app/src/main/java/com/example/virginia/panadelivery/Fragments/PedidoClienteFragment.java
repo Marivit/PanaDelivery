@@ -10,9 +10,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.virginia.panadelivery.Activities.ProfileClienteActivity;
 import com.example.virginia.panadelivery.R;
+import com.example.virginia.panadelivery.Services.APIKeys;
 import com.example.virginia.panadelivery.Services.QrService;
+import com.example.virginia.panadelivery.Services.VolleyApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
@@ -21,6 +27,13 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.zxing.WriterException;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.w3c.dom.Text;
+
+import java.io.IOException;
 
 import javax.annotation.Nullable;
 
@@ -36,6 +49,7 @@ public class PedidoClienteFragment extends Fragment {
     private TextView textViewMonto;
     private TextView textViewConductor;
     private TextView textViewPanaderia;
+    private TextView tiempoEntrega;
     private ImageView codigoQr;
     private QrService QrService = new QrService();
     @Override
@@ -81,11 +95,20 @@ public class PedidoClienteFragment extends Fragment {
                                 panaderia=doc.getDocument().getString("panaderia");
                                 Log.d(TAG5, panaderia);
                                 if (doc.getDocument().getString("latitudConductor") != null && doc.getDocument().getString("longitudConductor") != null) {
-                                   String latitud = doc.getDocument().getString("latitudConductor");
-                                   String longitud = doc.getDocument().getString("longitudConductor");
-                                   Log.d("LL", latitud + " y " + longitud);
+                                   String latitudConductor = doc.getDocument().getString("latitudConductor");
+                                   String longitudConductor = doc.getDocument().getString("longitudConductor");
+                                   Log.d("LL", latitudConductor + " y " + longitudConductor);
+                                   String latitudCliente = doc.getDocument().getString("latitud");
+                                   String longitudCliente = doc.getDocument().getString("longitud");
+                                    try {
+                                        getTiempo(latitudCliente,longitudCliente,latitudConductor,longitudConductor);
+                                    } catch (IOException e1) {
+                                        e1.printStackTrace();
+                                    }
+
                                 }
                                 setearEstados(estado);
+
                                 textViewMonto.setText(monto);
                                 textViewPanaderia.setText(panaderia);
                                 if(conductor != null) {
@@ -99,7 +122,7 @@ public class PedidoClienteFragment extends Fragment {
                                 } catch (WriterException e1) {
                                     e1.printStackTrace();
                                 }
-
+                                i =  queryDocumentSnapshots.getDocumentChanges().size();
                             }
                             else if (Integer.parseInt(doc.getDocument().get("activo").toString())== 0 && i == queryDocumentSnapshots.getDocumentChanges().size() ) {
                                 validar();
@@ -128,6 +151,7 @@ public class PedidoClienteFragment extends Fragment {
         textViewMonto = (TextView) view.findViewById(R.id.textViewMonto);
         textViewConductor = (TextView) view.findViewById(R.id.textViewConductor);
         textViewPanaderia = (TextView) view.findViewById(R.id.textViewPanaderia);
+        tiempoEntrega = (TextView) view.findViewById(R.id.tiempo);
         codigoQr = (ImageView) view.findViewById(R.id.qr);
         return view;
     }
@@ -150,4 +174,45 @@ public class PedidoClienteFragment extends Fragment {
             ((ProfileClienteActivity) getActivity()).mostrarEmpty();
         }
     }
+
+    public void getTiempo(String latitudDestino, String longitudDestino, String latitudConductor, String longitudConductor) throws IOException {
+        APIKeys ApiKeys = new APIKeys();
+        String key = "&key=" + ApiKeys.getDirectionsKey();
+        String direccionOrigen = "origin=" + latitudConductor + "," + longitudConductor;
+        String direccionDestino = "&destination=" + latitudDestino + "," + longitudDestino;
+        String request = "https://maps.googleapis.com/maps/api/directions/json?" + direccionOrigen + direccionDestino + key;
+        Log.d("URL", request);
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.GET, request, null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d("RES",  response.toString());
+                        try {
+                           JSONArray te = response.getJSONArray("routes");
+                           JSONObject te2 = te.getJSONObject(0);
+                           JSONArray te3 = te2.getJSONArray("legs");
+                           JSONObject te4 =te3.getJSONObject(0);
+                           JSONObject te5 = te4.getJSONObject("duration");
+                           String duracion = te5.getString("text");
+                           tiempoEntrega.setText(duracion);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO: Handle error
+
+                    }
+                });
+        VolleyApp.getInstance().getRequestQueue().add(jsonObjectRequest);
+
+    }
+
 }

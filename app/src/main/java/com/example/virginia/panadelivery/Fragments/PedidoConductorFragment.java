@@ -22,7 +22,6 @@ import com.example.virginia.panadelivery.Activities.ProfileConductorActivity;
 import com.example.virginia.panadelivery.Activities.ScannerActivity;
 import com.example.virginia.panadelivery.Modelos.Pedido;
 import com.example.virginia.panadelivery.R;
-import com.example.virginia.panadelivery.Services.HttpService;
 import com.example.virginia.panadelivery.Services.TrackerService;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
@@ -58,7 +57,7 @@ public class PedidoConductorFragment extends Fragment {
     private String idPedido;
     private Pedido pedido;
     private static final int PERMISSIONS_REQUEST = 1;
-    private HttpService httpService =  new HttpService();
+
 
     public PedidoConductorFragment() {
         // Required empty public constructor
@@ -182,8 +181,8 @@ public class PedidoConductorFragment extends Fragment {
                     }
                     for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
                         //TODO: Agregar modified
-
-                        if (doc.getType() == DocumentChange.Type.ADDED) {
+                        DocumentChange doc2 = doc;
+                        if (doc.getType() == DocumentChange.Type.ADDED || doc.getType() == DocumentChange.Type.MODIFIED) {
                             if (Integer.parseInt(doc.getDocument().get("activo").toString())== 1) {
                                 idPedido = doc.getDocument().getId();
                                 int estado;

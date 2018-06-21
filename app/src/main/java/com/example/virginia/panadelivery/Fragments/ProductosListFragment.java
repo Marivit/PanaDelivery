@@ -21,6 +21,7 @@ import com.example.virginia.panadelivery.Modelos.Producto;
 import com.example.virginia.panadelivery.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -170,7 +171,7 @@ public class ProductosListFragment extends Fragment {
 
                     }
                     for (int i = 0; i < queryDocumentSnapshots.getDocumentChanges().size(); i++ ) {
-
+                        List<DocumentSnapshot> a = queryDocumentSnapshots.getDocuments();
                         DocumentChange doc = queryDocumentSnapshots.getDocumentChanges().get(i);
                         if(doc.getType() == DocumentChange.Type.ADDED || doc.getType() == DocumentChange.Type.MODIFIED) {
                             if (Integer.parseInt(doc.getDocument().get("activo").toString())== 1){
@@ -191,7 +192,7 @@ public class ProductosListFragment extends Fragment {
                     }
                     if (queryDocumentSnapshots.getDocumentChanges().size() == 0) {
                         //validar();
-                        validar=true;
+                        validar=false;
                     }
                 }
             });
