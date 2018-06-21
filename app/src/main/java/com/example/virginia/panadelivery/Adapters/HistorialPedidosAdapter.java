@@ -32,6 +32,8 @@ public class HistorialPedidosAdapter extends RecyclerView.Adapter<HistorialPedid
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.fecha.setText(historialPedidos.get(position).getFecha());
         holder.monto.setText(historialPedidos.get(position).getMontoTotal());
+        holder.hora.setText(historialPedidos.get(position).getHora());
+
     }
 
 
@@ -46,11 +48,13 @@ public class HistorialPedidosAdapter extends RecyclerView.Adapter<HistorialPedid
         View mView;
         public TextView fecha;
         public TextView monto;
+        public TextView hora;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            fecha = itemView.findViewById(R.id.fecha);
-            monto = itemView.findViewById(R.id.monto);
+            fecha = itemView.findViewById(R.id.fechaH);
+            monto = itemView.findViewById(R.id.montoH);
+            hora = itemView.findViewById(R.id.horaH);
         }
     }
 }
