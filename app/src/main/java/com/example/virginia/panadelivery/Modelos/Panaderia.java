@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Panaderia {
 
-    String nombre, direccion, id;
+    String nombre, direccion, id, foto;
     List<Producto> productosPanaderia;
 
     public void setProductosPanaderia(List<Producto> productosPanaderia) {
@@ -42,6 +42,7 @@ public class Panaderia {
     public String toString() {
         return "Panaderia{" +
                 "nombre='" + nombre + '\'' +
+                ", foto='" + foto + '\'' +
                 ", direccion='" + direccion + '\'' +
                 '}';
     }
@@ -61,4 +62,8 @@ public class Panaderia {
     public void setDireccion(String direccion) {
         this.direccion = direccion;
     }
+    public String getFoto() {
+        return foto;
+    }
+
 }
