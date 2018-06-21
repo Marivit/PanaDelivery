@@ -3,6 +3,7 @@ package com.example.virginia.panadelivery.Activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
@@ -20,6 +21,7 @@ import com.example.virginia.panadelivery.Fragments.HistorialClienteFragment;
 import com.example.virginia.panadelivery.Fragments.PanaderiasListFragment;
 import com.example.virginia.panadelivery.Fragments.PedidoClienteFragment;
 import com.example.virginia.panadelivery.Fragments.PedidoClienteVacioFragment;
+import com.example.virginia.panadelivery.Fragments.ProductosListFragment;
 import com.example.virginia.panadelivery.Modelos.Panaderia;
 import com.example.virginia.panadelivery.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -86,7 +88,7 @@ public class    ProfileClienteActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.contenedorCliente, new PanaderiasListFragment());
+        ft.replace(R.id.contenedorCliente, new PanaderiasListFragment(), "PANADERIAS");
         ft.commit();
 
         /*
@@ -135,9 +137,17 @@ public class    ProfileClienteActivity extends AppCompatActivity
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        FragmentManager fm = getSupportFragmentManager();
+        Fragment fragmentSeleccionado = fm.findFragmentById(R.id.contenedorCliente);
+
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else {
+        }
+        else if (fragmentSeleccionado instanceof ProductosListFragment) {
+            fm.beginTransaction().replace(R.id.contenedorCliente, new PanaderiasListFragment(), "PANADERIAS").commit();
+        }
+
+        else {
             super.onBackPressed();
         }
     }
@@ -193,4 +203,6 @@ public class    ProfileClienteActivity extends AppCompatActivity
     public void mostrarEmpty(){
         getSupportFragmentManager().beginTransaction().replace(R.id.contenedorCliente, new PedidoClienteVacioFragment() ).commit();
     }
+
+
 }

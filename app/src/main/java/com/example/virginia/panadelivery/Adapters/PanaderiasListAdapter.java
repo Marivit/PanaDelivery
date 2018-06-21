@@ -53,7 +53,7 @@ public class PanaderiasListAdapter extends RecyclerView.Adapter<PanaderiasListAd
                    FragmentTransaction ft = fm.beginTransaction();
 
 
-                    ft.replace(R.id.contenedorCliente, fragmentoPL);
+                    ft.replace(R.id.contenedorCliente, fragmentoPL, "PRODUCTOS");
                     ft.commit();
                 }
             });
