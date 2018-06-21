@@ -48,7 +48,7 @@ public class PedidoConductorFragment extends Fragment {
 
     private String TAG = "resultConductor";
     private String TAG2 = "probando";
-
+    private Intent intent;
     private TextView textViewEstado2;
     private TextView textViewMonto2;
     private TextView textViewConductor2;
@@ -62,7 +62,7 @@ public class PedidoConductorFragment extends Fragment {
 
 
 
-    private boolean validar=true;
+    private boolean validar=true, noiniciado = true;
 
 
     public PedidoConductorFragment() {
@@ -129,13 +129,7 @@ public class PedidoConductorFragment extends Fragment {
 
     }
 
-    private void startTrackerService() {
-        Intent intent = new Intent(getContext(), TrackerService.class);
-        intent.putExtra("idPedido", pedido.getIdPedido());
 
-        getActivity().startService(intent);
-
-    }
 
     private void configurarBoton(){
         Activity activity = getActivity();
@@ -145,6 +139,10 @@ public class PedidoConductorFragment extends Fragment {
                 Drawable d = getResources().getDrawable(R.color.colorMorado);
                 buttonEstado.setText("Completar");
                 buttonEstado.setBackground(d);
+                if (!noiniciado) {
+                    finishTrackerService();
+
+                }
             }
         }
         if(pedido.getEstado()==3){
@@ -152,6 +150,10 @@ public class PedidoConductorFragment extends Fragment {
                 Drawable d = getResources().getDrawable(R.color.colorVerde);
                 buttonEstado.setText("Entregar");
                 buttonEstado.setBackground(d);
+                if (!noiniciado) {
+                    finishTrackerService();
+
+                }
             }
         }
 
@@ -207,8 +209,9 @@ public class PedidoConductorFragment extends Fragment {
                                     // the service, otherwise request the permission
                                     int permission = ContextCompat.checkSelfPermission(getContext(),
                                             Manifest.permission.ACCESS_FINE_LOCATION);
-                                    if (permission == PackageManager.PERMISSION_GRANTED) {
+                                    if (permission == PackageManager.PERMISSION_GRANTED && estado == 2) {
                                         startTrackerService();
+                                        noiniciado = false;
                                     } else {
                                         ActivityCompat.requestPermissions(getActivity(),
                                                 new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
@@ -259,6 +262,18 @@ public class PedidoConductorFragment extends Fragment {
         if (estado==4){
             textViewEstado2.setText("Entregado");
         }
+    }
+    private void startTrackerService() {
+        intent = new Intent(getContext(), TrackerService.class);
+        intent.putExtra("idPedido", pedido.getIdPedido());
+
+        getActivity().startService(intent);
+
+    }
+
+    public void finishTrackerService() {
+
+        getContext().stopService(intent);
     }
 
 }

@@ -1,11 +1,13 @@
 package com.example.virginia.panadelivery.Activities;
 
+import android.support.v4.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.virginia.panadelivery.Fragments.PedidoConductorFragment;
 import com.example.virginia.panadelivery.R;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -66,7 +68,8 @@ public class ScannerActivity extends AppCompatActivity {
             Log.d(TAG2, "son iguales");
             DocumentReference resultado = db.collection("Pedidos").document(idPedido);
             Map<String, Object> actualizarEstado = new HashMap<>();
-            actualizarEstado.put("activo", 0); //FINALIZAR EL PEDIDO
+            actualizarEstado.put("activo", 0);
+            //FINALIZAR EL PEDIDO
             resultado.set(actualizarEstado, SetOptions.merge());
             Toast.makeText(this, "El pedido de finalizó con éxito!", Toast.LENGTH_LONG).show();
 

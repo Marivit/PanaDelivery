@@ -1,5 +1,6 @@
 package com.example.virginia.panadelivery.Fragments;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -24,6 +26,7 @@ import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.zxing.WriterException;
@@ -52,7 +55,7 @@ public class PedidoClienteFragment extends Fragment {
     private TextView tiempoEntrega;
     private ImageView codigoQr;
     private QrService QrService = new QrService();
-    private boolean validar=true;
+    private boolean validar=true, unsubscribe = false;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,7 +72,7 @@ public class PedidoClienteFragment extends Fragment {
                 //.whereEqualTo("activo","1"); //En espera
 
         if(resultado!=null){
-            resultado.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            ListenerRegistration registration = resultado.addSnapshotListener(new EventListener<QuerySnapshot>() {
                 @Override
                 public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
 
@@ -83,6 +86,8 @@ public class PedidoClienteFragment extends Fragment {
                         Log.d(TAG, String.valueOf(doc));
                         if(doc.getType() == DocumentChange.Type.ADDED || doc.getType() == DocumentChange.Type.MODIFIED) {
                             if (Integer.parseInt(doc.getDocument().get("activo").toString())== 1){
+
+
                                 validar=false;
                                 Long estado;
                                 estado=doc.getDocument().getLong("estado");
@@ -133,6 +138,16 @@ public class PedidoClienteFragment extends Fragment {
 
 
                             }
+                           else if (Integer.parseInt(doc.getDocument().get("activo").toString())== 0 &&  doc.getType() == DocumentChange.Type.MODIFIED) {
+                                if (getContext() != null) {
+                                    Toast.makeText(getContext(), "Se ha completado la orden!", Toast.LENGTH_SHORT).show();
+                                    getActivity().finish();
+                                    startActivity(new Intent(getContext(), ProfileClienteActivity.class));
+                                }
+                                unsubscribe = true;
+
+                            }
+
                         }
 
                     }
@@ -145,6 +160,10 @@ public class PedidoClienteFragment extends Fragment {
                     }
                 }
             });
+            if (unsubscribe) {
+                registration.remove();
+                return;
+            }
          } else {
             validar();
         }

@@ -41,6 +41,7 @@ public class TrackerService extends Service {
     private static final String TAG = TrackerService.class.getSimpleName();
     private String idPedido;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private boolean seguirActualizando = true;
     @Override
     public IBinder onBind(Intent intent) {
 
@@ -81,45 +82,47 @@ public class TrackerService extends Service {
     }
 
     private void requestLocationUpdates() {
-        LocationRequest request = new LocationRequest();
-        request.setInterval(10000);
-        request.setFastestInterval(5000);
-        request.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        FusedLocationProviderClient client = LocationServices.getFusedLocationProviderClient(this);
-        //final String path = getString(R.string.firebase_path) + "/" + getString(R.string.transport_id);
-        int permission = ContextCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_FINE_LOCATION);
-        if (permission == PackageManager.PERMISSION_GRANTED) {
-            // Request location updates and when an update is
-            // received, store the location in Firebase
-            client.requestLocationUpdates(request, new LocationCallback() {
-                @Override
-                public void onLocationResult(LocationResult locationResult) {
-                    //DatabaseReference ref = FirebaseDatabase.getInstance().getReference(path);
-                    Location location = locationResult.getLastLocation();
-                    if (location != null) {
-                        Map<String, String> coordenadas = new HashMap<>();
-                        coordenadas.put("latitudConductor",Double.toString(location.getLatitude()) );
-                        coordenadas.put("longitudConductor", Double.toString(location.getLongitude()));
+        if (seguirActualizando) {
+            LocationRequest request = new LocationRequest();
+            request.setInterval(20000);
+            request.setFastestInterval(10000);
+            request.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+            FusedLocationProviderClient client = LocationServices.getFusedLocationProviderClient(this);
+            //final String path = getString(R.string.firebase_path) + "/" + getString(R.string.transport_id);
+            int permission = ContextCompat.checkSelfPermission(this,
+                    Manifest.permission.ACCESS_FINE_LOCATION);
+            if (permission == PackageManager.PERMISSION_GRANTED) {
+                // Request location updates and when an update is
+                // received, store the location in Firebase
+                client.requestLocationUpdates(request, new LocationCallback() {
+                    @Override
+                    public void onLocationResult(LocationResult locationResult) {
+                        //DatabaseReference ref = FirebaseDatabase.getInstance().getReference(path);
+                        Location location = locationResult.getLastLocation();
+                        if (location != null) {
+                            Map<String, String> coordenadas = new HashMap<>();
+                            coordenadas.put("latitudConductor", Double.toString(location.getLatitude()));
+                            coordenadas.put("longitudConductor", Double.toString(location.getLongitude()));
 
-                        db.collection("Pedidos").document(idPedido).set(coordenadas, SetOptions.merge()).addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
+                            db.collection("Pedidos").document(idPedido).set(coordenadas, SetOptions.merge()).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
                                     Log.d("AA", "FURULO EL CAMBIO");
-                            }
-                        })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Log.w(TAG, "Error writing document", e);
-                                    }
-                                });
+                                }
+                            })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Log.w(TAG, "Error writing document", e);
+                                        }
+                                    });
 
 
-                        //ref.setValue(location);
+                            //ref.setValue(location);
+                        }
                     }
-                }
-            }, null);
+                }, null);
+            }
         }
     }
 }

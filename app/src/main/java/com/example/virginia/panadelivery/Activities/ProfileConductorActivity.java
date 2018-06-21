@@ -49,7 +49,7 @@ public class ProfileConductorActivity extends AppCompatActivity {
                     fragmentManager.beginTransaction().replace(R.id.containerConductor, new PedidosListFragment()).commit();
                     return true;
                 case R.id.navigation_pedidoActual:
-                    fragmentManager.beginTransaction().replace(R.id.containerConductor, new PedidoConductorFragment()).commit();
+                    fragmentManager.beginTransaction().replace(R.id.containerConductor, new PedidoConductorFragment(), "PedidoConductor").commit();
                     return true;
                 case R.id.navigation_historial:
                     fragmentManager.beginTransaction().replace(R.id.containerConductor, new historialConductorFragment()).commit();
