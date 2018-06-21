@@ -65,9 +65,12 @@ public class HistorialClienteFragment extends Fragment {
                     else {
                         for(DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
                             if (doc.getType() == DocumentChange.Type.ADDED ) {
-                                Pedido pedido = doc.getDocument().toObject(Pedido.class);
-                                historialPedidos.add(pedido);
-                                adaptador.notifyDataSetChanged();
+                                if (Integer.parseInt(doc.getDocument().get("activo").toString())== 0){
+                                    Pedido pedido = doc.getDocument().toObject(Pedido.class);
+                                    historialPedidos.add(pedido);
+                                    adaptador.notifyDataSetChanged();
+                                }
+
                             }
                         }
                     }

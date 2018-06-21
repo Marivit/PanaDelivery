@@ -2,20 +2,20 @@ package com.example.virginia.panadelivery.Adapters;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.virginia.panadelivery.Fragments.PanaderiasListFragment;
 import com.example.virginia.panadelivery.Fragments.ProductosListFragment;
 import com.example.virginia.panadelivery.Modelos.Panaderia;
-import com.example.virginia.panadelivery.Modelos.Producto;
 import com.example.virginia.panadelivery.R;
-import android.support.v4.app.FragmentManager;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -42,7 +42,9 @@ public class PanaderiasListAdapter extends RecyclerView.Adapter<PanaderiasListAd
             holder.direccion.setText(panaderias.get(position).getDireccion());
             Bundle bundle = new Bundle();
             String id = panaderias.get(position).getId();
-            bundle.putString("id", id);
+            Picasso.get().load(panaderias.get(position).getFoto()).resize(90,91).centerCrop().into(holder.imagenPanaderia);
+
+        bundle.putString("id", id);
             bundle.putString("nombre", panaderias.get(position).getNombre());
             bundle.putString("latitud", panaderias.get(position).getLatitud());
             bundle.putString("longitud",panaderias.get(position).getLongitud());
@@ -71,6 +73,8 @@ public class PanaderiasListAdapter extends RecyclerView.Adapter<PanaderiasListAd
 
         public TextView nombrePanaderia;
         public TextView direccion;
+        public ImageView imagenPanaderia;
+
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -78,6 +82,7 @@ public class PanaderiasListAdapter extends RecyclerView.Adapter<PanaderiasListAd
 
             nombrePanaderia = (TextView) mView.findViewById(R.id.nombrePanaderia);
             direccion = (TextView) mView.findViewById(R.id.direccionPanaderia);
+            imagenPanaderia = (ImageView) mView.findViewById(R.id.imagePanaderia);
 
 
         }

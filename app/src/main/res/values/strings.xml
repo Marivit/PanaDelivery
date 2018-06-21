@@ -2,7 +2,7 @@
     <string name="app_name">PanaDelivery</string>
     <string name="title_activity_mapa">Map</string>
     <string name="title_activity_maps">Map</string>
-    <string name="title_activity_profile_cliente">ProfileClienteActivity</string>
+    <string name="title_activity_profile_cliente">PanaDelivery - Clientes</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>
@@ -17,6 +17,6 @@
     <string name="notification_text">Tracking, tap to cancel</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_profile_conductor">ProfileConductorActivity</string>
+    <string name="title_activity_profile_conductor">Panadelivery - Conductor</string>
     <string name="title_activity_scanner">ScannerActivity</string>
 </resources>

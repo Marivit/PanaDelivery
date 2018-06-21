@@ -100,7 +100,7 @@ public class PedidosListAdapter extends RecyclerView.Adapter<PedidosListAdapter.
 
             numPedido = (TextView) mView.findViewById(R.id.numeroPedido);
             direccion = (TextView) mView.findViewById(R.id.descripcionDireccion);
-            fecha = (TextView) mView.findViewById(R.id.fecha);
+            fecha = (TextView) mView.findViewById(R.id.fechaH);
             hora = (TextView) mView.findViewById(R.id.hora);
             buttonUbicacion = (FloatingActionButton) mView.findViewById(R.id.buttonUbicacion);
             buttonElegir = (FloatingActionButton) mView.findViewById(R.id.buttonElegir);

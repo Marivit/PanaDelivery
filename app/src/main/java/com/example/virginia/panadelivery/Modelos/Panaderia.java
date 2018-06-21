@@ -6,7 +6,9 @@ import java.util.List;
 
 public class Panaderia {
 
-    String nombre, direccion, id, latitud, longitud;
+
+    String nombre, direccion, id, latitud, longitud, foto;
+
     List<Producto> productosPanaderia;
 
     public void setProductosPanaderia(List<Producto> productosPanaderia) {
@@ -42,6 +44,7 @@ public class Panaderia {
     public String toString() {
         return "Panaderia{" +
                 "nombre='" + nombre + '\'' +
+                ", foto='" + foto + '\'' +
                 ", direccion='" + direccion + '\'' +
                 '}';
     }
@@ -62,6 +65,7 @@ public class Panaderia {
         this.direccion = direccion;
     }
 
+
     public String getLatitud() {
         return latitud;
     }
@@ -77,4 +81,10 @@ public class Panaderia {
     public void setLongitud(String longitud) {
         this.longitud = longitud;
     }
+
+    public String getFoto() {
+        return foto;
+    }
+
+
 }
