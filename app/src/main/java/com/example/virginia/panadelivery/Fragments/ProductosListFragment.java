@@ -20,16 +20,21 @@ import com.example.virginia.panadelivery.Adapters.ProductosListAdapter;
 import com.example.virginia.panadelivery.Modelos.Producto;
 import com.example.virginia.panadelivery.R;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.SetOptions;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Nullable;
 
@@ -106,14 +111,37 @@ public class ProductosListFragment extends Fragment {
 
 
                     if (doc.getType() == DocumentChange.Type.ADDED) {
-                        String name = doc.getDocument().getString("nombre");
+                        QueryDocumentSnapshot doc2 = doc.getDocument();
+                        try {
+                            Producto producto = doc.getDocument().toObject(Producto.class);
+                            producto.setId(doc.getDocument().getId());
+                            lProductos.add(producto);
+                            Log.d(TAG, "Se agrego algo a la lista!");
+                            productosListAdapter.notifyDataSetChanged();
+                        }
+                        catch(RuntimeException exception) {
+                                Log.d("RUNTIMEEXCEPTION", "Hay datos mal guardados en la Base de datos. Corrigiendo...");
+                                //Se crea el producto
+                                Producto producto2 = new Producto();
+                                producto2.setNombre(doc2.getString("nombre"));
+                                producto2.setPrecio(doc2.getString("precio"));
+                                producto2.setFoto(doc2.getString("foto"));
+                                producto2.setDescripcion(doc2.getString("descripcion"));
+                                producto2.setId(doc2.getId());
+                                producto2.setCantidad(Integer.parseInt(doc2.getString("cantidad")));
+                                CollectionReference reference = db.collection("Panaderias").document(idPanaderia).collection("Productos");
+                                //Se arreglan los datos
+                                Map<String, Integer> arreglarDatos = new HashMap<>();
+                                arreglarDatos.put("cantidad", Integer.parseInt(doc2.getString("cantidad")));
+                                reference.document(producto2.getId()).set(arreglarDatos, SetOptions.merge());
+                                //Se agrega a la lista
+                                lProductos.add(producto2);
+                                Log.d(TAG, "Se agrego algo a la lista!");
+                                productosListAdapter.notifyDataSetChanged();
 
-                        Producto producto = doc.getDocument().toObject(Producto.class);
+                        }
 
-                        producto.setId(doc.getDocument().getId());
-                        lProductos.add(producto);
-                        Log.d(TAG, "Se agrego algo a la lista!");
-                        productosListAdapter.notifyDataSetChanged();
+
                     }
                     if (doc.getType() == DocumentChange.Type.MODIFIED) {
                         for (int i = 0; i < lProductos.size(); i++) {

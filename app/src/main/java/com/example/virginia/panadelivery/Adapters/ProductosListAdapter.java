@@ -47,11 +47,22 @@ public class ProductosListAdapter extends RecyclerView.Adapter<ProductosListAdap
 
         holder.setProducto(productos.get(position));
         holder.nombreProducto.setText(productos.get(position).getNombre());
-        Picasso.get().load(productos.get(position).getFoto()).resize(90,91).centerCrop().into(holder.imagenProducto);
-        holder.descripcion.setText(productos.get(position).getDescripcion());
-        holder.precioUnidad.setText(productos.get(position).getPrecio() + " BSS.");
-        holder.unidadesTotales.setText(Integer.toString(productos.get(position).getCantidad()));
-        holder.bind(productos.get(position));
+        try {
+            Picasso.get().load(productos.get(position).getFoto()).resize(90, 91).centerCrop().into(holder.imagenProducto);
+            holder.descripcion.setText(productos.get(position).getDescripcion());
+            holder.precioUnidad.setText(productos.get(position).getPrecio() + " BSS.");
+            holder.unidadesTotales.setText(Integer.toString(productos.get(position).getCantidad()));
+            holder.bind(productos.get(position));
+        }
+        catch(IllegalArgumentException exc) {
+            Log.d("MALA IMAGEN", "Hay una imagen mal agregada en la base de datos");
+            holder.descripcion.setText(productos.get(position).getDescripcion());
+            holder.precioUnidad.setText(productos.get(position).getPrecio() + " BSS.");
+            holder.unidadesTotales.setText(Integer.toString(productos.get(position).getCantidad()));
+            holder.bind(productos.get(position));
+
+        }
+
 
     }
 

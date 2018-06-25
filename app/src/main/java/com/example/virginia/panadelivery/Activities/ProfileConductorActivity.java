@@ -1,5 +1,6 @@
 package com.example.virginia.panadelivery.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -22,7 +23,7 @@ import java.util.List;
 
 public class ProfileConductorActivity extends AppCompatActivity {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private FirebaseAuth firebaseAuth;
+    private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private String TAG = "Prueba";
     private String TAG2 = "PEDIDO ACTUAL";
     private String TAG3 = "CorreoCliente";
@@ -54,6 +55,10 @@ public class ProfileConductorActivity extends AppCompatActivity {
                 case R.id.navigation_historial:
                     fragmentManager.beginTransaction().replace(R.id.containerConductor, new historialConductorFragment()).commit();
                     return true;
+                case R.id.nav_logout:
+                        firebaseAuth.signOut();
+                        finish();
+                        startActivity(new Intent(ProfileConductorActivity.this, MainActivity.class));
             }
             return false;
         }
