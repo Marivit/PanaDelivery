@@ -11,9 +11,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.virginia.panadelivery.Adapters.HistorialConductorAdapter;
-import com.example.virginia.panadelivery.Adapters.HistorialPedidosAdapter;
+import com.example.virginia.panadelivery.Adapters.ProductosPedidosAdapter;
 import com.example.virginia.panadelivery.Modelos.Pedido;
+import com.example.virginia.panadelivery.Modelos.Producto;
 import com.example.virginia.panadelivery.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
@@ -28,32 +28,29 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-
-public class historialConductorFragment extends Fragment {
-    private FirebaseAuth fireAuth;
-    private FirebaseFirestore db;
-    private List<Pedido> historialPedidos;
-    private RecyclerView vistaHistorial;
-    private HistorialConductorAdapter adaptador;
+public class detalleHistorialFragment extends Fragment {
 
 
+    private FirebaseAuth fireAuth = FirebaseAuth.getInstance();
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private String idPedido;
+    private List<Producto> lProductos;
     private OnFragmentInteractionListener mListener;
-
-    public historialConductorFragment() {
+    private  ProductosPedidosAdapter adapter;
+    public detalleHistorialFragment() {
         // Required empty public constructor
     }
 
 
-/*
-    public static historialConductorFragment newInstance(String param1, String param2) {
-        historialConductorFragment fragment = new historialConductorFragment();
+    // TODO: Rename and change types and number of parameters
+    public static detalleHistorialFragment newInstance(String param1, String param2) {
+        detalleHistorialFragment fragment = new detalleHistorialFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+
+
         fragment.setArguments(args);
         return fragment;
     }
-*/
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -64,21 +61,17 @@ public class historialConductorFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-       View mView = inflater.inflate(R.layout.fragment_historial_conductor, container, false);
-        vistaHistorial = (RecyclerView)  mView.findViewById(R.id.historialConductor);
-        historialPedidos = new ArrayList<>();
-        adaptador = new HistorialConductorAdapter(historialPedidos);
-        adaptador.setActividadActual(getActivity());
-        adaptador.setFm(getActivity().getSupportFragmentManager());
-        vistaHistorial.setHasFixedSize(true);
-        vistaHistorial.setLayoutManager(new LinearLayoutManager(getContext()));
-        vistaHistorial.setAdapter(adaptador);
-        fireAuth = fireAuth.getInstance();
-        db = FirebaseFirestore.getInstance();
+        lProductos = new ArrayList<>();
+        View mView = inflater.inflate(R.layout.fragment_detalle_historial, container, false);
+        RecyclerView listaProductos = mView.findViewById(R.id.productosHistorial);
+        listaProductos.setLayoutManager(new LinearLayoutManager(getContext()));
+        adapter = new ProductosPedidosAdapter(lProductos);
+        listaProductos.setAdapter(adapter);
+        listaProductos.setHasFixedSize(true);
 
-        final String email = fireAuth.getCurrentUser().getEmail();
+
         Query resultado = db
-                .collection("Pedidos").whereEqualTo("conductor", email);
+                .collection("Pedidos").document(getArguments().getString("idPedido")).collection("Productos");
 
         if (resultado != null) {
             resultado.addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -90,11 +83,11 @@ public class historialConductorFragment extends Fragment {
                     else {
                         for(DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
                             if (doc.getType() == DocumentChange.Type.ADDED ) {
-                                if (Integer.parseInt(doc.getDocument().get("activo").toString())== 0){
-                                    Pedido pedido = doc.getDocument().toObject(Pedido.class);
-                                    historialPedidos.add(pedido);
-                                    adaptador.notifyDataSetChanged();
-                                }
+                                Producto producto = doc.getDocument().toObject(Producto.class);
+                                lProductos.add(producto);
+                                adapter.notifyDataSetChanged();
+
+
 
                             }
                         }
@@ -113,18 +106,6 @@ public class historialConductorFragment extends Fragment {
     }
 
 
-
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);

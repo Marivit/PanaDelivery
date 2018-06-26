@@ -22,6 +22,7 @@ import com.example.virginia.panadelivery.Fragments.PanaderiasListFragment;
 import com.example.virginia.panadelivery.Fragments.PedidoClienteFragment;
 import com.example.virginia.panadelivery.Fragments.PedidoClienteVacioFragment;
 import com.example.virginia.panadelivery.Fragments.ProductosListFragment;
+import com.example.virginia.panadelivery.Fragments.detalleHistorialFragment;
 import com.example.virginia.panadelivery.Modelos.Panaderia;
 import com.example.virginia.panadelivery.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -83,6 +84,7 @@ public class    ProfileClienteActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -146,6 +148,9 @@ public class    ProfileClienteActivity extends AppCompatActivity
         else if (fragmentSeleccionado instanceof ProductosListFragment) {
             fm.beginTransaction().replace(R.id.contenedorCliente, new PanaderiasListFragment(), "PANADERIAS").commit();
         }
+        else if (fragmentSeleccionado instanceof detalleHistorialFragment) {
+            fm.beginTransaction().replace(R.id.contenedorCliente, new HistorialClienteFragment()).commit();
+        }
 
         else {
             super.onBackPressed();
@@ -204,5 +209,10 @@ public class    ProfileClienteActivity extends AppCompatActivity
         getSupportFragmentManager().beginTransaction().replace(R.id.contenedorCliente, new PedidoClienteVacioFragment() ).commit();
     }
 
+    public void seleccionarPedidoActualDrawer() {
+       NavigationView nav = findViewById(R.id.nav_view);
+       nav.getMenu().getItem(2).setChecked(true);
+       nav.getMenu().getItem(1).setChecked(false);
+    }
 
 }

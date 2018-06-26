@@ -5,7 +5,7 @@ public class Pedido {
      String direccion, hora, fecha, latitud, longitud, correoCliente;
      String idPedido, conductorEmail, montoTotal;
      int estado;
-
+     Long activo;
     @Override
     public String toString() {
         return "Pedido{" +
@@ -38,6 +38,15 @@ public class Pedido {
         this.conductorEmail= conductorEmail;
         this.montoTotal = montoTotal;
     }
+
+    public Long getActivo() {
+        return activo;
+    }
+
+    public void setActivo(Long activo) {
+        this.activo = activo;
+    }
+
     public int getEstado() {
         return estado;
     }

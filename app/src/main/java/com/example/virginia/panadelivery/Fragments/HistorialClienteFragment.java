@@ -45,6 +45,8 @@ public class HistorialClienteFragment extends Fragment {
         vistaHistorial = (RecyclerView)  mView.findViewById(R.id.historialPedidos);
         historialPedidos = new ArrayList<>();
         adaptador = new HistorialPedidosAdapter(historialPedidos);
+        adaptador.setFm(getActivity().getSupportFragmentManager());
+        adaptador.setActividadActual(getActivity());
         vistaHistorial.setHasFixedSize(true);
         vistaHistorial.setLayoutManager(new LinearLayoutManager(getContext()));
         vistaHistorial.setAdapter(adaptador);
@@ -65,11 +67,17 @@ public class HistorialClienteFragment extends Fragment {
                     else {
                         for(DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
                             if (doc.getType() == DocumentChange.Type.ADDED ) {
-                                if (Integer.parseInt(doc.getDocument().get("activo").toString())== 0){
+
                                     Pedido pedido = doc.getDocument().toObject(Pedido.class);
-                                    historialPedidos.add(pedido);
+                                    pedido.setIdPedido(doc.getDocument().getId());
+                                    if (pedido.getActivo() == 1) {
+                                        historialPedidos.add(0, pedido);
+                                    }
+                                    else {
+                                        historialPedidos.add(pedido);
+                                    }
                                     adaptador.notifyDataSetChanged();
-                                }
+
 
                             }
                         }

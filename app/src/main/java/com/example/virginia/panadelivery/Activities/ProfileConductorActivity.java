@@ -4,14 +4,21 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.example.virginia.panadelivery.Fragments.EmptyPedidoFragment;
+import com.example.virginia.panadelivery.Fragments.HistorialClienteFragment;
+import com.example.virginia.panadelivery.Fragments.PanaderiasListFragment;
 import com.example.virginia.panadelivery.Fragments.PedidoConductorFragment;
 import com.example.virginia.panadelivery.Fragments.PedidosListFragment;
+import com.example.virginia.panadelivery.Fragments.ProductosListFragment;
+import com.example.virginia.panadelivery.Fragments.detalleHistorialFragment;
 import com.example.virginia.panadelivery.Fragments.historialConductorFragment;
 import com.example.virginia.panadelivery.Modelos.Pedido;
 import com.example.virginia.panadelivery.R;
@@ -80,6 +87,21 @@ public class ProfileConductorActivity extends AppCompatActivity {
 
     public void mostrarEmpty(){
         fragmentManager.beginTransaction().replace(R.id.containerConductor, new EmptyPedidoFragment()).commit();
+    }
+    public void onBackPressed() {
+
+        FragmentManager fm = getSupportFragmentManager();
+        Fragment fragmentSeleccionado = fm.findFragmentById(R.id.containerConductor);
+
+
+       if (fragmentSeleccionado instanceof ProductosListFragment) {
+            fm.beginTransaction().replace(R.id.containerConductor, new historialConductorFragment()).commit();
+        }
+
+
+        else {
+            super.onBackPressed();
+        }
     }
 
 }
