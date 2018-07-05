@@ -135,7 +135,7 @@ public class ProductosListAdapter extends RecyclerView.Adapter<ProductosListAdap
                         //precioTotal.setText(Integer.toString(pt2));
                         Log.d("CANTIDAD", Integer.toString(productoCheckout.getCantidad()));
                         sumaMonto = sumaMonto + Integer.parseInt(productoCheckout.getPrecio());
-                        montoTotal.setText("Total: "+Integer.toString(sumaMonto)+" Bs.S");
+                        montoTotal.setText(Integer.toString(sumaMonto));
                         if (numero == 1) {
                             confirmarProducto.setChecked(true);
                             checkout.add(productoCheckout);
@@ -166,7 +166,7 @@ public class ProductosListAdapter extends RecyclerView.Adapter<ProductosListAdap
                         if (sumaMonto < 0) {
                             sumaMonto = 0;
                         }
-                        montoTotal.setText("Total: "+Integer.toString(sumaMonto)+" Bs.S");
+                        montoTotal.setText(Integer.toString(sumaMonto));
                         if (numero == 0) {
                             confirmarProducto.setChecked(false);
                             checkout.remove(productoCheckout);

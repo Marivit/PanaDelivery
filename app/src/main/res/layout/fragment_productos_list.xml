@@ -12,33 +12,50 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/productos"
         android:layout_width="388dp"
-        android:layout_height="500dp"
+        android:layout_height="459dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
     </android.support.v7.widget.RecyclerView>
 
-    <TextView
-        android:id="@+id/sumaMontos"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:background="#ffcaa7"
-        android:gravity="center"
-        android:text="Total: 0 Bs.S"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/checkout" />
-
     <Button
         android:id="@+id/checkout"
         android:layout_width="match_parent"
-        android:layout_height="52dp"
+        android:layout_height="54dp"
         android:layout_marginBottom="4dp"
         android:backgroundTint="@color/colorVerde"
         android:text="Confirmar"
         app:layout_constraintBottom_toBottomOf="parent"
         tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/sumaMontos3"
+        android:layout_width="212dp"
+        android:layout_height="0dp"
+        android:background="#ffcaa7"
+        android:gravity="center"
+        android:text="Total (Bs.S):        "
+        android:textAlignment="textEnd"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/checkout"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/sumaMontos"
+        android:layout_width="171dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:background="#ffcaa7"
+        android:gravity="center"
+        android:text="0"
+        android:textAlignment="textStart"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/checkout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/sumaMontos3" />
 </android.support.constraint.ConstraintLayout>

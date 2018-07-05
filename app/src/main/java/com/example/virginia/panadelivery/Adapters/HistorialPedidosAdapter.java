@@ -2,9 +2,7 @@ package com.example.virginia.panadelivery.Adapters;
 
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,9 +13,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.virginia.panadelivery.Activities.ProfileClienteActivity;
-import com.example.virginia.panadelivery.Activities.ProfileConductorActivity;
 import com.example.virginia.panadelivery.Fragments.PedidoClienteFragment;
-import com.example.virginia.panadelivery.Fragments.PedidoConductorFragment;
 import com.example.virginia.panadelivery.Fragments.detalleHistorialFragment;
 import com.example.virginia.panadelivery.Modelos.Pedido;
 import com.example.virginia.panadelivery.R;
@@ -74,6 +70,7 @@ public class HistorialPedidosAdapter extends RecyclerView.Adapter<HistorialPedid
 
         }
         else {
+            holder.activo.setText("Terminado");
             holder.detallePedido.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

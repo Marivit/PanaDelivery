@@ -8,7 +8,9 @@
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="1dp">
 
         <TextView
             android:id="@+id/numeroPedido3"
@@ -66,25 +68,25 @@
             android:id="@+id/textViewFecha2"
             android:layout_width="50dp"
             android:layout_height="17dp"
+            android:layout_marginBottom="48dp"
             android:layout_marginEnd="300dp"
             android:layout_marginLeft="100dp"
-            android:layout_marginTop="8dp"
             android:text="Fecha:"
             android:textColor="@color/cardview_dark_background"
             android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewDireccion2" />
+            app:layout_constraintLeft_toLeftOf="parent" />
 
         <TextView
             android:id="@+id/textViewDireccion2"
-            android:layout_width="82dp"
+            android:layout_width="126dp"
             android:layout_height="16dp"
             android:layout_marginBottom="72dp"
-            android:layout_marginEnd="268dp"
+            android:layout_marginEnd="224dp"
             android:layout_marginLeft="100dp"
             android:layout_marginTop="8dp"
-            android:text="Monto total:"
+            android:text="Monto total (Bs.S):"
             android:textColor="@color/cardview_dark_background"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -97,32 +99,13 @@
             android:layout_width="101dp"
             android:layout_height="17dp"
             android:layout_marginBottom="8dp"
-            android:layout_marginEnd="196dp"
-            android:layout_marginStart="8dp"
+            android:layout_marginEnd="192dp"
             android:layout_marginTop="8dp"
             android:text="20/05/2018"
-            app:layout_constraintBottom_toTopOf="@+id/hora"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/textViewFecha2"
-            app:layout_constraintTop_toBottomOf="@+id/BS"
-            app:layout_constraintVertical_bias="1.0" />
-
-        <TextView
-            android:id="@+id/BS"
-            android:layout_width="45dp"
-            android:layout_height="17dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="40dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:text="(Bs.S)"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/montoH"
-            app:layout_constraintTop_toBottomOf="@+id/numeroPedido3"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.636" />
 
         <TextView
             android:id="@+id/montoH"
@@ -146,14 +129,13 @@
             android:layout_width="53dp"
             android:layout_height="16dp"
             android:layout_marginBottom="8dp"
-            android:layout_marginEnd="224dp"
+            android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:text="04:00"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.037"
-            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintHorizontal_bias="0.004"
             app:layout_constraintStart_toEndOf="@+id/textViewHora2"
             app:layout_constraintTop_toBottomOf="@+id/fechaH"
             app:layout_constraintVertical_bias="0.0" />
@@ -170,23 +152,10 @@
             android:text="VER DETALLES"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.856"
+            app:layout_constraintHorizontal_bias="0.914"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.817" />
-
-        <TextView
-            android:id="@+id/pedidoActivo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="108dp"
-            android:layout_marginEnd="126dp"
-            android:layout_marginStart="14dp"
-            android:layout_marginTop="16dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/numeroPedido3"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintVertical_bias="0.827" />
 
     </android.support.constraint.ConstraintLayout>
 </android.support.constraint.ConstraintLayout>
