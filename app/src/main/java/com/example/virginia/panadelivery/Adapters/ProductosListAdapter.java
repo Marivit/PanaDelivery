@@ -50,14 +50,14 @@ public class ProductosListAdapter extends RecyclerView.Adapter<ProductosListAdap
         try {
             Picasso.get().load(productos.get(position).getFoto()).resize(90, 91).centerCrop().into(holder.imagenProducto);
             holder.descripcion.setText(productos.get(position).getDescripcion());
-            holder.precioUnidad.setText(productos.get(position).getPrecio() + " BSS.");
+            holder.precioUnidad.setText(productos.get(position).getPrecio() + " Bs.S");
             holder.unidadesTotales.setText(Integer.toString(productos.get(position).getCantidad()));
             holder.bind(productos.get(position));
         }
         catch(IllegalArgumentException exc) {
             Log.d("MALA IMAGEN", "Hay una imagen mal agregada en la base de datos");
             holder.descripcion.setText(productos.get(position).getDescripcion());
-            holder.precioUnidad.setText(productos.get(position).getPrecio() + " BSS.");
+            holder.precioUnidad.setText(productos.get(position).getPrecio() + " Bs.S");
             holder.unidadesTotales.setText(Integer.toString(productos.get(position).getCantidad()));
             holder.bind(productos.get(position));
 
@@ -83,7 +83,7 @@ public class ProductosListAdapter extends RecyclerView.Adapter<ProductosListAdap
         public Producto producto, productoCheckout;
         public ImageView imagenProducto;
         public TextView precioUnidad;
-        public TextView precioTotal;
+        //public TextView precioTotal;
         public TextView unidadesTotales;
         public ViewHolder(View itemView) {
             super(itemView);
@@ -98,7 +98,7 @@ public class ProductosListAdapter extends RecyclerView.Adapter<ProductosListAdap
             confirmarProducto = (CheckBox) mView.findViewById(R.id.checkBoxAñadir);
             imagenProducto = (ImageView) mView.findViewById(R.id.imagenProducto);
             precioUnidad = (TextView) mView.findViewById(R.id.precioUnidad);
-            precioTotal = (TextView) mView.findViewById(R.id.precioTotal);
+            //precioTotal = (TextView) mView.findViewById(R.id.precioTotal);
             unidadesTotales = (TextView) mView.findViewById(R.id.unidadesTotales);
 
         }
@@ -132,10 +132,10 @@ public class ProductosListAdapter extends RecyclerView.Adapter<ProductosListAdap
                         cantidadProducto.setText(Integer.toString(numero));
                         int pt = Integer.parseInt(p2.getPrecio());
                         int pt2 = pt * productoCheckout.getCantidad();
-                        precioTotal.setText(Integer.toString(pt2));
+                        //precioTotal.setText(Integer.toString(pt2));
                         Log.d("CANTIDAD", Integer.toString(productoCheckout.getCantidad()));
                         sumaMonto = sumaMonto + Integer.parseInt(productoCheckout.getPrecio());
-                        montoTotal.setText(Integer.toString(sumaMonto));
+                        montoTotal.setText("Total: "+Integer.toString(sumaMonto)+" Bs.S");
                         if (numero == 1) {
                             confirmarProducto.setChecked(true);
                             checkout.add(productoCheckout);
@@ -159,14 +159,14 @@ public class ProductosListAdapter extends RecyclerView.Adapter<ProductosListAdap
                         cantidadProducto.setText(Integer.toString(numero));
                         int pt = Integer.parseInt(p2.getPrecio());
                         int pt2 = pt * productoCheckout.getCantidad();
-                        precioTotal.setText(Integer.toString(pt2));
+                        //precioTotal.setText(Integer.toString(pt2));
                         sumaMonto = Integer.parseInt(montoTotal.getText().toString());
                         Log.d("CANTIDAD", Integer.toString(productoCheckout.getCantidad()));
                         sumaMonto = sumaMonto - Integer.parseInt(productoCheckout.getPrecio());
                         if (sumaMonto < 0) {
                             sumaMonto = 0;
                         }
-                        montoTotal.setText(Integer.toString(sumaMonto));
+                        montoTotal.setText("Total: "+Integer.toString(sumaMonto)+" Bs.S");
                         if (numero == 0) {
                             confirmarProducto.setChecked(false);
                             checkout.remove(productoCheckout);

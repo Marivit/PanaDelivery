@@ -14,16 +14,25 @@
 
         <TextView
             android:id="@+id/precioUnidad"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="6dp"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="28dp"
-            android:text="precio (BSS)"
+            android:layout_width="190dp"
+            android:layout_height="15dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="precio (Bs.S)"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/nombre"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toEndOf="@+id/precioUnidad2"
+            app:layout_constraintTop_toBottomOf="@+id/descripcion" />
+
+        <TextView
+            android:id="@+id/precioUnidad2"
+            android:layout_width="wrap_content"
+            android:layout_height="15dp"
+            android:layout_marginStart="116dp"
+            android:layout_marginTop="8dp"
+            android:text="Precio:"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/descripcion" />
 
         <ImageView
             android:id="@+id/imagenProducto"
@@ -58,16 +67,15 @@
             app:layout_constraintHorizontal_bias="0.538"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.917" />
+            app:layout_constraintVertical_bias="0.98" />
 
         <TextView
             android:id="@+id/descripcion"
-            android:layout_width="138dp"
-            android:layout_height="24dp"
-            android:layout_marginBottom="8dp"
+            android:layout_width="243dp"
+            android:layout_height="20dp"
+            android:layout_marginBottom="100dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="116dp"
-            android:layout_marginTop="8dp"
             android:text="Descripcion"
             android:textAppearance="@android:style/TextAppearance.Material.Menu"
             android:textColor="#74000000"
@@ -75,24 +83,25 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.398" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/nombre"
-            android:layout_width="138dp"
-            android:layout_height="28dp"
+            android:layout_width="243dp"
+            android:layout_height="23dp"
             android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
             android:layout_marginStart="116dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
             android:text="Nombre Producto"
             android:textAppearance="@android:style/TextAppearance.Material.Menu"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/descripcion"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.111" />
+            app:layout_constraintVertical_bias="1.0" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/mas"
@@ -111,7 +120,7 @@
             app:layout_constraintHorizontal_bias="0.692"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.917" />
+            app:layout_constraintVertical_bias="0.98" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/menos"
@@ -130,7 +139,7 @@
             app:layout_constraintHorizontal_bias="0.385"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.916" />
+            app:layout_constraintVertical_bias="0.99" />
 
         <CheckBox
             android:id="@+id/checkBoxAñadir"
@@ -143,35 +152,10 @@
             android:text="Add"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0" />
-
-        <TextView
-            android:id="@+id/precioTotal"
-            android:layout_width="55dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="44dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:text="MT:"
-            app:layout_constraintBottom_toTopOf="@+id/checkBoxAñadir"
-            app:layout_constraintEnd_toStartOf="@+id/precioTotal2"
-            app:layout_constraintHorizontal_bias="0.833"
-            app:layout_constraintStart_toEndOf="@+id/descripcion"
-            app:layout_constraintTop_toBottomOf="@+id/precioUnidad"
-            app:layout_constraintVertical_bias="1.0" />
-
-        <TextView
-            android:id="@+id/precioTotal2"
-            android:layout_width="33dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="44dp"
-            android:layout_marginEnd="4dp"
-            android:text="Bs.S"
-            app:layout_constraintBottom_toTopOf="@+id/checkBoxAñadir"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintVertical_bias="0.934" />
 
         <TextView
             android:id="@+id/unidadesTotales2"

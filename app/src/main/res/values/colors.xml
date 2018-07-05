@@ -8,6 +8,7 @@
     <color name="color3">#ffffff</color>
     <color name="colorAccent">#ffcc40</color>
     <color name="colorVerde">@android:color/holo_green_light</color>
+    <color name="colorVerdeClaro">#d9f77d</color>
     <color name="black">#000</color>
 
     <color name="colorPrimary">#FF8000</color>
@@ -17,7 +18,7 @@
 
     <color name="colorMorado">#b94fff</color>
     <color name="colorAzul">#1395ec</color>
-
+    <color name="holo_green_light">#d9f77d</color>
 
 
 </resources>
