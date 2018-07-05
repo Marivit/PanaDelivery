@@ -175,7 +175,9 @@ public class ProductosListFragment extends Fragment {
                         b.putString("nombrePanaderia", nombrePanaderia);
                         b.putString("latitudPanaderia", latitudPanaderia);
                         b.putString("longitudPanaderia", longitudPanaderia);
-                        int mt = Integer.parseInt(montoTotal.getText().toString());
+                        String str = montoTotal.getText().toString();
+                        str = str.replaceAll("\\D+","");
+                        int mt = Integer.parseInt(str);
                         b.putInt("montoTotal", mt);
                         intent.putExtra("listas", b);
                         startActivity(intent);
