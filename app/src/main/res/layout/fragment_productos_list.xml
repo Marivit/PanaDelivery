@@ -3,50 +3,42 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    tools:context=".Fragments.ProductosListFragment"
-        android:gravity="bottom"
-        android:orientation="vertical">
+    android:layout_height="match_parent"
+    android:gravity="bottom"
+    android:orientation="vertical"
+    tools:context=".Fragments.ProductosListFragment">
 
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/productos"
         android:layout_width="388dp"
-        android:layout_height="425dp"
-        android:layout_marginBottom="8dp"
+        android:layout_height="500dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/sumaMontos"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintTop_toTopOf="parent">
 
     </android.support.v7.widget.RecyclerView>
 
-        <TextView
-            android:id="@+id/sumaMontos"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginTop="436dp"
-            android:background="#ffcaa7"
-            android:gravity="center"
-            android:text="Total: 0 Bs.S"
-            android:textStyle="bold"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:layout_editor_absoluteX="16dp" />
+    <TextView
+        android:id="@+id/sumaMontos"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="#ffcaa7"
+        android:gravity="center"
+        android:text="Total: 0 Bs.S"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/checkout" />
 
     <Button
         android:id="@+id/checkout"
         android:layout_width="match_parent"
         android:layout_height="52dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="4dp"
         android:backgroundTint="@color/colorVerde"
         android:text="Confirmar"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sumaMontos"
-        app:layout_constraintVertical_bias="0.0"
-        tools:layout_editor_absoluteX="0dp"
         tools:ignore="MissingConstraints" />
 </android.support.constraint.ConstraintLayout>
