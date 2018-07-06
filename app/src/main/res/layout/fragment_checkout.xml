@@ -8,7 +8,7 @@
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/imagenCheckout"
@@ -27,17 +27,16 @@
 
         <TextView
             android:id="@+id/nombreProducto"
-            android:layout_width="248dp"
+            android:layout_width="241dp"
             android:layout_height="17dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="12dp"
             android:text="nombreProducto"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.428"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imagenCheckout"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.148" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/cancelarProducto"
@@ -45,31 +44,32 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
             android:clickable="true"
             app:backgroundTint="@color/color2"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@+id/nombreProducto"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.789"
+            app:layout_constraintStart_toEndOf="@+id/cantidad"
+            app:layout_constraintTop_toBottomOf="@+id/nombreProducto"
+            app:layout_constraintVertical_bias="0.709"
             app:srcCompat="@drawable/baseline_clear_white_18dp" />
 
         <TextView
             android:id="@+id/descripcion"
-            android:layout_width="248dp"
-            android:layout_height="17dp"
-            android:layout_marginBottom="47dp"
+            android:layout_width="199dp"
+            android:layout_height="36dp"
+            android:layout_marginBottom="56dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="13dp"
+            android:layout_marginTop="8dp"
             android:text="TextView"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.428"
+            app:layout_constraintHorizontal_bias="0.095"
             app:layout_constraintStart_toEndOf="@+id/imagenCheckout"
             app:layout_constraintTop_toBottomOf="@+id/nombreProducto"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintVertical_bias="1.0" />
 
         <TextView
             android:id="@+id/cantidad"
@@ -78,15 +78,15 @@
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="144dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="72dp"
+            android:layout_marginTop="8dp"
             android:gravity="center"
             android:text="10"
             android:textAlignment="textStart"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_bias="0.066"
             app:layout_constraintStart_toEndOf="@+id/cantidad2"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/descripcion"
             app:layout_constraintVertical_bias="0.0" />
 
         <TextView
@@ -94,13 +94,13 @@
             android:layout_width="60dp"
             android:layout_height="16dp"
             android:layout_marginBottom="8dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="72dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="8dp"
             android:gravity="center"
             android:text="Cantidad:"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imagenCheckout"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/descripcion"
             app:layout_constraintVertical_bias="0.0" />
 
     </android.support.constraint.ConstraintLayout>
