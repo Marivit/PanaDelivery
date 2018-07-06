@@ -2,6 +2,7 @@ package com.example.virginia.panadelivery.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -12,6 +13,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -25,7 +27,10 @@ import com.example.virginia.panadelivery.Fragments.ProductosListFragment;
 import com.example.virginia.panadelivery.Fragments.detalleHistorialFragment;
 import com.example.virginia.panadelivery.Modelos.Panaderia;
 import com.example.virginia.panadelivery.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
@@ -50,6 +55,8 @@ public class    ProfileClienteActivity extends AppCompatActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        firebaseAuth = FirebaseAuth.getInstance();
 
 
         super.onCreate(savedInstanceState);
@@ -77,7 +84,6 @@ public class    ProfileClienteActivity extends AppCompatActivity
             }
         });
         */
-
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -139,6 +145,7 @@ public class    ProfileClienteActivity extends AppCompatActivity
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
         FragmentManager fm = getSupportFragmentManager();
         Fragment fragmentSeleccionado = fm.findFragmentById(R.id.contenedorCliente);
 
